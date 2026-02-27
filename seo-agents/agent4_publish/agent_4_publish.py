@@ -21,6 +21,10 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]  # .../content-factory
 # Папка, куда Агент 3 кладёт Markdown-страницы
 OUTPUT_DIR = PROJECT_ROOT / "output"
 
+# === Загрузка контракта ===
+
+_CONFIG = json.loads((PROJECT_ROOT / "config" / "shared-config.json").read_text("utf-8"))
+
 # === HTTP-сессия с автоматическими повторами ===
 
 MAX_RETRIES = 3
@@ -83,34 +87,12 @@ def _wp_request(method: str, url: str, wp_user: str, wp_app_password: str,
     raise RuntimeError(f"❌ Все {retries} попыток неудачны: {last_err}")
 
 
-# === Рубрики блога (выбор по содержанию) ===
+# === Рубрики блога (из shared-config.json) ===
 
-RUBRICS = (
-    {
-        "key": "health_fitness",
-        "title": "Здоровье и фитнес",
-        "keywords": "упражнения лфк восстановление травм операций фитнес здоровье тренажер зал",
-    },
-    {
-        "key": "relax_massage",
-        "title": "Релаксация и массаж",
-        "keywords": "лимфодренаж кедровая бочка фитобочка массаж релаксация оздоровление омоложение обертывание соляная комната",
-    },
-    {
-        "key": "nutrition_lifestyle",
-        "title": "Питание и образ жизни",
-        "keywords": "питание антистресс долголетие образ жизни рекомендации",
-    },
-    {
-        "key": "client_stories",
-        "title": "Истории клиентов",
-        "keywords": "история клиента кейс было стало отзыв результат специалист врач рекомендация результат до после",
-    },
-    {
-        "key": "ai_health",
-        "title": "ИИ и здоровье",
-        "keywords": "искусственный интеллект ии ai нейросеть цифровизация технологии здоровье телемедицина приложения",
-    },
+RUBRICS = tuple(
+    {"key": k, "title": v["title"], "keywords": v.get("keywords", "")}
+    for k, v in _CONFIG["rubrics"].items()
+    if v.get("keywords")
 )
 
 
@@ -298,27 +280,12 @@ def update_page_content(
     return resp.json()
 
 
-# Маппинг: имя файла (service) → slug WordPress-страницы
-SERVICE_SLUG_MAP = {
-    "соляная комната": "solyanaya-komnata",
-    "кедровая фитобочка": "fitobochka",
-    "кедровая бочка": "fitobochka",
-    "фитобочка": "fitobochka",
-    "массаж": "massazh",
-    "прессотерапия": "pressoterapiya",
-    "влок": "vlok",
-    "гидромассаж": "gidromassazh",
-    "акваспа": "gidromassazh",
-    "тренажёрный зал": "trenazhernyy-zal",
-    "тренажерный зал": "trenazhernyy-zal",
-    "настольный теннис": "nastolnyy-tennis",
-    "долголетие": "dolgoletie",
-    "конференц-зал": "konferenc-zal",
-    "мастер клёпа": "master-klepa",
-    "мастер клепа": "master-klepa",
-    "прокат": "prokat",
-    "юридическая помощь": "yuridicheskaya-pomoshch",
-}
+# Маппинг: имя файла (service) → slug WordPress-страницы (из shared-config.json)
+SERVICE_SLUG_MAP: dict[str, str] = {}
+for _slug, _svc in _CONFIG["services"].items():
+    SERVICE_SLUG_MAP[_svc["name"].lower()] = _slug
+    for _alias in _svc.get("aliases", []):
+        SERVICE_SLUG_MAP[_alias.lower()] = _slug
 
 
 def resolve_page_slug(service_name: str) -> str | None:

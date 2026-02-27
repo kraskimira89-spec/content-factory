@@ -1,0 +1,29 @@
+---
+description: Обзор проекта content-factory — архитектура, агенты, контракт с VPS-сайтом
+alwaysApply: true
+---
+
+# Content Factory — контекст проекта
+
+## Архитектура: polyrepo
+
+- **content-factory** (этот проект) — Python, цепочка AI-агентов, генерация SEO-контента
+- **entuziastov75-vps** (отдельный репо) — PHP/WordPress, сайт на VPS
+- Связь: WordPress REST API + контракт `config/shared-config.json`
+
+## Цепочка агентов
+
+```
+agent1_keywords → agent_planner → agent2_brief → agent3_content
+  → agent_editor → agent4_publish → agent_publish_vk → agent_analyst
+```
+
+Все агенты в `seo-agents/`, промпты в `system_prompt.txt` рядом с каждым агентом.
+
+## Ключевые правила
+
+- Единый `.env` только в `config/.env` — не дублировать
+- Все данные об услугах, рубриках, эндпоинтах — в `config/shared-config.json`
+- Агенты используют `seo-agents/shared/api_client.py` для AI-запросов
+- Деплой на VPS: `scripts/deploy_to_vps.py --mode ssh|rest`
+- Язык кода: Python 3.11+, русскоязычные комментарии

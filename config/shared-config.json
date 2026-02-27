@@ -1,35 +1,87 @@
 {
   "_comment": "Контракт между content-factory и entuziastov75-vps. Оба проекта читают этот файл.",
+  "_version": "2.0",
 
   "wordpress": {
     "url_env": "WP_URL",
     "username_env": "WP_USERNAME",
     "password_env": "WP_APP_PASSWORD",
-    "rest_base": "/wp-json/wp/v2"
+    "rest_base": "/wp-json/wp/v2",
+    "timeout_sec": 30
+  },
+
+  "endpoints": {
+    "posts":      { "path": "/wp-json/wp/v2/posts",      "methods": ["GET", "POST"] },
+    "pages":      { "path": "/wp-json/wp/v2/pages",      "methods": ["GET", "POST"] },
+    "tags":       { "path": "/wp-json/wp/v2/tags",       "methods": ["GET", "POST"] },
+    "categories": { "path": "/wp-json/wp/v2/categories", "methods": ["GET"] },
+    "options":    { "path": "/wp-json/cf/v1/options",     "methods": ["POST"], "_comment": "Кастомный эндпоинт для деплоя service_data" }
+  },
+
+  "publish_protocol": {
+    "post_fields": {
+      "title":      "string, заголовок из первой строки Markdown (# Заголовок)",
+      "content":    "string, HTML-контент (Markdown → HTML через python-markdown с ext: extra, tables, sane_lists)",
+      "status":     "enum: draft | publish | private",
+      "categories": "array<int>, ID категорий WP",
+      "tags":       "array<int>, ID тегов WP (создаются автоматически)"
+    },
+    "page_update_fields": {
+      "content": "string, HTML — обновляется только post_content, заголовок/шаблон не трогается"
+    },
+    "statuses": {
+      "success": "Публикация/обновление прошло, HTTP 200/201",
+      "error":   "HTTP != 200/201 → RuntimeError с телом ответа"
+    },
+    "file_naming": "{timestamp}_page_{услуга}_{город}.md — Агент 3 → Агент 4"
   },
 
   "rubrics": {
-    "health_fitness":       { "title": "Здоровье и фитнес",      "wp_cat_env": "WP_CAT_HEALTH_FITNESS" },
-    "relax_massage":        { "title": "Релаксация и массаж",     "wp_cat_env": "WP_CAT_RELAX_MASSAGE" },
-    "nutrition_lifestyle":  { "title": "Питание и образ жизни",   "wp_cat_env": "WP_CAT_NUTRITION_LIFESTYLE" },
-    "client_stories":       { "title": "Истории клиентов",        "wp_cat_env": "WP_CAT_CLIENT_STORIES" },
-    "ai_health":            { "title": "ИИ и здоровье",           "wp_cat_env": "WP_CAT_AI_HEALTH" },
+    "health_fitness":       { "title": "Здоровье и фитнес",      "wp_cat_env": "WP_CAT_HEALTH_FITNESS",       "keywords": "упражнения лфк восстановление травм операций фитнес здоровье тренажер зал" },
+    "relax_massage":        { "title": "Релаксация и массаж",     "wp_cat_env": "WP_CAT_RELAX_MASSAGE",        "keywords": "лимфодренаж кедровая бочка фитобочка массаж релаксация оздоровление омоложение обертывание соляная комната" },
+    "nutrition_lifestyle":  { "title": "Питание и образ жизни",   "wp_cat_env": "WP_CAT_NUTRITION_LIFESTYLE",  "keywords": "питание антистресс долголетие образ жизни рекомендации" },
+    "client_stories":       { "title": "Истории клиентов",        "wp_cat_env": "WP_CAT_CLIENT_STORIES",       "keywords": "история клиента кейс было стало отзыв результат специалист врач рекомендация до после" },
+    "ai_health":            { "title": "ИИ и здоровье",           "wp_cat_env": "WP_CAT_AI_HEALTH",            "keywords": "искусственный интеллект ии ai нейросеть цифровизация технологии здоровье телемедицина приложения" },
     "services":             { "title": "Услуги",                  "wp_cat_env": "WP_CAT_SERVICES" }
   },
 
   "services": {
-    "gidromassazh":            { "name": "Гидромассаж (АКВАСПА)" },
+    "gidromassazh":            { "name": "Гидромассаж (АКВАСПА)",  "aliases": ["акваспа", "гидромассаж"] },
     "dolgoletie":              { "name": "Долголетие" },
     "nastolnyy-tennis":        { "name": "Настольный теннис" },
     "konferenc-zal":           { "name": "Конференц-зал" },
-    "master-klepa":            { "name": "Мастер Клёпа" },
+    "master-klepa":            { "name": "Мастер Клёпа",           "aliases": ["мастер клепа", "мастер клёпа"] },
     "prokat":                  { "name": "Прокат" },
-    "yuridicheskaya-pomoshch": { "name": "Юридическая помощь" }
+    "yuridicheskaya-pomoshch": { "name": "Юридическая помощь" },
+    "solyanaya-komnata":       { "name": "Соляная комната" },
+    "fitobochka":              { "name": "Кедровая фитобочка",     "aliases": ["кедровая бочка", "фитобочка"] },
+    "massazh":                 { "name": "Массаж" },
+    "pressoterapiya":          { "name": "Прессотерапия" },
+    "vlok":                    { "name": "ВЛОК" },
+    "trenazhernyy-zal":        { "name": "Тренажёрный зал",        "aliases": ["тренажерный зал"] }
+  },
+
+  "service_data_fields": {
+    "_comment": "Поля, которые content-factory генерирует для inc/service-pages-defaults.php на VPS",
+    "results":            "array<string> — результаты процедуры",
+    "comparison":         "{ headers: string[], rows: string[][] } — таблица сравнения",
+    "faq":                "array<{ q: string, a: string }> — FAQ",
+    "steps":              "array<{ text: string }> — шаги процедуры",
+    "indications":        "array<string> — показания (опционально)",
+    "contraindications":  "array<string> — противопоказания (опционально)",
+    "pricing":            "{ headers: string[], rows: string[][] } — таблица цен (опционально)"
   },
 
   "vk": {
     "api_version": "5.131",
     "token_env": "VK_ACCESS_TOKEN",
     "group_id_env": "VK_GROUP_ID"
+  },
+
+  "deploy": {
+    "vps_host_env": "VPS_HOST",
+    "vps_user_env": "VPS_USER",
+    "vps_key_env":  "VPS_SSH_KEY",
+    "theme_path":   "/var/www/html/wp-content/themes/flavor/inc/service-pages-defaults.php"
   }
 }

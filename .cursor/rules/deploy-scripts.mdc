@@ -1,0 +1,25 @@
+---
+description: Правила для скриптов деплоя и генерации
+globs: scripts/**/*.py
+alwaysApply: false
+---
+
+# Правила для scripts/
+
+## Контракт с VPS
+
+- Все параметры деплоя — в `config/shared-config.json`, секция `deploy`
+- Данные услуг для PHP — в `config/shared-config.json`, секция `service_data_fields`
+- Слаги услуг — из `config/shared-config.json`, секция `services`
+
+## Генерация PHP-патчей
+
+- `deploy_services_data.py` генерирует PHP-код в `output/`
+- Результат: `service-pages-defaults-patch-generated.php` + `services-patch-data.json`
+- PHP-код предназначен для `inc/service-pages-defaults.php` на VPS
+
+## Доставка на VPS
+
+- `deploy_to_vps.py --mode ssh` — SCP-копирование файла
+- `deploy_to_vps.py --mode rest` — POST JSON через WP REST API
+- SSH-креды: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY` из config/.env

@@ -1,0 +1,35 @@
+---
+description: Правила для работы с SEO-агентами
+globs: seo-agents/**/*.py
+alwaysApply: false
+---
+
+# Правила для seo-agents
+
+## Конфиг
+
+- Все переменные окружения читать из `PROJECT_ROOT / "config" / ".env"` через `load_dotenv`
+- Рубрики, услуги, слаги — брать из `config/shared-config.json`, не хардкодить
+- Для AI-запросов использовать `seo-agents/shared/api_client.ask_ai()`
+- Для логирования — `seo-agents/shared/logger.get_logger()`
+
+## Структура агента
+
+```
+seo-agents/agent_name/
+  agent_name.py       — код агента
+  system_prompt.txt   — системный промпт (читается агентом)
+```
+
+## Взаимодействие между агентами
+
+- Агенты общаются через файлы в `output/`: один создаёт, следующий читает
+- Именование: `{timestamp}_{тип}_{услуга}_{город}.{ext}`
+- Типы: keywords (.txt), brief (.md), page (.md), approved (.md)
+
+## Публикация
+
+- `agent4_publish` → WordPress REST API (посты и страницы)
+- `agent_publish_vk` → VK API (wall.post)
+- Новые посты создаются со статусом `draft`
+- Обновление страниц услуг — только `content`, без смены заголовка/шаблона

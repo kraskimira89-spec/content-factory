@@ -1,0 +1,17 @@
+[
+  { "slug": "solyanaya-komnata",       "name": "Соляная комната",      "category": "Оздоровительные", "duration": "40 мин",  "price_from": 300 },
+  { "slug": "massazh",                 "name": "Массаж",               "category": "Массаж и релаксация", "duration": "60 мин",  "price_from": 1500 },
+  { "slug": "pressoterapiya",          "name": "Прессотерапия",        "category": "Аппаратные",       "duration": "30 мин",  "price_from": 800 },
+  { "slug": "uglekislaya-vanna",       "name": "Углекислая ванна",     "category": "Аппаратные",       "duration": "20 мин",  "price_from": null },
+  { "slug": "fitobochka",              "name": "Кедровая фитобочка",   "category": "Оздоровительные", "duration": "20 мин",  "price_from": null },
+  { "slug": "vlok",                    "name": "ВЛОК",                 "category": "Аппаратные",       "duration": "20 мин",  "price_from": null },
+  { "slug": "lfk",                     "name": "ЛФК",                  "category": "Спорт и активность", "duration": "45 мин", "price_from": null },
+  { "slug": "trenazhernyy-zal",        "name": "Тренажёрный зал",      "category": "Спорт и активность", "duration": null,     "price_from": null },
+  { "slug": "gidromassazh",            "name": "Гидромассаж (АКВАСПА)", "category": "Массаж и релаксация", "duration": "25 мин", "price_from": 750 },
+  { "slug": "dolgoletie",              "name": "Долголетие",           "category": "Комплексные программы", "duration": null,   "price_from": null },
+  { "slug": "nastolnyy-tennis",        "name": "Настольный теннис",    "category": "Досуг",            "duration": null,      "price_from": null },
+  { "slug": "konferenc-zal",           "name": "Конференц-зал",        "category": "Аренда",           "duration": null,      "price_from": 500 },
+  { "slug": "master-klepa",            "name": "Мастер Клёпа",         "category": "Дети",             "duration": null,      "price_from": null },
+  { "slug": "prokat",                  "name": "Прокат",               "category": "Досуг",            "duration": null,      "price_from": null },
+  { "slug": "yuridicheskaya-pomoshch", "name": "Юридическая помощь",   "category": "Консультации",     "duration": null,      "price_from": 500 }
+]

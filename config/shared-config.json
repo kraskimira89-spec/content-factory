@@ -15,7 +15,11 @@
     "pages":      { "path": "/wp-json/wp/v2/pages",      "methods": ["GET", "POST"] },
     "tags":       { "path": "/wp-json/wp/v2/tags",       "methods": ["GET", "POST"] },
     "categories": { "path": "/wp-json/wp/v2/categories", "methods": ["GET"] },
-    "options":    { "path": "/wp-json/cf/v1/options",     "methods": ["POST"], "_comment": "Кастомный эндпоинт для деплоя service_data" }
+    "service_data": {
+      "path": "/wp-json/entuziastov75/v1/service-data/{slug}",
+      "methods": ["GET", "POST"],
+      "_comment": "Кастомный эндпоинт: POST пишет данные услуги в wp_options, GET читает. Merge: API-данные перезаписывают дефолты из PHP"
+    }
   },
 
   "publish_protocol": {

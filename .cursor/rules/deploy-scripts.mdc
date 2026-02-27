@@ -20,6 +20,9 @@ alwaysApply: false
 
 ## Доставка на VPS
 
-- `deploy_to_vps.py --mode ssh` — SCP-копирование файла
-- `deploy_to_vps.py --mode rest` — POST JSON через WP REST API
-- SSH-креды: `VPS_HOST`, `VPS_USER`, `VPS_SSH_KEY` из config/.env
+- `deploy_to_vps.py --mode rest` (основной) — POST JSON на `/wp-json/entuziastov75/v1/service-data/{slug}` поштучно
+- `deploy_to_vps.py --mode rest --slug gidromassazh` — обновить одну услугу
+- `deploy_to_vps.py --mode rest --dry-run` — показать без отправки
+- `deploy_to_vps.py --mode ssh` — SCP-фоллбэк (требует VPS_HOST, VPS_USER в config/.env)
+- WP-эндпоинт мержит данные с дефолтами из PHP, фильтрует чужие ключи
+- Авторизация: WP Application Password (Basic Auth)

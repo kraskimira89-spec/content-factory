@@ -3,11 +3,14 @@ import os
 import base64
 import glob
 import re
+import time
 from pathlib import Path
 
 import requests
-import markdown  # pip install markdown
-from dotenv import load_dotenv  # pip install python-dotenv
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
+import markdown
+from dotenv import load_dotenv
 
 # === Настройки путей ===
 
@@ -16,7 +19,69 @@ BASE_DIR = Path(__file__).resolve().parents[1]  # .../seo-agents
 PROJECT_ROOT = Path(__file__).resolve().parents[2]  # .../content-factory
 
 # Папка, куда Агент 3 кладёт Markdown-страницы
-OUTPUT_DIR = Path(r"D:\content-factory\output")
+OUTPUT_DIR = PROJECT_ROOT / "output"
+
+# === HTTP-сессия с автоматическими повторами ===
+
+MAX_RETRIES = 3
+RETRY_BACKOFF = 1.0
+
+
+def _create_session() -> requests.Session:
+    session = requests.Session()
+    retry = Retry(
+        total=MAX_RETRIES,
+        backoff_factor=RETRY_BACKOFF,
+        status_forcelist=(500, 502, 503, 504),
+        allowed_methods=["GET", "POST", "PUT"],
+        raise_on_status=False,
+    )
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+    return session
+
+
+_session = _create_session()
+
+
+def _wp_headers(wp_user: str, wp_app_password: str, content_type: bool = False) -> dict:
+    token = base64.b64encode(f"{wp_user}:{wp_app_password}".encode()).decode()
+    h = {"Authorization": f"Basic {token}"}
+    if content_type:
+        h["Content-Type"] = "application/json"
+    return h
+
+
+def _wp_request(method: str, url: str, wp_user: str, wp_app_password: str,
+                retries: int = MAX_RETRIES, **kwargs) -> requests.Response:
+    """HTTP-запрос к WP REST API с retry и обработкой ошибок."""
+    headers = _wp_headers(wp_user, wp_app_password, content_type="json" in kwargs)
+    kwargs.setdefault("headers", headers)
+    kwargs.setdefault("timeout", 30)
+
+    last_err = None
+    for attempt in range(1, retries + 1):
+        try:
+            resp = _session.request(method, url, **kwargs)
+            if resp.status_code == 401:
+                raise RuntimeError("❌ Авторизация WP не прошла (401). Проверьте WP_USERNAME / WP_APP_PASSWORD")
+            if resp.status_code == 403:
+                raise RuntimeError("❌ Нет прав (403). Пользователю нужна capability edit_posts / edit_pages")
+            return resp
+        except requests.exceptions.ConnectionError as e:
+            last_err = e
+            print(f"  ⚠️ Сетевая ошибка (попытка {attempt}/{retries}): {e}")
+        except requests.exceptions.Timeout as e:
+            last_err = e
+            print(f"  ⚠️ Таймаут (попытка {attempt}/{retries})")
+        if attempt < retries:
+            wait = RETRY_BACKOFF * attempt
+            print(f"  ⏳ Повтор через {wait:.0f} с...")
+            time.sleep(wait)
+
+    raise RuntimeError(f"❌ Все {retries} попыток неудачны: {last_err}")
+
 
 # === Рубрики блога (выбор по содержанию) ===
 
@@ -192,16 +257,10 @@ def find_page_by_slug(
     Ищет WordPress-страницу (page) по slug.
     Возвращает dict с id, title, link, status или None.
     """
-    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/pages"
-    credentials = f"{wp_user}:{wp_app_password}"
-    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
-    headers = {"Authorization": f"Basic {token}"}
-
-    resp = requests.get(
-        api_url,
-        headers=headers,
+    api_url = f"{wp_url}/wp-json/wp/v2/pages"
+    resp = _wp_request(
+        "GET", api_url, wp_user, wp_app_password,
         params={"slug": slug, "status": "publish,draft,private", "per_page": 1},
-        timeout=30,
     )
     if resp.status_code != 200:
         return None
@@ -230,20 +289,8 @@ def update_page_content(
     Обновляет post_content существующей WordPress-страницы.
     Не трогает заголовок, статус, шаблон — только контент.
     """
-    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/pages/{page_id}"
-    credentials = f"{wp_user}:{wp_app_password}"
-    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Basic {token}",
-    }
-
-    resp = requests.post(
-        api_url,
-        json={"content": content_html},
-        headers=headers,
-        timeout=30,
-    )
+    api_url = f"{wp_url}/wp-json/wp/v2/pages/{page_id}"
+    resp = _wp_request("POST", api_url, wp_user, wp_app_password, json={"content": content_html})
     if resp.status_code not in (200, 201):
         raise RuntimeError(
             f"Ошибка обновления страницы {page_id}: {resp.status_code}\n{resp.text}"
@@ -296,22 +343,14 @@ def get_or_create_tag(
     if not name:
         return None
 
-    credentials = f"{wp_user}:{wp_app_password}"
-    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Basic {token}",
-    }
-
-    search_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/tags"
-    resp = requests.get(search_url, headers=headers, params={"search": name}, timeout=30)
+    tags_url = f"{wp_url}/wp-json/wp/v2/tags"
+    resp = _wp_request("GET", tags_url, wp_user, wp_app_password, params={"search": name})
     if resp.status_code == 200:
         for t in resp.json():
             if t.get("name") == name:
                 return t.get("id")
 
-    create_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/tags"
-    resp = requests.post(create_url, headers=headers, json={"name": name}, timeout=30)
+    resp = _wp_request("POST", tags_url, wp_user, wp_app_password, json={"name": name})
     if resp.status_code not in (200, 201):
         raise RuntimeError(
             f"Не удалось создать тег '{name}': {resp.status_code}\n{resp.text}"
@@ -333,22 +372,14 @@ def publish_post(
     Публикует пост в WordPress через REST API.
     categories и tags — списки ID категорий и тегов WP.
     """
-    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/posts"
-
-    credentials = f"{wp_user}:{wp_app_password}"
-    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Basic {token}",
-    }
-
+    api_url = f"{wp_url}/wp-json/wp/v2/posts"
     data = {"title": title, "content": content_html, "status": status}
     if categories:
         data["categories"] = categories
     if tags:
         data["tags"] = tags
 
-    resp = requests.post(api_url, json=data, headers=headers, timeout=30)
+    resp = _wp_request("POST", api_url, wp_user, wp_app_password, json=data)
     if resp.status_code not in (200, 201):
         raise RuntimeError(
             f"Ошибка публикации: {resp.status_code}\nТело ответа: {resp.text}"

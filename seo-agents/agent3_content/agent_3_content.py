@@ -26,6 +26,7 @@ from api_client import ask_ai  # type: ignore
 from keywords_db import load_keywords  # type: ignore
 from db_session import get_last_pair  # type: ignore
 from logger import get_logger  # type: ignore
+from prompt_loader import load_brand_voice  # type: ignore
 
 console = Console()
 logger = get_logger("seo_agents.agent3")
@@ -34,9 +35,14 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
 
 
 def load_system_prompt() -> str:
-    """Читаем системный промпт из отдельного файла."""
+    """Системный промпт + общий brand voice из prompts/context/."""
     with open(PROMPT_FILE, "r", encoding="utf-8") as f:
-        return f.read()
+        base_prompt = f.read()
+    try:
+        brand = load_brand_voice()
+        return f"{base_prompt}\n\n--- ОБЩИЙ КОНТЕКСТ БРЕНДА ---\n{brand}"
+    except FileNotFoundError:
+        return base_prompt
 
 
 def load_last_brief(service_name: str, city: str) -> str | None:

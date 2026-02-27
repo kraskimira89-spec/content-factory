@@ -28,6 +28,7 @@ from api_client import ask_ai  # type: ignore
 from keywords_db import save_keywords as db_save_keywords  # type: ignore
 from db_session import set_last_pair  # type: ignore
 from logger import get_logger  # type: ignore
+from prompt_loader import get_service_names  # type: ignore
 
 console = Console()
 logger = get_logger("seo_agents.agent1")
@@ -85,6 +86,12 @@ def save_keywords(service_name: str, city: str, keywords_text: str) -> str:
 
 def main():
     console.print("\n[bold cyan]Агент 1 — генератор ключевых фраз[/bold cyan]\n")
+
+    try:
+        names = get_service_names()
+        console.print("[dim]Доступные услуги:[/dim] " + ", ".join(names) + "\n")
+    except Exception:
+        pass
 
     service_name = console.input("Введите [green]название услуги[/green]: ")
     city = console.input("Введите [green]город[/green]: ")

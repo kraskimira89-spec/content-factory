@@ -1,0 +1,498 @@
+import json
+import os
+import base64
+import glob
+import re
+from pathlib import Path
+
+import requests
+import markdown  # pip install markdown
+from dotenv import load_dotenv  # pip install python-dotenv
+
+# === Настройки путей ===
+
+# Базовая директория проекта seo-agents (папка, где лежит .env и агенты)
+BASE_DIR = Path(__file__).resolve().parents[1]  # .../seo-agents
+PROJECT_ROOT = Path(__file__).resolve().parents[2]  # .../content-factory
+
+# Папка, куда Агент 3 кладёт Markdown-страницы
+OUTPUT_DIR = Path(r"D:\content-factory\output")
+
+# === Рубрики блога (выбор по содержанию) ===
+
+RUBRICS = (
+    {
+        "key": "health_fitness",
+        "title": "Здоровье и фитнес",
+        "keywords": "упражнения лфк восстановление травм операций фитнес здоровье тренажер зал",
+    },
+    {
+        "key": "relax_massage",
+        "title": "Релаксация и массаж",
+        "keywords": "лимфодренаж кедровая бочка фитобочка массаж релаксация оздоровление омоложение обертывание соляная комната",
+    },
+    {
+        "key": "nutrition_lifestyle",
+        "title": "Питание и образ жизни",
+        "keywords": "питание антистресс долголетие образ жизни рекомендации",
+    },
+    {
+        "key": "client_stories",
+        "title": "Истории клиентов",
+        "keywords": "история клиента кейс было стало отзыв результат специалист врач рекомендация результат до после",
+    },
+    {
+        "key": "ai_health",
+        "title": "ИИ и здоровье",
+        "keywords": "искусственный интеллект ии ai нейросеть цифровизация технологии здоровье телемедицина приложения",
+    },
+)
+
+
+# === Работа с .env ===
+
+def load_env():
+    """Читает настройки WordPress из .env без изменения пароля."""
+    env_path = PROJECT_ROOT / "config" / ".env"
+    if not env_path.exists():
+        raise RuntimeError(f".env не найден по пути: {env_path}")
+
+    load_dotenv(env_path)
+
+    wp_url = os.getenv("WP_URL")
+    wp_user = os.getenv("WP_USERNAME")
+    wp_app_password = os.getenv("WP_APP_PASSWORD")
+
+    if not wp_url or not wp_user or not wp_app_password:
+        raise RuntimeError(
+            "Не заданы WP_URL, WP_USERNAME или WP_APP_PASSWORD в .env"
+        )
+
+    # Убираем только слэш в конце URL
+    wp_url = wp_url.rstrip("/")
+
+    # Пароль оставляем строго как в WordPress (включая пробелы)
+    return wp_url, wp_user, wp_app_password
+
+
+def get_rubric_category_ids():
+    """
+    Читает из .env ID категорий WP для рубрик.
+    Ключи: WP_CAT_HEALTH_FITNESS, WP_CAT_RELAX_MASSAGE, WP_CAT_NUTRITION_LIFESTYLE.
+    """
+    load_dotenv(PROJECT_ROOT / "config" / ".env")
+    ids = {}
+    for r in RUBRICS:
+        val = os.getenv(f"WP_CAT_{r['key'].upper()}", "").strip()
+        if val.isdigit():
+            ids[r["key"]] = int(val)
+    return ids
+
+
+def load_metadata_for_md(md_path: Path) -> dict:
+    """
+    Читает метаданные для выбранного .md: файл с тем же именем и суффиксом .meta.json.
+    Формат: {"rubric_key": "client_stories", "content_type": "case"}.
+    Возвращает пустой dict, если файла нет или JSON невалиден.
+    """
+    meta_path = md_path.with_suffix(md_path.suffix + ".meta.json")
+    if not meta_path.is_file():
+        return {}
+    try:
+        return json.loads(meta_path.read_text(encoding="utf-8"))
+    except Exception:
+        return {}
+
+
+def select_rubric(title: str, content_text: str) -> str:
+    """
+    Выбирает одну из рубрик по заголовку и тексту (ключевые слова).
+    Возвращает ключ рубрики (health_fitness | relax_massage | nutrition_lifestyle | client_stories | ai_health).
+    """
+    text = f"{title}\n{content_text}".lower()
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", text)
+    scores = []
+    for r in RUBRICS:
+        score = sum(1 for w in r["keywords"].split() if w in text)
+        scores.append((r["key"], score))
+    best = max(scores, key=lambda x: x[1])
+    return best[0] if best[1] > 0 else RUBRICS[0]["key"]
+
+
+# === Работа с файлами Markdown от Агента 3 ===
+
+def get_latest_md_file():
+    """Возвращает путь к последнему .md файлу вида *_page_*.md из D:\\content-factory\\output."""
+    if not OUTPUT_DIR.exists():
+        raise FileNotFoundError(f"Папка с output не найдена: {OUTPUT_DIR}")
+
+    pattern = str(OUTPUT_DIR / "*_page_*.md")
+    files = sorted(glob.glob(pattern), key=os.path.getmtime)
+    if not files:
+        raise FileNotFoundError(f"В {OUTPUT_DIR} нет файлов по шаблону *_page_*.md")
+    return Path(files[-1])
+
+
+def parse_service_and_city_from_filename(md_path: Path) -> tuple[str | None, str | None]:
+    """
+    Ждём имя вида: {timestamp}_page_{услуга}_{город}.md
+    Возвращает (service_name, city). Файлы с «approved» в имени (от Editor) не разбираем — (None, None).
+    """
+    name = md_path.stem
+    parts = name.split("_page_")
+    if len(parts) != 2:
+        return None, None
+
+    tail = parts[1]
+    if "approved" in tail.lower():
+        return None, None
+
+    tail_parts = tail.split("_")
+    if len(tail_parts) < 2:
+        return None, None
+
+    city = tail_parts[-1]
+    service = " ".join(tail_parts[:-1])
+    return service, city
+
+
+def parse_markdown(md_text: str):
+    """
+    Берёт Markdown:
+    - первая строка '# Заголовок' → title
+    - остальное → body, конвертирует в HTML
+    """
+    lines = md_text.splitlines()
+    title = "Без заголовка"
+    body_lines = lines
+
+    if lines and lines[0].startswith("# "):
+        title = lines[0][2:].strip()
+        body_lines = lines[1:]
+
+    body_md = "\n".join(body_lines).strip()
+
+    # Markdown → HTML с поддержкой таблиц/списков
+    body_html = markdown.markdown(
+        body_md,
+        extensions=["extra", "tables", "sane_lists"]
+    )
+
+    return title, body_html
+
+
+# === Работа со страницами услуг (pages) ===
+
+
+def find_page_by_slug(
+    wp_url: str, wp_user: str, wp_app_password: str, slug: str
+) -> dict | None:
+    """
+    Ищет WordPress-страницу (page) по slug.
+    Возвращает dict с id, title, link, status или None.
+    """
+    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/pages"
+    credentials = f"{wp_user}:{wp_app_password}"
+    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
+    headers = {"Authorization": f"Basic {token}"}
+
+    resp = requests.get(
+        api_url,
+        headers=headers,
+        params={"slug": slug, "status": "publish,draft,private", "per_page": 1},
+        timeout=30,
+    )
+    if resp.status_code != 200:
+        return None
+
+    pages = resp.json()
+    if not pages:
+        return None
+
+    p = pages[0]
+    return {
+        "id": p["id"],
+        "title": p["title"]["rendered"],
+        "link": p["link"],
+        "status": p["status"],
+    }
+
+
+def update_page_content(
+    wp_url: str,
+    wp_user: str,
+    wp_app_password: str,
+    page_id: int,
+    content_html: str,
+) -> dict:
+    """
+    Обновляет post_content существующей WordPress-страницы.
+    Не трогает заголовок, статус, шаблон — только контент.
+    """
+    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/pages/{page_id}"
+    credentials = f"{wp_user}:{wp_app_password}"
+    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Basic {token}",
+    }
+
+    resp = requests.post(
+        api_url,
+        json={"content": content_html},
+        headers=headers,
+        timeout=30,
+    )
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(
+            f"Ошибка обновления страницы {page_id}: {resp.status_code}\n{resp.text}"
+        )
+    return resp.json()
+
+
+# Маппинг: имя файла (service) → slug WordPress-страницы
+SERVICE_SLUG_MAP = {
+    "соляная комната": "solyanaya-komnata",
+    "кедровая фитобочка": "fitobochka",
+    "кедровая бочка": "fitobochka",
+    "фитобочка": "fitobochka",
+    "массаж": "massazh",
+    "прессотерапия": "pressoterapiya",
+    "влок": "vlok",
+    "гидромассаж": "gidromassazh",
+    "акваспа": "gidromassazh",
+    "тренажёрный зал": "trenazhernyy-zal",
+    "тренажерный зал": "trenazhernyy-zal",
+    "настольный теннис": "nastolnyy-tennis",
+    "долголетие": "dolgoletie",
+    "конференц-зал": "konferenc-zal",
+    "мастер клёпа": "master-klepa",
+    "мастер клепа": "master-klepa",
+    "прокат": "prokat",
+    "юридическая помощь": "yuridicheskaya-pomoshch",
+}
+
+
+def resolve_page_slug(service_name: str) -> str | None:
+    """
+    По имени услуги возвращает slug страницы WordPress.
+    Ищет в SERVICE_SLUG_MAP (нечувствительно к регистру).
+    """
+    key = service_name.strip().lower()
+    return SERVICE_SLUG_MAP.get(key)
+
+
+# === Публикация в WordPress (запись в блоге) ===
+
+
+def get_or_create_tag(
+    wp_url: str, wp_user: str, wp_app_password: str, name: str
+) -> int | None:
+    """
+    Ищет тег по имени (GET с search), если нет — создаёт (POST).
+    Возвращает ID тега или None при пустом name.
+    """
+    if not name:
+        return None
+
+    credentials = f"{wp_user}:{wp_app_password}"
+    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Basic {token}",
+    }
+
+    search_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/tags"
+    resp = requests.get(search_url, headers=headers, params={"search": name}, timeout=30)
+    if resp.status_code == 200:
+        for t in resp.json():
+            if t.get("name") == name:
+                return t.get("id")
+
+    create_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/tags"
+    resp = requests.post(create_url, headers=headers, json={"name": name}, timeout=30)
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(
+            f"Не удалось создать тег '{name}': {resp.status_code}\n{resp.text}"
+        )
+    return resp.json().get("id")
+
+
+def publish_post(
+    wp_url: str,
+    wp_user: str,
+    wp_app_password: str,
+    title: str,
+    content_html: str,
+    status: str = "draft",
+    categories: list[int] | None = None,
+    tags: list[int] | None = None,
+):
+    """
+    Публикует пост в WordPress через REST API.
+    categories и tags — списки ID категорий и тегов WP.
+    """
+    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/posts"
+
+    credentials = f"{wp_user}:{wp_app_password}"
+    token = base64.b64encode(credentials.encode("utf-8")).decode("utf-8")
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Basic {token}",
+    }
+
+    data = {"title": title, "content": content_html, "status": status}
+    if categories:
+        data["categories"] = categories
+    if tags:
+        data["tags"] = tags
+
+    resp = requests.post(api_url, json=data, headers=headers, timeout=30)
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(
+            f"Ошибка публикации: {resp.status_code}\nТело ответа: {resp.text}"
+        )
+    return resp.json()
+
+
+# === Точка входа Агента 4 ===
+
+def main():
+    print("=== Агент 4: публикация в WordPress ===")
+
+    wp_url, wp_user, wp_app_password = load_env()
+    print(f"WP_URL: {wp_url}")
+    print(f"WP_USERNAME: {wp_user}")
+
+    md_path = get_latest_md_file()
+    print(f"Используется файл: {md_path}")
+
+    service_name, city = parse_service_and_city_from_filename(md_path)
+    print(f"Услуга: {service_name or '—'}, город: {city or '—'}")
+
+    md_text = md_path.read_text(encoding="utf-8")
+    title, content_html = parse_markdown(md_text)
+    print(f"Заголовок из Markdown: {title}")
+
+    meta = load_metadata_for_md(md_path)
+
+    # --- Режим обновления страницы услуги ---
+    # Если в имени файла есть услуга — пробуем найти существующую страницу (page)
+    # и обновить её post_content вместо создания нового поста.
+    if service_name:
+        slug = resolve_page_slug(service_name)
+        if slug:
+            page = find_page_by_slug(wp_url, wp_user, wp_app_password, slug)
+            if page:
+                print(f"Найдена страница услуги: «{page['title']}» (ID={page['id']}, slug={slug})")
+                print("Обновляю post_content страницы (шаблон отображает остальные блоки из services_data)...")
+                result = update_page_content(
+                    wp_url, wp_user, wp_app_password, page["id"], content_html
+                )
+                print(f"✅ Страница обновлена: ID={page['id']}, link={page['link']}")
+                _log_to_db(meta, result)
+                return
+
+            print(f"Страница со slug «{slug}» не найдена — создаю пост в блог.")
+        else:
+            print(f"Slug для услуги «{service_name}» не найден в маппинге — создаю пост в блог.")
+
+    # --- Режим создания поста в блог ---
+    categories = None
+    tags_ids = []
+
+    if service_name or city:
+        load_dotenv(PROJECT_ROOT / "config" / ".env")
+        services_cat = os.getenv("WP_CAT_SERVICES", "").strip()
+        services_category_id = int(services_cat) if services_cat.isdigit() else None
+        if services_category_id is not None:
+            categories = [services_category_id]
+            print(f"Рубрика: Услуги (ID={services_category_id})")
+        else:
+            print("(WP_CAT_SERVICES не задан в .env — пост без категории)")
+
+        if service_name:
+            tid = get_or_create_tag(wp_url, wp_user, wp_app_password, service_name)
+            if tid:
+                tags_ids.append(tid)
+        if city:
+            tid = get_or_create_tag(wp_url, wp_user, wp_app_password, city)
+            if tid:
+                tags_ids.append(tid)
+        if tags_ids:
+            print(f"Теги: {service_name or ''}, {city or ''} (ID: {tags_ids})")
+    else:
+        rubric_keys = {r["key"] for r in RUBRICS}
+        if meta.get("rubric_key") in rubric_keys:
+            rubric_key = meta["rubric_key"]
+            rubric_title = next(r["title"] for r in RUBRICS if r["key"] == rubric_key)
+            print(f"Рубрика из метаданных: {rubric_title}")
+        else:
+            rubric_key = select_rubric(title, md_text)
+            rubric_title = next(r["title"] for r in RUBRICS if r["key"] == rubric_key)
+            print(f"Рубрика по содержанию: {rubric_title}")
+
+        category_ids = get_rubric_category_ids()
+        categories = [category_ids[rubric_key]] if rubric_key in category_ids else None
+        if not categories:
+            print("(ID категории для этой рубрики не заданы в .env — пост без категории)")
+
+    result = publish_post(
+        wp_url=wp_url,
+        wp_user=wp_user,
+        wp_app_password=wp_app_password,
+        title=title,
+        content_html=content_html,
+        status="draft",
+        categories=categories,
+        tags=tags_ids if tags_ids else None,
+    )
+
+    post_id = result.get("id")
+    link = result.get("link")
+    print(f"✅ Запись создана: ID={post_id}, link={link}")
+
+    _log_to_db(meta, result)
+
+
+def _log_to_db(meta: dict, wp_result: dict):
+    """Записывает факт публикации в БД (publishing_log) если content_item_id есть в мета."""
+    content_item_id = meta.get("content_item_id") if isinstance(meta.get("content_item_id"), int) else None
+    if not content_item_id:
+        return
+    try:
+        import sys
+        if str(PROJECT_ROOT) not in sys.path:
+            sys.path.insert(0, str(PROJECT_ROOT))
+        from db import get_connection, is_available
+        if not is_available():
+            return
+        conn = get_connection()
+        try:
+            cur = conn.cursor()
+            cur.execute("SELECT id FROM channels WHERE name = 'blog' LIMIT 1")
+            ch = cur.fetchone()
+            channel_id = ch["id"] if ch else None
+            post_id = str(wp_result.get("id", ""))
+            link = wp_result.get("link", "")
+            cur.execute(
+                """INSERT INTO publishing_log
+                   (content_item_id, channel_id, platform, external_id, url, published_at, status, response_raw)
+                   VALUES (%s, %s, 'wordpress', %s, %s, now(), 'success', %s)""",
+                (content_item_id, channel_id, post_id, link, json.dumps(wp_result)),
+            )
+            cur.execute(
+                "UPDATE content_items SET status = 'published', updated_at = now() WHERE id = %s",
+                (content_item_id,),
+            )
+            conn.commit()
+            print("(Запись в БД: publishing_log, status=published)")
+        finally:
+            conn.close()
+    except Exception:
+        pass
+
+
+if __name__ == "__main__":
+    main()

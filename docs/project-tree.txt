@@ -1,0 +1,162 @@
+content-factory/
+├── Pasport_besedy
+│   └── passport-conversation.md
+├── Pasport_proekta
+│   └── passport-project.md
+├── Servery
+│   ├── .webui_secret_key
+│   ├── restart_open-webui.bat
+│   ├── run_open-webui.bat
+│   └── run_server-ollama.txt
+├── Strategiya
+│   ├── Assistenty
+│   │   ├── Analiz_mneniy_schpetsialistov.docx
+│   │   ├── Analiz_mneniy_spetsialistov_2.docx
+│   │   ├── Generator_postov_v_blog.docx
+│   │   ├── Generator_postov_v_blog_2_.docx
+│   │   ├── Generator_produktovyh_spetsifikatsiy.docx
+│   │   ├── Generator_produktovyh_spetsifikatsiy_2.docx
+│   │   ├── IT_podderzhka.docx
+│   │   ├── Luchshie_praktiki.docx
+│   │   └── Luchshie_praktiki_2.docx
+│   ├── Movavi Video Editor
+│   │   ├── kontent_zavod.mepj
+│   │   ├── kontent_zavod_zvuk.mp3
+│   │   └── {8acbbb7e-75f0-41c9-abed-d187b907bf9e}.mov
+│   ├── Programmy
+│   │   ├── CursorUserSetup-x64-2.4.27.exe
+│   │   ├── npp.8.9.1.Installer.x64.exe
+│   │   └── python-manager-25.2.msix
+│   ├── Skrinshoty
+│   │   ├── 001.png
+│   │   ├── 002.png
+│   │   ├── 003.png
+│   │   ├── 004.png
+│   │   ├── 005.png
+│   │   ├── 006.png
+│   │   ├── 007.png
+│   │   ├── 008.png
+│   │   ├── 009.png
+│   │   ├── 010.png
+│   │   ├── 011.png
+│   │   ├── 012.png
+│   │   ├── 013.png
+│   │   ├── 014.png
+│   │   ├── 015.png
+│   │   ├── 016.png
+│   │   ├── 017.png
+│   │   ├── 018.png
+│   │   ├── 019.png
+│   │   ├── 020.png
+│   │   ├── 021.png
+│   │   ├── 022.png
+│   │   ├── 023.png
+│   │   ├── 024.png
+│   │   ├── 025.png
+│   │   ├── 026.png
+│   │   ├── 027.png
+│   │   ├── 028.png
+│   │   ├── 029.png
+│   │   ├── 030.png
+│   │   ├── 031.png
+│   │   ├── 032.png
+│   │   ├── 033.png
+│   │   ├── 034.png
+│   │   ├── 035.png
+│   │   ├── 036.png
+│   │   ├── 037.png
+│   │   ├── 038_tsepochka.png
+│   │   ├── 039.png
+│   │   ├── 040.png
+│   │   ├── 041.png
+│   │   ├── 042.png
+│   │   ├── 043.png
+│   │   ├── 044.png
+│   │   ├── 045.png
+│   │   ├── 046.png
+│   │   ├── 047.png
+│   │   ├── 048.png
+│   │   ├── 049.png
+│   │   ├── 050.png
+│   │   ├── 051.png
+│   │   ├── 052.png
+│   │   ├── 053.png
+│   │   ├── 054.png
+│   │   ├── 055.png
+│   │   ├── 056.png
+│   │   ├── 057.png
+│   │   ├── 058_zavod.png
+│   │   ├── 059.png
+│   │   ├── 060.png
+│   │   ├── 061.png
+│   │   ├── 062.png
+│   │   ├── 063.png
+│   │   ├── 064.png
+│   │   ├── 065.png
+│   │   ├── 066.png
+│   │   ├── 067.png
+│   │   └── Snimok_pleera.png
+│   ├── kontent_zavod_zvuk~1
+│   │   ├── kontent_zavod_zvukPart001.mp3
+│   │   ├── kontent_zavod_zvukPart002.mp3
+│   │   ├── kontent_zavod_zvukPart003.mp3
+│   │   ├── kontent_zavod_zvukPart004.mp3
+│   │   └── kontent_zavod_zvukPart005.mp3
+│   ├── Prezentatsiya_Kontent_zavoda.pdf
+│   ├── Prezentatsiya_Kontent_zavoda_1.pdf
+│   ├── Prezentatsiya_Kontent_zavoda_27.pdf
+│   ├── Prezentatsiya_Kontent_zavoda_57.pdf
+│   ├── Strategiya_Kontent-Zavoda_Entuziast.docx
+│   ├── Strategiya_Kontent-Zavoda_Entuziast.md
+│   ├── kontent_zavod_zvukPart001.docx
+│   ├── kontent_zavod_zvukPart002.docx
+│   ├── kontent_zavod_zvukPart003.docx
+│   ├── kontent_zavod_zvukPart004.docx
+│   └── kontent_zavod_zvukPart005.docx
+├── Workflow
+│   ├── 02_Kontent-zavod_Prodolzhaem_besedu_proverim_kachest.md
+│   └── workflow.md
+├── config
+│   ├── .env
+│   └── .env.example
+├── docs
+│   ├── Technical Setup Guide.docx
+│   ├── Technical Setup Guide.pdf
+│   ├── local-setup-guide.md
+│   └── project-tree.txt
+├── materials
+│   ├── 9_poleznyih_otchetov_dlya_marketologov.pdf
+│   ├── Analiz_Entuziast_vs_monosalony.md
+│   ├── Analiz_tsepochka_7_agentov_1_2026-02-12.docx
+│   ├── Konfiguratsiya_PK.docx
+│   ├── Otchet_1400_str.pdf
+│   ├── Otchet_po_Konfiguratsii_PK.txt
+│   ├── Otchet_po_konfiguratsii_PK.htm
+│   ├── Platformy_dlya_agentov.png
+│   ├── Prioritet_uslug_dlya_Noyabrska_(1).md
+│   ├── Prover_po_smyslu.docx
+│   ├── Prover_polnyy_deploy_dlya_servera.docx
+│   ├── SEO_optimizator.png
+│   ├── Tehnicheskiy_Gayd_Lokalizatsiya.docx
+│   ├── Tehnicheskiy_Gayd_Lokalizatsiya.pdf
+│   ├── Tehnicheskiy_gayd.docx
+│   ├── Video_2026-02-16_180545.mp4
+│   ├── Vidy_agentov.png
+│   ├── seo-core.docx
+│   ├── seo-core.md
+│   ├── seo-core.pdf
+│   └── wordpress-seo.27.0.zip
+├── output
+│   ├── 20260203_154505_programmnoe_obespechenie_kompyutera.md
+│   ├── 20260203_154529_konfiguratsiya_kompyutera.md
+│   ├── Report.txt
+│   ├── Report2.txt
+│   └── Report3.txt
+├── prompts
+├── scripts
+│   ├── first_request.py
+│   ├── make_tree.py
+│   ├── test_setup.py
+│   └── translit_rename.py
+├── .gitignore
+└── README.md

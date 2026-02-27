@@ -1,0 +1,447 @@
+# Установленное ПО
+
+*Собрано: 2026-02-03T15:45:06.735779*
+
+---
+
+- **1С:Предприятие 8 Тонкий клиент (8.3.25.1445)** — 8.3.25.1445 — 1С-Софт
+- **ABBYY FineReader PDF** — 16.0.7300 — ABBYY Development, Inc.
+- **ACDSee Photo Studio Ultimate 2025** — 18.1.0.4072 — ACD Systems International Inc.
+- **Adobe Photoshop 2020** — 21.2.12.215 — Adobe Inc.
+- **AIMP 5.30.2560** — 5.30.2560 — LR
+- **AnyDesk** — ad 6.0.8 — philandro Software GmbH
+- **Application Verifier x64 External Package (DesktopEditions)** — 10.1.26100.7175 — Microsoft
+- **Application Verifier x64 External Package (OnecoreUAP)** — 10.1.26100.7175 — Microsoft
+- **AstralToolBox 2.51.1** — 2.51.1 — АО "Калуга Астрал"
+- **BCO System Cryptographic Plugin** — 1.0.0.16 — Signal-COM
+- **Bitrix24 for Windows** — 19.0.23.89 — Bitrix
+- **Clover 3.5.4** — 3.5.4 — lrepacks.ru
+- **Comet** — 143.2.7499.37654 — Авторы Comet
+- **Corel Graphics - Windows Shell Extension** — 25.0.0.230 — Corel Corporation
+- **Corel Graphics - Windows Shell Extension 32 Bit Keys** — 25.0.230 — Corel Corporation
+- **Corel Update Manager** — 2.17.697 — Corel corporation
+- **CorelDRAW Graphics Suite 2024** — 25.1.0.269 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - BR (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Capture (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Common (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - CS (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - CT (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Custom Data (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - CZ (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - DE (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Discovery (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Docs (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Draw (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - EN (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - ES (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Filters (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Font Manager (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - FR (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content BR (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content CS (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content CT (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content CZ (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content DE (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content EN (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content ES (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content FR (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content IT (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content JP (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content NL (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content PL (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content RU (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content SV (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IPM Content TR (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - IT (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - JP (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Models (x64)** — 25.0 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - NL (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - PHOTO-PAINT (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - PL (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - RU (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Setup Files (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - SV (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - VBA (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Workspaces (x64)** — 25.1 — Corel Corporation
+- **CorelDRAW Graphics Suite 2024 - Writing Tools (x64)** — 25.1 —  Corel Corporation
+- **CorelDRAW Graphics Suite 2024 -TR (x64)** — 25.1 — Corel Corporation
+- **CrossClient B2B** — — — Ростелеком ИТ
+- **Cursor (User)** — 2.4.27 — Anysphere
+- **DBeaver 25.3.0** — 25.3.0 — DBeaver Corp
+- **DiagnosticsHub_CollectionService** — 17.14.36412 — Microsoft Corporation
+- **Digital Q.DataBase - клиентские утилиты 17.4** — 17.4 — Диасофт
+- **Docker Desktop** — 4.58.0 — Docker Inc.
+- **ESMART PKI Client** — 4.17.4 — Интеллектуальные системы управления бизнесом
+- **FastStone Capture 10.4** — 10.4 — FastStone Corporation
+- **FileZilla 3.69.5** — 3.69.5 — Tim Kosse
+- **Format Factory** — 5.20.0.0 — Free Time
+- **Format Factory 5.16.0.0** — 5.16.0.0 — LR
+- **Ghostscript GPL 10.01.2 (Msi Setup)** — 10.01.2 — Corel Corporation
+- **Git** — 2.52.0 — The Git Development Community
+- **Google Chrome** — 144.0.7559.110 — Google LLC
+- **Google Менеджер паролей** — 1.0 — Google\Chrome
+- **GosUslugiPlugin** — 1.3.19.0 — IITrust
+- **HeidiSQL 12.13.0.7147** — 12.13.0.7147 — Ansgar Becker
+- **HitVPN** — 0.1.16 — OVERWIN INTERNET SOLUTIONS LIMITED
+- **HP Dropbox Plugin** — 48.2.312.0 — HP
+- **HP EmailSMTP Plugin** — 48.2.312.0 — HP
+- **HP FTP Plugin** — 48.2.312.0 — HP
+- **HP Google Drive Plugin** — 48.2.312.0 — HP
+- **HP LaserJet Pro M428f-M429f Справка** — 0.00.0005 — HP
+- **HP SFTP Plugin** — 48.2.312.0 — HP
+- **HP SharePoint Plugin** — 48.2.312.0 — HP
+- **IPRo-6** — — — ООО 'ИПРО'
+- **Java(TM) SE Development Kit 25 (64-bit)** — 25.0.0.0 — Oracle Corporation
+- **K-Lite Mega Codec Pack 18.4.8** — 18.4.8 — KLCP
+- **Kaspersky Endpoint Security for Windows** — 11.19.7.533 — —
+- **Kaspersky Password Manager** — 24.2.0.277 — Kaspersky
+- **Kaspersky Endpoint Security для Windows** — 12.7.0.533 — АО "Лаборатория Касперского"
+- **Kits Configuration Installer** — 10.1.26100.7175 — Microsoft
+- **Kyocera Product Library** — 6.0.4912 — KYOCERA Document Solutions Inc.
+- **Kyocera Quick Scan** — 2.2.0802 — KYOCERA Document Solutions Inc.
+- **Kyocera TWAIN Driver** — 3.1.0915 — KYOCERA Document Solutions Inc.
+- **MAX** — 26.2.2 — Communication Platform LLC
+- **Microsoft .NET Host - 6.0.27 (x64)** — 48.108.8828 — Microsoft Corporation
+- **Microsoft .NET Host - 6.0.27 (x86)** — 48.108.8828 — Microsoft Corporation
+- **Microsoft .NET Host FX Resolver - 6.0.27 (x64)** — 48.108.8828 — Microsoft Corporation
+- **Microsoft .NET Host FX Resolver - 6.0.27 (x86)** — 48.108.8828 — Microsoft Corporation
+- **Microsoft .NET Runtime - 6.0.27 (x64)** — 48.108.8828 — Microsoft Corporation
+- **Microsoft .NET Runtime - 6.0.27 (x86)** — 48.108.8828 — Microsoft Corporation
+- **Microsoft Access database engine 2010 (English)** — 14.0.7015.1000 — Microsoft Corporation
+- **Microsoft Edge** — 144.0.3719.104 — Microsoft Corporation
+- **Microsoft Office LTSC профессиональный плюс 2021 - ru-ru** — 16.0.14332.20736 — Microsoft Corporation
+- **Microsoft Visio LTSC профессиональный 2021 - ru-ru** — 16.0.14332.20736 — Microsoft Corporation
+- **Microsoft Visual Basic for Applications 7.1 (x64)** — 7.1.00.00 — Microsoft Corporation
+- **Microsoft Visual Basic for Applications 7.1 (x64) English** — 7.1.0.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.50727.4053 False** — 8.0.50727.4053 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.50727.42 False** — 8.0.50727.42 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.51011 False** — 8.0.51011 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.56336 False** — 8.0.56336 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.57102 False** — 8.0.57102 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.58298 False** — 8.0.58298 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.59192 False** — 8.0.59192 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x64 8.0.61000** — 8.0.61000 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.50727.4053 False** — 8.0.50727.4053 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.50727.42 False** — 8.0.50727.42 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.51011 False** — 8.0.51011 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.56336 False** — 8.0.56336 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.57103 False** — 8.0.57103 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.58299 False** — 8.0.58299 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.59193 False** — 8.0.59193 — Microsoft Corporation
+- **Microsoft Visual C++ 2005 Redistributable - x86 8.0.61001** — 8.0.61001 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.21022 False** — 9.0.21022 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.21022.0 False** — 9.0.21022 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.21022.218 False** — 9.0.21022.218 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30411 False** — 9.0.30411 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729 False** — 9.0.30729 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.0 False** — 9.0.30729 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.17 False** — 9.0.30729 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.4048 False** — 9.0.30729.4048 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.4148 False** — 9.0.30729.4148 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.4148.0 False** — 9.0.30729.4148 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.5570 False** — 9.0.30729.5570 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x64 9.0.30729.6161** — 9.0.30729.6161 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.21022 False** — 9.0.21022 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.21022.0 False** — 9.0.21022 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.21022.218 False** — 9.0.21022.218 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30411 False** — 9.0.30411 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729 False** — 9.0.30729 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.0 False** — 9.0.30729 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.17 False** — 9.0.30729 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.4048 False** — 9.0.30729.4048 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.4148 False** — 9.0.30729.4148 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.4148.0 False** — 9.0.30729.4148 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.5570 False** — 9.0.30729.5570 — Microsoft Corporation
+- **Microsoft Visual C++ 2008 Redistributable - x86 9.0.30729.6161** — 9.0.30729.6161 — Microsoft Corporation
+- **Microsoft Visual C++ 2010 Redistributable - x64 10.0.30319 False** — 10.0.30319 — Microsoft Corporation
+- **Microsoft Visual C++ 2010 Redistributable - x64 10.0.40219** — 10.0.40219 — Microsoft Corporation
+- **Microsoft Visual C++ 2010 Redistributable - x86 10.0.30319 False** — 10.0.30319 — Microsoft Corporation
+- **Microsoft Visual C++ 2010 Redistributable - x86 10.0.40219** — 10.0.40219 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.50727 False** — 11.0.50727.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.50727 False Eng** — 11.0.50727.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.51106 False** — 11.0.51106.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.51106 False Eng** — 11.0.51106.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.60610 False** — 11.0.60610.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.60610 False Eng** — 11.0.60610.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.61030** — 11.0.61030.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x64) - 11.0.61030 False Eng** — 11.0.61030.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.50727 False** — 11.0.50727.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.50727 False Eng** — 11.0.50727.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.51106 False** — 11.0.51106.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.51106 False Eng** — 11.0.51106.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.60610 False** — 11.0.60610.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.60610 False Eng** — 11.0.60610.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.61030** — 11.0.61030.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2012 Redistributable (x86) - 11.0.61030 False Eng** — 11.0.61030.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Additional Runtime - 11.0.50727 False** — 11.0.50727 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Additional Runtime - 11.0.51106 False** — 11.0.51106 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Additional Runtime - 11.0.60610 False** — 11.0.60610 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Additional Runtime - 11.0.61030** — 11.0.61030 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Minimum Runtime - 11.0.50727 False** — 11.0.50727 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Minimum Runtime - 11.0.51106 False** — 11.0.51106 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Minimum Runtime - 11.0.60610 False** — 11.0.60610 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x64 Minimum Runtime - 11.0.61030** — 11.0.61030 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Additional Runtime - 11.0.50727 False** — 11.0.50727 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Additional Runtime - 11.0.51106 False** — 11.0.51106 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Additional Runtime - 11.0.60610 False** — 11.0.60610 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Additional Runtime - 11.0.61030** — 11.0.61030 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Minimum Runtime - 11.0.50727 False** — 11.0.50727 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Minimum Runtime - 11.0.51106 False** — 11.0.51106 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Minimum Runtime - 11.0.60610 False** — 11.0.60610 — Microsoft Corporation
+- **Microsoft Visual C++ 2012 x86 Minimum Runtime - 11.0.61030** — 11.0.61030 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.21005 False** — 12.0.21005.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.21005 False Eng** — 12.0.21005.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.30501 False** — 12.0.30501.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.30501 False Eng** — 12.0.30501.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.40649 False** — 12.0.40649.5 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.40649 False Eng** — 12.0.40649.5 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.40660 False** — 12.0.40660.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.40660 False Eng** — 12.0.40660.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.40664** — 12.0.40664.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x64) - 12.0.40664 False Eng** — 12.0.40664.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.21005 False** — 12.0.21005.1 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.21005 False Eng** — 12.0.21005.1 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.30501 False** — 12.0.30501.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.30501 False Eng** — 12.0.30501.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.40649 False** — 12.0.40649.5 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.40649 False Eng** — 12.0.40649.5 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.40660 False** — 12.0.40660.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.40660 False Eng** — 12.0.40660.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.40664** — 12.0.40664.0 — Корпорация Майкрософт
+- **Microsoft Visual C++ 2013 Redistributable (x86) - 12.0.40664 False Eng** — 12.0.40664.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Additional Runtime - 12.0.21005 False** — 12.0.21005 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Additional Runtime - 12.0.40649 False** — 12.0.40649 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Additional Runtime - 12.0.40660 False** — 12.0.40660 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Additional Runtime - 12.0.40664** — 12.0.40664 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.21005 False** — 12.0.21005 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.40649 False** — 12.0.40649 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.40660 False** — 12.0.40660 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x64 Minimum Runtime - 12.0.40664** — 12.0.40664 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Additional Runtime - 12.0.21005 False** — 12.0.21005 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Additional Runtime - 12.0.40649 False** — 12.0.40649 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Additional Runtime - 12.0.40660 False** — 12.0.40660 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Additional Runtime - 12.0.40664** — 12.0.40664 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Minimum Runtime - 12.0.21005 False** — 12.0.21005 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Minimum Runtime - 12.0.40649 False** — 12.0.40649 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Minimum Runtime - 12.0.40660 False** — 12.0.40660 — Microsoft Corporation
+- **Microsoft Visual C++ 2013 x86 Minimum Runtime - 12.0.40664** — 12.0.40664 — Microsoft Corporation
+- **Microsoft Visual C++ 2015-2022 Redistributable (x64) - 14.44.35211** — 14.44.35211.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2015-2022 Redistributable (x86) - 14.44.35211** — 14.44.35211.0 — Microsoft Corporation
+- **Microsoft Visual C++ 2022 X64 Additional Runtime - 14.44.35211** — 14.44.35211 — Microsoft Corporation
+- **Microsoft Visual C++ 2022 X64 Debug Runtime - 14.44.35211** — 14.44.35211 — Microsoft Corporation
+- **Microsoft Visual C++ 2022 X64 Minimum Runtime - 14.44.35211** — 14.44.35211 — Microsoft Corporation
+- **Microsoft Visual C++ 2022 X86 Additional Runtime - 14.44.35211** — 14.44.35211 — Microsoft Corporation
+- **Microsoft Visual C++ 2022 X86 Debug Runtime - 14.44.35211** — 14.44.35211 — Microsoft Corporation
+- **Microsoft Visual C++ 2022 X86 Minimum Runtime - 14.44.35211** — 14.44.35211 — Microsoft Corporation
+- **Microsoft Visual Studio Code (User)** — 1.108.1 — Microsoft Corporation
+- **Microsoft Visual Studio Installer** — 4.0.2168.39045 — Microsoft Corporation
+- **Microsoft Visual Studio Setup Configuration** — 3.12.2140.44225 — Microsoft Corporation
+- **Microsoft Visual Studio Setup WMI Provider** — 3.12.2140.44225 — Microsoft Corporation
+- **Microsoft Visual Studio Tools for Applications 2022** — 17.0.33529 — Microsoft Corporation
+- **Microsoft Visual Studio Tools for Applications 2022 x64 Hosting Support** — 17.0.33529 — Microsoft Corporation
+- **Microsoft Visual Studio Tools for Applications 2022 x86 Hosting Support** — 17.0.33529 — Microsoft Corporation
+- **Microsoft Windows Desktop Runtime - 6.0.27 (x64)** — 48.108.8836 — Microsoft Corporation
+- **Microsoft Windows Desktop Runtime - 6.0.27 (x86)** — 48.108.8836 — Microsoft Corporation
+- **Movavi Video Converter Premium 22.5.0** — 22.5.0 — lrepacks.net
+- **Movavi Video Editor 25.3.0** — 25.3.0 — LR
+- **Movavi Video Suite 22.4.1** — 22.4.1 — lrepacks.net
+- **Mozilla Firefox (x64 ru)** — 143.0 — Mozilla
+- **Mozilla Maintenance Service** — 114.0.2 — Mozilla
+- **MSI Development Tools** — 10.1.26100.7175 — Microsoft Corporation
+- **Node.js** — 24.13.0 — Node.js Foundation
+- **Notepad++ (64-bit x64)** — 8.8.8 — Notepad++ Team
+- **NVIDIA Backend** — 39.2.2.0 — NVIDIA Corporation
+- **NVIDIA Container** — 1.37 — NVIDIA Corporation
+- **NVIDIA FrameView SDK 1.2.7704.31296923** — 1.2.7704.31296923 — NVIDIA Corporation
+- **NVIDIA GeForce Experience 3.24.0.135** — 3.24.0.135 — NVIDIA Corporation
+- **NVIDIA GPX Common OSS binaries (POCO, OpenSSL, libprotobuf)** — 7.1 — NVIDIA Corporation
+- **NVIDIA Install Application** — 2.1002.415.0 — NVIDIA Corporation
+- **NVIDIA LocalSystem Container** — 1.37 — NVIDIA Corporation
+- **NVIDIA Message Bus for NvContainer** — 1.37 — NVIDIA Corporation
+- **NVIDIA NetworkService Container** — 1.37 — NVIDIA Corporation
+- **NVIDIA NodeJS** — 3.24.0.135 — NVIDIA Corporation
+- **NVIDIA NVAPI Monitor plugin for NvContainer** — 1.37 — NVIDIA Corporation
+- **NVIDIA Optimus Update 39.2.2.0** — 39.2.2.0 — NVIDIA Corporation
+- **NVIDIA Session Container** — 1.37 — NVIDIA Corporation
+- **NVIDIA ShadowPlay 3.24.0.135** — 3.24.0.135 — NVIDIA Corporation
+- **Nvidia Share** — 3.24.0.135 — NVIDIA Corporation
+- **NVIDIA SHIELD Streaming** — 7.1.31283680 — NVIDIA Corporation
+- **NVIDIA SHIELD Wireless Controller Driver** — 3.24.0.132 — NVIDIA Corporation
+- **NVIDIA Telemetry Client** — 16.15.9.0 — NVIDIA Corporation
+- **NVIDIA TelemetryApi helper for NvContainer** — 1.37 — NVIDIA Corporation
+- **NVIDIA Update Core** — 39.2.2.0 — NVIDIA Corporation
+- **NVIDIA User Container** — 1.37 — NVIDIA Corporation
+- **NVIDIA Virtual Audio 4.39.0.0** — 4.39.0.0 — NVIDIA Corporation
+- **NVIDIA Virtual Host Controller** — 3.04.0.1 — NVIDIA Corporation
+- **NVIDIA Watchdog Plugin for NvContainer** — 1.37 — NVIDIA Corporation
+- **NVIDIA Аудиодрайвер HD 1.3.38.60** — 1.3.38.60 — NVIDIA Corporation
+- **NVIDIA Графический драйвер 475.14** — 475.14 — NVIDIA Corporation
+- **NVIDIA Системное программное обеспечение PhysX 9.19.0218** — 9.19.0218 — NVIDIA Corporation
+- **NvModuleTracker** — 6.14.24370.22713 — NVIDIA Corporation
+- **Obsidian** — 1.11.5 — Obsidian
+- **Office 16 Click-to-Run Extensibility Component** — 16.0.14332.20736 — Microsoft Corporation
+- **Office 16 Click-to-Run Licensing Component** — 16.0.14332.20736 — Microsoft Corporation
+- **Office 16 Click-to-Run Localization Component** — 16.0.14332.20736 — Microsoft Corporation
+- **Office Tab Enterprise** — 14.50 — ExtendOffice.com
+- **Old Calculator for Windows 10** — 1.1 — http://winaero.com
+- **Orpalis PaperScan Professional 4.0.10** — 4.0.10 — LR
+- **PDF-XChange Editor** — 10.5.2.395 — PDF-XChange Co Ltd.
+- **pgAdmin 4 version 9.11** — 9.11 — The pgAdmin Development Team
+- **Punto Switcher 4.5.0** — 4.5.0.583 — Яндекс
+- **Python 3.10.11 (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Add to Path (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Core Interpreter (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Development Libraries (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Documentation (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Executables (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 pip Bootstrap (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Standard Library (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Tcl/Tk Support (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Test Suite (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.10.11 Utility Scripts (64-bit)** — 3.10.11150.0 — Python Software Foundation
+- **Python 3.14.2 (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Add to Path (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Core Interpreter (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Development Libraries (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Documentation (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Executables (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 pip Bootstrap (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Standard Library (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Tcl/Tk Support (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python 3.14.2 Test Suite (64-bit)** — 3.14.2150.0 — Python Software Foundation
+- **Python Launcher** — 3.14.2150.0 — Python Software Foundation
+- **Realtek High Definition Audio Driver** — 6.0.9273.1 — Realtek Semiconductor Corp.
+- **Reg Organizer 9.45** — 9.45 — LR
+- **Registration Agent** — 1.0.1.17635 — InfoTeCS
+- **Revo Uninstaller Pro 5.3.7** — 5.3.7 — LR
+- **rtCOMLite 1.0.3.1** — 1.0.3.1 — Компания "Актив", ЗАО «ПФ «СКБ Контур»
+- **SDK ARM64 Additions** — 10.1.26100.7175 — Microsoft Corporation
+- **SDK ARM64 Redistributables** — 10.1.26100.7175 — Microsoft Corporation
+- **SmartFix Tool** — 2.4.10 — simplix
+- **SoftEther VPN Client** — 4.34.9745 — SoftEther VPN Project
+- **Status Monitor 5** — 5.0.9814 — KYOCERA Document Solutions Inc.
+- **Telegram Desktop** — 6.4.2 — Telegram FZ-LLC
+- **Tesseract-OCR - open source OCR engine** — 5.4.0.20240606 — Tesseract-OCR community
+- **TrueConf 8.4.2** — 8.4.2 — TrueConf
+- **Universal CRT Extension SDK** — 10.1.26100.7175 — Microsoft Corporation
+- **Universal CRT Headers Libraries and Sources** — 10.1.26100.7175 — Microsoft Corporation
+- **Universal CRT Redistributable** — 10.0.26624 — Microsoft Corporation
+- **Universal CRT Tools x64** — 10.1.26100.7175 — Microsoft Corporation
+- **Universal CRT Tools x86** — 10.1.26100.7175 — Microsoft Corporation
+- **Universal General MIDI DLS Extension SDK** — 10.1.26100.7175 — Microsoft Corporation
+- **Update for x64-based Windows Systems (KB5001716)** — 8.94.0.0 — Microsoft Corporation
+- **vcpp_crt.redist.clickonce** — 14.44.35211 — Microsoft Corporation
+- **ViPNet Local Signature Service** — 1.4.0.8 — InfoTeCS
+- **Virtual COM Port Driver** — 1.3.1 — STMicroelectronics
+- **Visual Studio Build Tools 2022** — 17.14.24 — Microsoft Corporation
+- **VLC media player** — 3.0.21 — VideoLAN
+- **VS Script Debugging Common** — 17.0.157.0 — Microsoft Corporation
+- **vs_communitymsires** — 17.14.36015 — Microsoft Corporation
+- **vs_communitysharedmsi** — 17.14.36025 — Microsoft Corporation
+- **vs_communityx64msi** — 17.14.36025 — Microsoft Corporation
+- **vs_CoreEditorFonts** — 17.7.40001 — Microsoft Corporation
+- **vs_filehandler_amd64** — 17.14.36024 — Microsoft Corporation
+- **vs_filehandler_x86** — 17.14.36024 — Microsoft Corporation
+- **vs_FileTracker_Singleton** — 17.14.36015 — Microsoft Corporation
+- **vs_githubprotocolhandlermsi** — 17.14.36015 — Microsoft Corporation
+- **vs_minshellinteropmsi** — 17.14.36015 — Microsoft Corporation
+- **vs_minshellinteropsharedmsi** — 17.14.36015 — Microsoft Corporation
+- **vs_minshellmsi** — 17.14.36301 — Microsoft Corporation
+- **vs_minshellmsires** — 17.14.36015 — Microsoft Corporation
+- **vs_minshellsharedmsi** — 17.14.36024 — Microsoft Corporation
+- **vs_vswebprotocolselectormsi** — 17.14.36323 — Microsoft Corporation
+- **vs_vswebprotocolselectormsires** — 17.14.36323 — Microsoft Corporation
+- **WebkitSupport** — 1.0.0 — Apple Inc.
+- **WhatsApp 2.2326.10** — 2.2326.10 — LR
+- **WinAppDeploy** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows App Certification Kit Native Components** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows App Certification Kit SupportedApiList x86** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows App Certification Kit x64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows App Certification Kit x64 (OnecoreUAP)** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows Desktop Extension SDK** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows Desktop Extension SDK Contracts** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows IoT Extension SDK** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows IoT Extension SDK Contracts** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows Mobile Extension SDK** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows Mobile Extension SDK Contracts** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK AddOn** — 10.1.0.0 — Microsoft Corporation
+- **Windows SDK ARM64 Desktop Tools** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Headers arm64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Headers x64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Headers x86** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Libs arm64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Libs x64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Libs x86** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Tools arm64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Tools x64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Desktop Tools x86** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK DirectX x64 Remote** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK DirectX x86 Remote** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK EULA** — 10.1.26100.7175 — Microsoft Corporations
+- **Windows SDK Facade Windows WinMD Versioned** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps Contracts** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps DirectX x86 Remote** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps Headers** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps Headers OnecoreUap** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps Libs** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps Metadata** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Apps Tools** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK for Windows Store Managed Apps Libs** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Modern Non-Versioned Developer Tools** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Modern Versioned Developer Tools** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK OnecoreUap Headers arm64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK OnecoreUap Headers x64** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK OnecoreUap Headers x86** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Redistributables** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows SDK Signing Tools** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows Software Development Kit - Windows 10.0.26100.7175** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows Subsystem for Linux** — 2.6.3.0 — Microsoft Corporation
+- **Windows Team Extension SDK** — 10.1.26100.7175 — Microsoft Corporation
+- **Windows Team Extension SDK Contracts** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRAR 7.11** — 7.11 — LR
+- **WinRT Intellisense Desktop - en-us** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense Desktop - Other Languages** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense IoT - en-us** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense IoT - Other Languages** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense Mobile - en-us** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense PPI - en-us** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense PPI - Other Languages** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense UAP - en-us** — 10.1.26100.7175 — Microsoft Corporation
+- **WinRT Intellisense UAP - Other Languages** — 10.1.26100.7175 — Microsoft Corporation
+- **x264vfw - H.264/MPEG-4 AVC codec (remove only)** — — — —
+- **XAMPP** — 8.2.12-0 — Apache Friends
+- **XnView 2.51.6** — 2.51.6 — Gougelet Pierre-e
+- **Yandex** — 25.12.2.1338 — Yandex
+- **Yandex Disk** — 4.5.8.2871 — Yandex
+- **Zoom Workplace** — 6.6.6 (19875) — Zoom Communications, Inc.
+- **µTorrent 3.6.0.47132** — 3.6.0.47132 — BitTorrent, Inc
+- **Ассистент 6.5** — 6.5.2510.1602 — САФИБ
+- **Видеонаблюдение Ростелеком (x64) 4.5.5.10024** — 4.5.5.10024 — ПАО Ростелеком
+- **ВТБ Бизнес** — 1.0 — Google\Chrome
+- **Госплагин** — 1.3.19.0 — IITrust
+- **Диаг.Плагин (Администратор) 3.0.27.965** — 3.0.27.965 — АО «ПФ «СКБ Контур»
+- **Диаг.Плагин 3.0.27.965** — 3.0.27.965 — АО «ПФ «СКБ Контур»
+- **Драйверы Рутокен** — 5.0.00.0000 — Компания "Актив"
+- **Единый Клиент JaCarta** — 3.1.2.3478 — Aladdin R.D.
+- **Кнопки сервисов Яндекса на панели задач** — 3.7.9.0 — Яндекс
+- **КОМПАС-3D v20 x64** — 20.0.0.3002 — АСКОН
+- **КОМПАС-3D: Строительная конфигурация v20.0 x64** — 20.0.0 — АСКОН
+- **КОМПАС-Электрик v20 x64** — 20.0.0 — АСКОН
+- **Контур Криптопомощь** — 1.0.29.0 — АО «ПФ «СКБ Контур»
+- **Контур.Плагин (Администратор) 4.12.1.4322 (64-bit)** — 4.12.1.4322 — АО «ПФ «СКБ Контур»
+- **КриптоПро CSP** — 5.0.13455 — Компания КриптоПро
+- **КриптоПро ЭЦП Browser plug-in** — 2.0.15500 — Компания КриптоПро
+- **Обновление корневых сертификатов** — 23.05.14.2 — Vanadiy Software
+- **Обновления NVIDIA 39.2.2.0** — 39.2.2.0 — NVIDIA Corporation
+- **Основное программное обеспечение устройства HP LaserJet Pro M428f-M429f** — 48.6.4638.2245 — HP Inc.
+- **ПВЗ промо** — 1.0 — Google\Chrome
+- **Плагин пользователя систем электронного правительства (версия 3.1.1.0) x64** — 3.1.1.0 — Rostelecom
+- **Приложение диагностики ПК от Контура 0.6.1.1432** — 0.6.1.1432 — АО «ПФ «СКБ Контур»
+- **Рутокен Коннект** — 5.1.0 — Aktiv Co.
+- **Рутокен Плагин** — 4.8.0.0 — Aktiv Co.
+- **Среда выполнения Microsoft Edge WebView2 Runtime** — 144.0.3719.93 — Корпорация Майкрософт
+- **Яндекс Телемост** — 2.25.8.7484 — Яндекс
+- **Яндекс.Диск** — 3.2.44.5094 — Яндекс

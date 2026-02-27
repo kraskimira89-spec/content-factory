@@ -1,0 +1,214 @@
+# Конфигурация ПК и периферии
+*Собрано: 2026-02-03T15:45:31.456658*
+
+## platform
+
+- **machine**: AMD64
+- **node**: WIN-82SQIUEQQTN
+- **processor**: Intel64 Family 6 Model 45 Stepping 7, GenuineIntel
+- **python**: 3.14.2
+- **system**: Windows
+- **release**: 10
+- **version**: 10.0.19045
+
+## system_psutil
+
+- **cpu_count_physical**: 4
+- **cpu_count_logical**: 8
+- **cpu_freq_mhz**: 3601.0
+- **memory_total_gb**: 23.92
+- **memory_available_gb**: 9.54
+- disks:
+  - Элемент 1:
+    - **device**: C:\
+    - **mountpoint**: C:\
+    - **fstype**: NTFS
+    - **total_gb**: 447.02
+    - **free_gb**: 223.89
+  - Элемент 2:
+    - **device**: D:\
+    - **mountpoint**: D:\
+    - **fstype**: NTFS
+    - **total_gb**: 931.51
+    - **free_gb**: 558.05
+  - Элемент 3:
+    - **device**: E:\
+    - **mountpoint**: E:\
+    - **fstype**: NTFS
+    - **total_gb**: 1863.01
+    - **free_gb**: 260.21
+  - Элемент 4:
+    - **device**: F:\
+    - **mountpoint**: F:\
+    - **fstype**: NTFS
+    - **total_gb**: 1863.01
+    - **free_gb**: 959.46
+- network_ifaces:
+  - Элемент 1:
+    - **name**: VPN - VPN Client
+    - addresses:
+      - AF_LINK: 5E-04-26-66-D4-FA
+      - AF_INET: 169.254.84.247
+      - AF_INET6: fe80::c51e:a30:7764:afe3
+  - Элемент 2:
+    - **name**: Ethernet
+    - addresses:
+      - AF_LINK: 1C-BD-B9-84-BA-F7
+      - AF_INET: 169.254.235.134
+      - AF_INET6: fe80::7c5e:9f5b:31a3:3400
+  - Элемент 3:
+    - **name**: Ethernet 2
+    - addresses:
+      - AF_LINK: 90-2B-34-3E-4B-CC
+      - AF_INET: 192.168.0.104
+      - AF_INET6: fe80::c876:8244:7abc:3d0e
+  - Элемент 4:
+    - **name**: vEthernet (Default Switch)
+    - addresses:
+      - AF_LINK: 00-15-5D-9F-31-81
+      - AF_INET: 172.17.80.1
+      - AF_INET6: fe80::6af6:fa85:3db2:5f78
+  - Элемент 5:
+    - **name**: Loopback Pseudo-Interface 1
+    - addresses:
+      - AF_INET: 127.0.0.1
+      - AF_INET6: ::1
+
+## wmi
+
+- **wmi_available**: True
+- os:
+  - **caption**: Майкрософт Windows 10 Pro
+  - **version**: 10.0.19045
+  - **build**: 19045
+  - **install_date**: 20241012141837.000000+300
+- bios:
+  - **manufacturer**: American Megatrends Inc.
+  - **version**: F20
+- baseboard:
+  - **manufacturer**: Gigabyte Technology Co., Ltd.
+  - **product**: X79-UD3
+- cpu:
+  - Элемент 1:
+    - **name**: Intel(R) Core(TM) i7-3820 CPU @ 3.60GHz
+    - **cores**: 4
+    - **logical_processors**: 8
+    - **max_clock_mhz**: 3601
+- gpu:
+  - Элемент 1:
+    - **name**: NVIDIA GeForce GTX 670
+    - **driver_version**: 30.0.14.7514
+    - **adapter_ram_mb**: -2048
+- monitors:
+  - Элемент 1:
+    - **name**: Универсальный монитор PnP
+    - **screen_height**: None
+    - **screen_width**: None
+- usb:
+  - Элемент 1:
+    - **device_id**: USB\ROOT_HUB20\4&F267922&0
+  - Элемент 2:
+    - **device_id**: USB\VID_8087&PID_0024\5&78F850C&0&1
+  - Элемент 3:
+    - **device_id**: USB\VID_05E3&PID_0610\6&22645838&0&3
+  - Элемент 4:
+    - **device_id**: USB\VID_0A89&PID_0025\7&4FD1220&0&2
+  - Элемент 5:
+    - **device_id**: {892EDE5E-BE49-443C-A0B3-005D74F2D69C}\SCFILTER\8&2A9B2FF2&0&10
+  - Элемент 6:
+    - **device_id**: USB\VID_0A89&PID_0025\7&4FD1220&0&3
+  - Элемент 7:
+    - **device_id**: {892EDE5E-BE49-443C-A0B3-005D74F2D69C}\SCFILTER\8&1BA1690&0&11
+  - Элемент 8:
+    - **device_id**: USB\VID_0A89&PID_0025\7&4FD1220&0&4
+  - Элемент 9:
+    - **device_id**: {892EDE5E-BE49-443C-A0B3-005D74F2D69C}\SCFILTER\8&38BBDAB6&0&12
+  - Элемент 10:
+    - **device_id**: USB\VID_1BCF&PID_2284\20200706001
+  - Элемент 11:
+    - **device_id**: USB\VID_1BCF&PID_2284&MI_00\7&E136205&0&0000
+  - Элемент 12:
+    - **device_id**: USB\VID_1BCF&PID_2284&MI_02\7&E136205&0&0002
+  - Элемент 13:
+    - **device_id**: SWD\MMDEVAPI\{0.0.1.00000000}.{46AF5D9E-6570-433A-9AA4-5EC49D1194A0}
+  - Элемент 14:
+    - **device_id**: FLUSB\ROOT_HUB_FL30\5&375A917&0
+  - Элемент 15:
+    - **device_id**: USB\ROOT_HUB20\4&38FCAB83&0
+  - Элемент 16:
+    - **device_id**: USB\VID_8087&PID_0024\5&D9C7431&0&1
+  - Элемент 17:
+    - **device_id**: USB\VID_0482&PID_069D\VCF4218102
+  - Элемент 18:
+    - **device_id**: USB\VID_0482&PID_069D&MI_00\7&236258A4&0&0000
+  - Элемент 19:
+    - **device_id**: USBPRINT\KYOCERAECOSYS_M2040DN\8&18081F3A&0&USB005
+  - Элемент 20:
+    - **device_id**: SWD\PRINTENUM\{09D458E6-EB2B-4D2C-B112-5EF7F56AB92C}
+  - Элемент 21:
+    - **device_id**: SWD\PRINTENUM\{37246F2F-D6F3-4AD3-97C6-5DF233877418}
+  - Элемент 22:
+    - **device_id**: USB\VID_0482&PID_069D&MI_01\7&236258A4&0&C001
+  - Элемент 23:
+    - **device_id**: USB\VID_0482&PID_069D&MI_02\7&236258A4&0&C002
+  - Элемент 24:
+    - **device_id**: USB\VID_1A40&PID_0101\6&D66F1F7&0&7
+  - Элемент 25:
+    - **device_id**: USB\VID_1A2C&PID_2124\7&1775184E&0&1
+  - Элемент 26:
+    - **device_id**: USB\VID_1A2C&PID_2124&MI_00\8&C6164D7&0&0000
+  - Элемент 27:
+    - **device_id**: HID\VID_1A2C&PID_2124&MI_00\9&1F94C5D7&0&0000
+  - Элемент 28:
+    - **device_id**: USB\VID_1A2C&PID_2124&MI_01\8&C6164D7&0&0001
+  - Элемент 29:
+    - **device_id**: HID\VID_1A2C&PID_2124&MI_01&COL01\9&C64A999&0&0000
+  - Элемент 30:
+    - **device_id**: HID\VID_1A2C&PID_2124&MI_01&COL02\9&C64A999&0&0001
+  - Элемент 31:
+    - **device_id**: USB\VID_046D&PID_C077\7&1775184E&0&2
+  - Элемент 32:
+    - **device_id**: HID\VID_046D&PID_C077\8&F4FA616&0&0000
+  - Элемент 33:
+    - **device_id**: {C1FCC185-55B3-4E00-814B-C588A13525E1}\VID_046D&PID_C077&REV_7200&MOUFILT\9&21145CDD&0&00
+  - Элемент 34:
+    - **device_id**: {C1FCC185-55B3-4E00-814B-C588A13525E1}\VID_046D&PID_C077&REV_7200&HIDFILT\9&21145CDD&0&00
+  - Элемент 35:
+    - **device_id**: USB\VID_0000&PID_0002\7&1775184E&0&3
+  - Элемент 36:
+    - **device_id**: FLUSB\ROOT_HUB_FL30\5&319EEE5A&0
+- printers:
+  - Элемент 1:
+    - **name**: Microsoft XPS Document Writer
+    - **default**: False
+    - **port**: PORTPROMPT:
+  - Элемент 2:
+    - **name**: Microsoft Print to PDF
+    - **default**: False
+    - **port**: PORTPROMPT:
+  - Элемент 3:
+    - **name**: Kyocera ECOSYS M2040dn KX
+    - **default**: True
+    - **port**: USB005
+  - Элемент 4:
+    - **name**: Kyocera ECOSYS M2040dn
+    - **default**: False
+    - **port**: USB005
+  - Элемент 5:
+    - **name**: Fax
+    - **default**: False
+    - **port**: SHRFAX:
+- network_adapters:
+  - Элемент 1:
+    - **description**: Intel(R) 82579V Gigabit Network Connection
+    - ip_addresses:
+      - 192.168.0.104
+      - fe80::c876:8244:7abc:3d0e
+    - **mac**: 90:2B:34:3E:4B:CC
+  - Элемент 2:
+    - **description**: Hyper-V Virtual Ethernet Adapter
+    - ip_addresses:
+      - 172.17.80.1
+      - fe80::6af6:fa85:3db2:5f78
+    - **mac**: 00:15:5D:9F:31:81
+

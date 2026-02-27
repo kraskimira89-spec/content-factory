@@ -1,0 +1,48 @@
+# Виртуальное окружение
+venv/
+.venv/
+env/
+
+# Секреты и ключи
+config/.env
+.env
+.env.local
+*.key
+*.db
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+dist/
+build/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Тяжёлые бинарники, медиа, инсталляторы (хранятся локально, не в git)
+Strategiya/
+materials/*.mp4
+materials/*.zip
+materials/*.pdf
+materials/*.htm
+materials/*.txt
+materials/*.docx
+*.exe
+*.msix
+*.mov
+*.mp3
+*.mepj
+
+# Логи
+logs/
+
+# Отладочные файлы
+debug-*.log

@@ -1,6 +1,6 @@
 {
   "_comment": "Контракт между content-factory и entuziastov75-vps. Оба проекта читают этот файл.",
-  "_version": "2.0",
+  "_version": "2.1",
 
   "wordpress": {
     "url_env": "WP_URL",
@@ -62,8 +62,18 @@
     "massazh":                 { "name": "Массаж" },
     "pressoterapiya":          { "name": "Прессотерапия" },
     "vlok":                    { "name": "ВЛОК" },
+    "uglekislaya-vanna":       { "name": "Углекислая ванна" },
+    "lfk":                     { "name": "ЛФК" },
     "trenazhernyy-zal":        { "name": "Тренажёрный зал",        "aliases": ["тренажерный зал"] }
   },
+
+  "services_slugs": [
+    "solyanaya-komnata", "massazh", "pressoterapiya",
+    "uglekislaya-vanna", "fitobochka", "vlok", "lfk",
+    "trenazhernyy-zal", "gidromassazh", "dolgoletie",
+    "nastolnyy-tennis", "konferenc-zal", "master-klepa",
+    "prokat", "yuridicheskaya-pomoshch"
+  ],
 
   "service_data_fields": {
     "_comment": "Поля, которые content-factory генерирует для inc/service-pages-defaults.php на VPS",

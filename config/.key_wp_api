@@ -1,0 +1,27 @@
+
+#k3GV ILVU oyak 3RVy kxUl VTcr
+
+WP_URL=http://91.229.11.147
+WP_USERNAME=admin
+WP_APP_PASSWORD=k3GVILVUoyak3RVykxUlVTcr
+
+comet
+
+Зайти в профиль пользователя и включить Application Password
+Открой в браузере админку:
+http://91.229.11.147/wp-admin/profile.php
+
+Пролистай страницу вниз до блока «Application Passwords / Пароли приложений». Он должен появиться как раз благодаря строке define('WP_ENVIRONMENT_TYPE', 'local');.
+
+В поле названия введи, например:
+content-factory-agent
+
+Нажми «Добавить новый пароль приложения».
+
+Скопируй показанный пароль вида xxxx xxxx xxxx ... и сразу сохрани (он показывается один раз).
+
+Если блока всё ещё нет — скажи, проверим, правильно ли встал define и где именно в wp-config.php он находится.
+
+comet
+
+

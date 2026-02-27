@@ -22,7 +22,7 @@ if str(PROJECT_ROOT) not in sys.path:
 
 from api_client import ask_ai  # type: ignore
 
-PROMPT_FILE = Path(__file__).resolve().parent / "system_prompt.txt"
+PROMPT_FILE = PROJECT_ROOT / "prompts" / "agents" / "agent_planner.txt"
 
 
 def load_system_prompt() -> str:

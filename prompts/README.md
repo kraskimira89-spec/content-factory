@@ -1,42 +1,49 @@
 # Промпты и контекст Content Factory
 
+Централизованное хранилище системных промптов, шаблонов и контекстных данных.
+
 ## Карта промптов
 
-Системные промпты хранятся **рядом с агентами** (единственный источник истины):
+Все системные промпты — в `prompts/agents/`:
 
-| Агент | Промпт | Назначение |
-|-------|--------|-----------|
-| agent1_keywords | `seo-agents/agent1_keywords/system_prompt.txt` | Генерация ключевых фраз |
-| agent_planner | `seo-agents/agent_planner/system_prompt.txt` | Контент-план (JSON-формат) |
-| agent2_brief | `seo-agents/agent2_brief/system_prompt.txt` | ТЗ для авторов с учётом архитектуры шаблона |
-| agent3_content | `seo-agents/agent3_content/system_prompt.txt` | Копирайтинг: tone of voice, структура, SEO |
-| agent_editor | `seo-agents/agent_editor/system_prompt.txt` | Редактура: медицинские нормы, стиль |
-| agent4_publish | — (программный) | Публикация в WP REST API |
-| agent_publish_vk | — (программный) | Анонс в ВК |
-| agent_analyst | — (программный) | Пересчёт приоритетов |
+| Файл | Агент | Назначение |
+|------|-------|-----------|
+| `agent1_keywords.txt` | agent1_keywords | Генерация ключевых фраз |
+| `agent_planner.txt` | agent_planner | Контент-план (JSON-формат) |
+| `agent2_brief.txt` | agent2_brief | ТЗ для авторов с учётом архитектуры шаблона |
+| `agent3_content.txt` | agent3_content | Копирайтинг: tone of voice, структура, SEO |
+| `agent_editor.txt` | agent_editor | Редактура: медицинские нормы, стиль |
+| — | agent4_publish | Программный (без промпта) |
+| — | agent_publish_vk | Программный (без промпта) |
+| — | agent_analyst | Программный (без промпта) |
 
-## Эта папка: вспомогательные материалы
+## Структура
 
 ```
 prompts/
-├── context/
-│   ├── brand_voice.md      — Тон коммуникации бренда
-│   └── services.json       — Услуги: цены, длительность, категории
-└── templates/
-    └── service_page.md     — Шаблон структуры страницы услуги
+├── agents/                         ← системные промпты агентов
+│   ├── agent1_keywords.txt
+│   ├── agent2_brief.txt
+│   ├── agent3_content.txt
+│   ├── agent_editor.txt
+│   └── agent_planner.txt
+├── context/                        ← общий контекст бренда
+│   ├── brand_voice.md
+│   └── services.json
+└── templates/                      ← шаблоны контента
+    └── service_page.md
 ```
 
 ## Использование в агентах
 
 ```python
-PROMPTS_DIR = PROJECT_ROOT / "prompts"
-brand_voice = (PROMPTS_DIR / "context" / "brand_voice.md").read_text("utf-8")
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
+PROMPT_FILE = os.path.join(PROJECT_ROOT, "prompts", "agents", "agent1_keywords.txt")
 ```
 
-Контекстные файлы можно подмешивать в system prompt или передавать как user-контекст.
+## Принципы
 
-## Принцип
-
-- **Промпты агентов** → `seo-agents/*/system_prompt.txt` (не дублировать!)
-- **Общий контекст** (brand voice, услуги) → `prompts/context/`
-- **Шаблоны вывода** → `prompts/templates/`
+- Промпты хранятся **только здесь** — единственный источник истины
+- Агенты загружают промпты через `PROMPT_FILE` → `load_system_prompt()`
+- Контекстные файлы (`context/`) можно подмешивать в system/user prompt
+- Изменения в промптах применяются при следующем запуске агента

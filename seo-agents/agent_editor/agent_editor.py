@@ -23,7 +23,7 @@ from api_client import ask_ai  # type: ignore
 from logger import get_logger  # type: ignore
 
 logger = get_logger("seo_agents.agent_editor")
-PROMPT_FILE = os.path.join(CURRENT_DIR, "system_prompt.txt")
+PROMPT_FILE = os.path.join(PROJECT_ROOT, "prompts", "agents", "agent_editor.txt")
 
 
 def load_system_prompt() -> str:

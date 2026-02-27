@@ -17,8 +17,9 @@ alwaysApply: false
 
 ```
 seo-agents/agent_name/
-  agent_name.py       — код агента
-  system_prompt.txt   — системный промпт (читается агентом)
+  agent_name.py       — код агента (PROMPT_FILE → prompts/agents/)
+prompts/agents/
+  agent_name.txt      — системный промпт (единый каталог)
 ```
 
 ## Взаимодействие между агентами

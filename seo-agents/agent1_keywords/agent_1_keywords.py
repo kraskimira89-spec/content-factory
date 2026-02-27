@@ -13,7 +13,8 @@ if sys.platform.startswith("win"):
 
 # Текущая папка (agent1_keywords)
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROMPT_FILE = os.path.join(CURRENT_DIR, "system_prompt.txt")
+PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
+PROMPT_FILE = os.path.join(PROJECT_ROOT, "prompts", "agents", "agent1_keywords.txt")
 
 # Путь к shared (..\shared)
 SHARED_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "..", "shared"))
@@ -31,9 +32,7 @@ from logger import get_logger  # type: ignore
 console = Console()
 logger = get_logger("seo_agents.agent1")
 
-# Базовая папка проекта и output
-BASE_DIR = r"D:\content-factory"
-OUTPUT_DIR = os.path.join(BASE_DIR, "output")
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
 
 
 def load_system_prompt() -> str:

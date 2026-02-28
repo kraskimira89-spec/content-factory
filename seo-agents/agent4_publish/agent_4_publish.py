@@ -204,6 +204,11 @@ def parse_service_and_city_from_filename(md_path: Path) -> tuple[str | None, str
     return service, city
 
 
+def _strip_citation_markers(text: str) -> str:
+    """Удаляет маркеры цитирования [1], [2], [1][2] и т.п."""
+    return re.sub(r"\[\d+\]", "", text)
+
+
 def parse_markdown(md_text: str):
     """
     Берёт Markdown:
@@ -215,10 +220,11 @@ def parse_markdown(md_text: str):
     body_lines = lines
 
     if lines and lines[0].startswith("# "):
-        title = lines[0][2:].strip()
+        title = _strip_citation_markers(lines[0][2:].strip())
         body_lines = lines[1:]
 
     body_md = "\n".join(body_lines).strip()
+    body_md = _strip_citation_markers(body_md)
 
     # Markdown → HTML с поддержкой таблиц/списков
     body_html = markdown.markdown(

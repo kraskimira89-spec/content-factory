@@ -50,33 +50,31 @@ curl -X POST "http://91.229.11.147/wp-json/wp/v2/posts" \
 
 ## Тест 3: Запуск Agent 4
 
-**Важно:** Agent 4 не принимает аргументы. Он берёт **последний** файл `*_page_*.md` из `output/`.
+### Режимы запуска
 
-### Предусловие
+| Команда | Поведение |
+|---------|-----------|
+| `python seo-agents\agent4_publish\agent_4_publish.py` | Берёт **последний** файл `*_page_*.md` |
+| `python seo-agents\agent4_publish\agent_4_publish.py pressoterapiya` | Ищет файл с услугой **pressoterapiya** |
 
-В `output/` должен быть файл вида `YYYYMMDD_HHMMSS_page_Услуга_Город.md` (результат Agent 3).
+Формат имени файла: `{timestamp}_page_{Услуга}_{Город}.md` (например, `page_Прессотерапия_Ноябрьск.md`).
 
 ### Запуск
 
 ```powershell
 cd D:\content-factory
 call venv\Scripts\activate.bat
-python seo-agents\agent4_publish\agent_4_publish.py
+python seo-agents\agent4_publish\agent_4_publish.py pressoterapiya
 ```
 
 ### Ожидаемый вывод
 
 ```
 === Агент 4: публикация в WordPress ===
-WP_URL: http://91.229.11.147
-Используется файл: D:\content-factory\output\20260224_172205_page_Соляная_комната_Ноябрьск.md
-Услуга: Соляная комната, город: Ноябрьск
+Используется файл (по slug «pressoterapiya»): ...\output\..._page_Прессотерапия_Ноябрьск.md
+Услуга: Прессотерапия, город: Ноябрьск
 ...
-✅ Страница обновлена: ID=123, link=...
-```
-или
-```
-✅ Запись создана: ID=456, link=...
+✅ Страница обновлена: ID=35, link=...
 ```
 
 ---

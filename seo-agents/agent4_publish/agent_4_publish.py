@@ -170,7 +170,7 @@ def select_rubric(title: str, content_text: str) -> str:
 # === Работа с файлами Markdown от Агента 3 ===
 
 def get_latest_md_file():
-    """Возвращает путь к последнему .md файлу вида *_page_*.md из D:\\content-factory\\output."""
+    """Возвращает путь к последнему .md файлу вида *_page_*.md из output."""
     if not OUTPUT_DIR.exists():
         raise FileNotFoundError(f"Папка с output не найдена: {OUTPUT_DIR}")
 
@@ -179,6 +179,35 @@ def get_latest_md_file():
     if not files:
         raise FileNotFoundError(f"В {OUTPUT_DIR} нет файлов по шаблону *_page_*.md")
     return Path(files[-1])
+
+
+def get_md_file_for_slug(slug: str) -> Path:
+    """
+    Ищет файл *_page_*.md, в имени которого услуга соответствует slug.
+    Формат имени: {timestamp}_page_{услуга}_{город}.md
+    """
+    if not OUTPUT_DIR.exists():
+        raise FileNotFoundError(f"Папка с output не найдена: {OUTPUT_DIR}")
+
+    pattern = str(OUTPUT_DIR / "*_page_*.md")
+    candidates = []
+    for p in glob.glob(pattern):
+        path = Path(p)
+        if "approved" in path.stem.lower():
+            continue
+        service_name, city = parse_service_and_city_from_filename(path)
+        if service_name:
+            resolved = resolve_page_slug(service_name)
+            if resolved == slug:
+                candidates.append(path)
+
+    if not candidates:
+        raise FileNotFoundError(
+            f"Нет файла для услуги со slug «{slug}». "
+            f"Ожидается имя вида *_page_Прессотерапия_Ноябрьск.md (для pressoterapiya)."
+        )
+    # Берём самый новый из подходящих
+    return max(candidates, key=lambda p: os.path.getmtime(p))
 
 
 def parse_service_and_city_from_filename(md_path: Path) -> tuple[str | None, str | None]:
@@ -362,15 +391,19 @@ def publish_post(
 
 # === Точка входа Агента 4 ===
 
-def main():
+def main(slug_filter: str | None = None):
     print("=== Агент 4: публикация в WordPress ===")
 
     wp_url, wp_user, wp_app_password = load_env()
     print(f"WP_URL: {wp_url}")
     print(f"WP_USERNAME: {wp_user}")
 
-    md_path = get_latest_md_file()
-    print(f"Используется файл: {md_path}")
+    if slug_filter:
+        md_path = get_md_file_for_slug(slug_filter)
+        print(f"Используется файл (по slug «{slug_filter}»): {md_path}")
+    else:
+        md_path = get_latest_md_file()
+        print(f"Используется файл: {md_path}")
 
     service_name, city = parse_service_and_city_from_filename(md_path)
     print(f"Услуга: {service_name or '—'}, город: {city or '—'}")
@@ -499,4 +532,13 @@ def _log_to_db(meta: dict, wp_result: dict):
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+    parser = argparse.ArgumentParser(description="Agent 4: публикация в WordPress")
+    parser.add_argument(
+        "slug",
+        nargs="?",
+        default=None,
+        help="Slug услуги (например, pressoterapiya). Без аргумента — последний файл из output",
+    )
+    args = parser.parse_args()
+    main(slug_filter=args.slug)

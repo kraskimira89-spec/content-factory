@@ -243,7 +243,6 @@ def _strip_faq_block_from_html(html: str) -> str:
     Удаляет блок «Часто задаваемые вопросы» из HTML.
     FAQ отображается только шаблонным аккордеоном из service_data — дубли в post_content убираем.
     """
-    # От заголовка FAQ до следующего <h2> (след. секция) или до конца
     for pattern in (
         re.compile(
             r'<h2[^>]*>\s*Часто задаваемые вопросы\s*</h2>.*?(?=<h2|\Z)',
@@ -256,6 +255,18 @@ def _strip_faq_block_from_html(html: str) -> str:
     ):
         html = pattern.sub("", html)
     return html.strip()
+
+
+def _strip_indications_block_from_html(html: str) -> str:
+    """
+    Удаляет блок «Показания и противопоказания» из HTML.
+    Эти блоки отображаются шаблоном из service_data — дубли в post_content убираем.
+    """
+    pattern = re.compile(
+        r'<h2[^>]*>\s*Показания и противопоказания\s*</h2>.*?(?=<h2|\Z)',
+        re.DOTALL | re.IGNORECASE,
+    )
+    return pattern.sub("", html).strip()
 
 
 def parse_markdown(md_text: str):
@@ -321,13 +332,18 @@ def update_page_content(
     wp_app_password: str,
     page_id: int,
     content_html: str,
+    *,
+    status: str | None = None,
 ) -> dict:
     """
     Обновляет post_content существующей WordPress-страницы.
-    Не трогает заголовок, статус, шаблон — только контент.
+    status: если задан (draft, publish, private) — обновляет и статус страницы.
     """
     api_url = f"{wp_url}/wp-json/wp/v2/pages/{page_id}"
-    resp = _wp_request("POST", api_url, wp_user, wp_app_password, json={"content": content_html})
+    payload: dict = {"content": content_html}
+    if status:
+        payload["status"] = status
+    resp = _wp_request("POST", api_url, wp_user, wp_app_password, json=payload)
     if resp.status_code not in (200, 201):
         raise RuntimeError(
             f"Ошибка обновления страницы {page_id}: {resp.status_code}\n{resp.text}"
@@ -411,7 +427,7 @@ def publish_post(
 
 # === Точка входа Агента 4 ===
 
-def main(slug_filter: str | None = None):
+def main(slug_filter: str | None = None, draft: bool = False):
     print("=== Агент 4: публикация в WordPress ===")
 
     wp_url, wp_user, wp_app_password = load_env()
@@ -443,12 +459,15 @@ def main(slug_filter: str | None = None):
             page = find_page_by_slug(wp_url, wp_user, wp_app_password, slug)
             if page:
                 print(f"Найдена страница услуги: «{page['title']}» (ID={page['id']}, slug={slug})")
-                print("Обновляю post_content страницы (шаблон отображает остальные блоки из services_data)...")
+                status_msg = "черновик" if draft else "публикация"
+                print(f"Обновляю post_content страницы ({status_msg})...")
                 content_no_faq = _strip_faq_block_from_html(content_html)
+                content_no_faq = _strip_indications_block_from_html(content_no_faq)
                 result = update_page_content(
-                    wp_url, wp_user, wp_app_password, page["id"], content_no_faq
+                    wp_url, wp_user, wp_app_password, page["id"], content_no_faq,
+                    status="draft" if draft else None,
                 )
-                print(f"✅ Страница обновлена: ID={page['id']}, link={page['link']}")
+                print(f"✅ Страница обновлена: ID={page['id']}, link={page['link']}" + (" (черновик)" if draft else ""))
                 _log_to_db(meta, result)
                 return
 
@@ -561,5 +580,10 @@ if __name__ == "__main__":
         default=None,
         help="Slug услуги (например, pressoterapiya). Без аргумента — последний файл из output",
     )
+    parser.add_argument(
+        "--draft",
+        action="store_true",
+        help="Сохранить страницу как черновик (для проверки перед публикацией)",
+    )
     args = parser.parse_args()
-    main(slug_filter=args.slug)
+    main(slug_filter=args.slug, draft=args.draft)

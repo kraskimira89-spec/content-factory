@@ -20,6 +20,7 @@
 | `scripts/` | Скрипты автоматизации и деплоя |
 | `db/` | PostgreSQL-схема для пайплайна агентов |
 | `output/` | Сгенерированный контент (markdown, PHP-патчи) |
+| `tasks/` | Файлы-задачи от Оркестратора (YYYY-MM-DD_описание.md) |
 | `docs/` | Документация |
 | `materials/` | Исходные материалы (PDF, DOCX — не в git) |
 
@@ -31,6 +32,16 @@ agent1_keywords → agent_planner → agent2_brief → agent3_content
 ```
 
 Запуск всей цепочки: `run_agents.bat`
+
+## Оркестратор
+
+Единая точка входа для задач: контент-завод, VPS-сайт, Perplexity (ТЗ/концепции).
+
+1. Создай чат «🧭 Orchestrator» в Cursor
+2. Первым сообщением вставь паспорт из `docs/orchestrator-chat-prompt.md`
+3. Пиши туда новые идеи — он создаёт `tasks/*.md`, подсказывает команды, готовит промпты для PPL
+
+Подробнее: `docs/orchestrator-workflow.md`
 
 ## Быстрый старт
 

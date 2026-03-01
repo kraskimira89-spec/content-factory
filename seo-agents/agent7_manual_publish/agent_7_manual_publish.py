@@ -4,12 +4,14 @@ Agent 7: manual_to_publish — мост от materials/pages_manual к output и
 Шаги:
 1. Читает отредактированный .md из materials/pages_manual/{slug}.md
 2. Копирует в output/, перезаписывая существующий *_page_*.md
-3. Запускает agent4 для публикации в WordPress
-4. Парсит FAQ из .md и отправляет в service-data (REST API) — для аккордеона в теме
+3. Запускает agent4 — сохраняет страницу в WordPress как ЧЕРНОВИК (не публикует)
+4. Парсит FAQ из .md и отправляет в service-data (REST API)
+5. Выводит чек-лист для проверки перед публикацией
 
 Использование:
   python seo-agents/agent7_manual_publish/agent_7_manual_publish.py pressoterapiya
   python seo-agents/agent7_manual_publish/agent_7_manual_publish.py solyanaya-komnata
+  python seo-agents/agent7_manual_publish/agent_7_manual_publish.py pressoterapiya --publish  # сразу опубликовать
 """
 
 import base64
@@ -102,13 +104,15 @@ def copy_manual_to_output(slug: str) -> Path:
     return output_path
 
 
-def run_agent4(slug: str) -> int:
-    """Запускает agent4 для публикации. Возвращает код возврата."""
+def run_agent4(slug: str, draft: bool = True) -> int:
+    """Запускает agent4. draft=True — сохраняет как черновик для проверки."""
     agent4_script = _AGENTS_DIR / "agent4_publish" / "agent_4_publish.py"
     if not agent4_script.is_file():
         raise FileNotFoundError(f"Agent4 не найден: {agent4_script}")
 
     cmd = [sys.executable, str(agent4_script), slug]
+    if draft:
+        cmd.append("--draft")
     result = subprocess.run(cmd, cwd=str(PROJECT_ROOT))
     return result.returncode
 
@@ -144,16 +148,35 @@ def deploy_faq_to_service_data(slug: str, faq: list[dict]) -> bool:
         return False
 
 
-def main(slug: str) -> None:
+def _print_verification_checklist(slug: str) -> None:
+    """Выводит чек-лист проверки перед публикацией."""
+    load_dotenv(PROJECT_ROOT / "config" / ".env")
+    wp_url = (os.getenv("WP_URL") or "").rstrip("/")
+    preview_url = f"{wp_url}/wp-admin/edit.php?post_type=page" if wp_url else ""
+    print(f"""
+✅ Страница сохранена как ЧЕРНОВИК. Проверьте перед публикацией:
+
+📋 Чек-лист:
+  • Логика текста: структура блоков, последовательность, призывы
+  • Отсутствие дублей: FAQ, показания/противопоказания только из шаблона
+  • Соответствие промптам: простой язык, ощущения, метафора, без крика
+
+🌐 Черновик в админке: {preview_url}
+   Найдите страницу «{slug}» → просмотр → проверьте → опубликуйте вручную.
+""")
+
+
+def main(slug: str, publish: bool = False) -> None:
     print("=== Agent 7: manual → output → WordPress ===\n")
 
     # 1. Копируем
     output_path = copy_manual_to_output(slug)
     print(f"✅ Файл {output_path.relative_to(PROJECT_ROOT)} обновлён из materials/pages_manual/{slug}.md\n")
 
-    # 2. Запускаем agent4
-    print("Запуск agent4 для публикации...")
-    returncode = run_agent4(slug)
+    # 2. Запускаем agent4 (по умолчанию — черновик)
+    draft_mode = not publish
+    print("Запуск agent4..." + (" (черновик)" if draft_mode else " (публикация)"))
+    returncode = run_agent4(slug, draft=draft_mode)
 
     if returncode == 0:
         # 3. Парсим FAQ из ручного файла и отправляем в service-data
@@ -173,7 +196,11 @@ def main(slug: str) -> None:
                         print("⚠️ FAQ не отправлен в service-data (проверьте WP_* в .env)")
             except Exception:
                 pass
-        print(f"\n✅ Готово. Страница обновлена: /uslugi/{slug}/")
+
+        if draft_mode:
+            _print_verification_checklist(slug)
+        else:
+            print(f"\n✅ Готово. Страница опубликована: /uslugi/{slug}/")
     else:
         print(f"\n⚠️ Agent4 завершился с кодом {returncode}. Проверьте вывод выше.")
         sys.exit(returncode)
@@ -189,5 +216,10 @@ if __name__ == "__main__":
         "slug",
         help="Slug услуги (pressoterapiya, solyanaya-komnata и т.д.)",
     )
+    parser.add_argument(
+        "--publish",
+        action="store_true",
+        help="Сразу опубликовать (без черновика). По умолчанию — сохранить как черновик.",
+    )
     args = parser.parse_args()
-    main(args.slug)
+    main(args.slug, publish=args.publish)

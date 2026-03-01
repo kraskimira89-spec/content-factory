@@ -64,7 +64,8 @@
     "vlok":                    { "name": "ВЛОК" },
     "uglekislaya-vanna":       { "name": "Углекислая ванна" },
     "lfk":                     { "name": "ЛФК" },
-    "trenazhernyy-zal":        { "name": "Тренажёрный зал",        "aliases": ["тренажерный зал"] }
+    "trenazhernyy-zal":        { "name": "Тренажёрный зал",        "aliases": ["тренажерный зал"] },
+    "limfodrenazh-nog":       { "name": "Аппаратный лимфодренаж ног", "aliases": ["лимфодренаж ног", "аппаратный лимфодренаж"] }
   },
 
   "services_slugs": [
@@ -72,7 +73,7 @@
     "uglekislaya-vanna", "fitobochka", "vlok", "lfk",
     "trenazhernyy-zal", "gidromassazh", "dolgoletie",
     "nastolnyy-tennis", "konferenc-zal", "master-klepa",
-    "prokat", "yuridicheskaya-pomoshch"
+    "prokat", "yuridicheskaya-pomoshch", "limfodrenazh-nog"
   ],
 
   "service_data_fields": {

@@ -22,6 +22,7 @@ agent1_keywords → agent_planner → agent2_brief → agent3_content
 
 ## Ключевые правила
 
+- **Коммиты** — сообщения пиши на русском языке
 - Единый `.env` только в `config/.env` — не дублировать
 - Все данные об услугах, рубриках, эндпоинтах — в `config/shared-config.json`
 - Агенты используют `seo-agents/shared/api_client.py` для AI-запросов

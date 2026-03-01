@@ -72,6 +72,7 @@ tasks/YYYY-MM-DD_краткое-описание.md
 - Дефолты услуг: `wp-content/themes/flavor/inc/service-pages-defaults.php`
 - REST: `/wp-json/entuziastov75/v1/service-data/{slug}`
 - Подробнее: `docs/vps-paths.md`
+- Remote-SSH: `docs/remote-ssh-vps.md`
 
 ## Реакция на задачу
 

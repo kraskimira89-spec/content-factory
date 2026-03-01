@@ -295,6 +295,86 @@ def parse_markdown(md_text: str):
     return title, body_html
 
 
+# Цвет заголовков в постах блога (как в теме: #24937a)
+BLOG_HEADING_COLOR = "#24937a"
+
+
+def apply_blog_heading_styles(html: str) -> str:
+    """
+    Для постов блога: зелёный цвет заголовков, SEO-иерархия (H1→H2, т.к. заголовок поста уже H1).
+    Шрифт — из темы сайта (семантические теги h2, h3...).
+    """
+    # H1 в контенте поста → H2 (заголовок поста уже H1 у WP)
+    html = re.sub(r"<h1(\s[^>]*)?>", r"<h2\1>", html, flags=re.IGNORECASE)
+    html = re.sub(r"</h1>", "</h2>", html, flags=re.IGNORECASE)
+
+    def add_color(match: re.Match) -> str:
+        tag = match.group(0)
+        if 'style=' in tag and 'color:' not in tag:
+            return re.sub(r'(style=["\'])([^"\']*?)(["\'])', rf'\1\2; color: {BLOG_HEADING_COLOR}; font-family: sans-serif\3', tag, count=1)
+        if 'style=' in tag and 'font-family:' not in tag:
+            return re.sub(r'(style=["\'])([^"\']*?)(["\'])', rf'\1\2; font-family: sans-serif\3', tag, count=1)
+        if 'style=' in tag:
+            return tag  # уже есть color и font
+        return tag[:-1] + f' style="color: {BLOG_HEADING_COLOR}; font-family: sans-serif">'
+
+    for tag_name in ["h2", "h3", "h4", "h5", "h6"]:
+        html = re.sub(rf"<{tag_name}(\s[^>]*)?>", add_color, html)
+    return html
+
+
+def _build_service_phrase_map() -> list[tuple[str, str]]:
+    """(phrase, slug) из services, длинные фразы первыми (для корректной перелинковки)."""
+    phrases = []
+    for slug, data in _CONFIG.get("services", {}).items():
+        name = data.get("name", "")
+        aliases = data.get("aliases") or []
+        for p in [name] + list(aliases):
+            if p and str(p).strip():
+                phrases.append((str(p).strip(), slug))
+    phrases.sort(key=lambda x: -len(x[0]))
+    return phrases
+
+
+def apply_blog_keywords_and_links(html: str, base_url: str) -> str:
+    """
+    Для постов блога: ключевые слова — жирным; первое упоминание услуги — ссылка на страницу.
+    Перелинковка по названиям и алиасам из shared-config.services.
+    """
+    phrase_map = _build_service_phrase_map()
+    if not phrase_map:
+        return html
+
+    # Разбиваем на теги и текст, чтобы не трогать атрибуты
+    parts = re.split(r"(<[^>]+>)", html)
+    linked: set[str] = set()
+    result = []
+
+    for part in parts:
+        if part.startswith("<"):
+            result.append(part)
+            continue
+
+        text = part
+        for phrase, slug in phrase_map:
+            if phrase.lower() not in text.lower():
+                continue
+            if phrase in linked:
+                # Остальные вхождения — только жирное (сохраняем регистр из текста)
+                pattern = re.compile(re.escape(phrase), re.IGNORECASE)
+                text = pattern.sub(lambda m: f"<strong>{m.group(0)}</strong>", text)
+            else:
+                # Первое вхождение — ссылка + жирное
+                pattern = re.compile(re.escape(phrase), re.IGNORECASE)
+                link = f'<a href="{base_url}/uslugi/{slug}/"><strong>\\g<0></strong></a>'
+                text = pattern.sub(link, text, count=1)
+                linked.add(phrase)
+
+        result.append(text)
+
+    return "".join(result)
+
+
 # === Работа со страницами услуг (pages) ===
 
 
@@ -581,12 +661,26 @@ def main(
         if not categories:
             print("(ID категории для этой рубрики не заданы в .env — пост без категории)")
 
+    # Стили заголовков, жирные ключи, перелинковка + кнопки в конце
+    content_html = apply_blog_heading_styles(content_html)
+    base_url = wp_url.rstrip("/")
+    content_html = apply_blog_keywords_and_links(content_html, base_url)
+    cta_buttons = (
+        '<p style="margin-top: 2em; display: flex; gap: 1em; flex-wrap: wrap;">'
+        f'<a href="{base_url}/blog/" style="display: inline-block; padding: 0.6em 1.2em; '
+        'background: #24937a; color: #fff; text-decoration: none; border-radius: 4px; border: 1px solid #1a6b5a;">Далее</a>'
+        f'<a href="{base_url}/#callback" style="display: inline-block; padding: 0.6em 1.2em; '
+        'background: #ff8800; color: #fff; text-decoration: none; border-radius: 4px;">Записаться</a>'
+        '</p>'
+    )
+    post_content = (content_html + cta_buttons).strip()
+
     result = publish_post(
         wp_url=wp_url,
         wp_user=wp_user,
         wp_app_password=wp_app_password,
         title=title,
-        content_html=content_html,
+        content_html=post_content,
         status="draft",
         categories=categories,
         tags=tags_ids if tags_ids else None,

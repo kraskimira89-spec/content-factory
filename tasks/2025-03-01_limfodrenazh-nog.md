@@ -17,20 +17,24 @@
 
 ## ТЗ для реализации
 
-1. Создать `materials/pages_manual/limfodrenazh-nog.md` по каркасу из «Ответ от Мозга» (H1, лид, Что даёт, Кому нужна, Как проходит, Показания, Противопоказания, Почему Энтузиаст, CTA).
-2. Добавить в `config/shared-config.json`: `services.limfodrenazh-nog` и slug в `services_slugs`.
-3. Синхронизировать shared-config в entuziastov75-vps.
-4. Запустить `python seo-agents/agent7_manual_publish/agent_7_manual_publish.py limfodrenazh-nog`.
-5. Проверить REST `/wp-json/entuziastov75/v1/service-data/limfodrenazh-nog` на VPS.
+### Трек А — контент (content-factory)
+1. Создать `materials/pages_manual/limfodrenazh-nog.md` — каркас готов из «Ответ от Мозга».
+2. Запустить agent7: `python seo-agents/agent7_manual_publish/agent_7_manual_publish.py limfodrenazh-nog`.
+
+### Трек Б — шаблон (entuziastov75-vps)
+3. Проверить, подхватит ли шаблон новый slug автоматически из контракта.
+4. Если нет — добавить дефолты в `wp-content/themes/flavor/inc/service-pages-defaults.php`:
+   - `$defaults['limfodrenazh-nog']` с полями results, faq, steps, indications, contraindications (по аналогии с другими услугами).
 
 ## Статус
-- [x] Сформировать ТЗ через Ask
+- [x] Сформировать ТЗ через Perplexity
 - [x] Описать структуру страницы и блоков
-- [x] Создать/обновить materials/pages_manual/limfodrenazh-nog.md
-- [x] Обновить shared-config.json (services, services_slugs)
-- [ ] Синхронизировать shared-config.json с entuziastov75-vps
-- [ ] Прогнать agent7_manual_publish по slug limfodrenazh-nog
-- [ ] Проверить публикацию на VPS (REST /service-data/limfodrenazh-nog)
+- [x] Создать materials/pages_manual/limfodrenazh-nog.md
+- [x] Обновить shared-config.json (slug + services) — content-factory
+- [x] Синхронизировать shared-config.json → entuziastov75-vps
+- [x] Прогнать agent7_manual_publish limfodrenazh-nog
+- [ ] Проверить публикацию на VPS (REST + валидатор)
+- [ ] Трек Б: проверить service-pages-defaults.php — нужны ли дефолты для limfodrenazh-nog
 
 ## Связанные файлы
 - content-factory: materials/pages_manual/limfodrenazh-nog.md

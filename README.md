@@ -11,6 +11,10 @@
 
 Связь между проектами — через **WordPress REST API** и единый контракт `config/shared-config.json`.
 
+## Связанные проекты
+
+- [entuziastov75-vps](https://github.com/kraskimira89-spec/entuziastov75-vps) — тема WordPress и REST API для публикации контента.
+
 ## Структура проекта
 
 | Папка | Назначение |

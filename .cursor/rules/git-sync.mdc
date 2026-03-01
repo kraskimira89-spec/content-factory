@@ -1,0 +1,46 @@
+---
+description: Автосинхронизация с GitHub после завершения задач
+alwaysApply: true
+---
+
+# Git-синхронизация
+
+## Когда отправлять изменения
+
+1. **После завершения задачи** — когда все шаги выполнены, коммить и пушить изменения.
+2. **После значительного объёма правок** — если внесено много изменений в рамках сессии.
+
+## Как выполнять
+
+Определи, какой проект менялся:
+- **content-factory** — правки в `seo-agents/`, `materials/`, `prompts/`, `config/`, `scripts/`, `docs/`, `output/`
+- **entuziastov75-vps** — правки в темах WordPress, wp-content, PHP
+
+Запусти скрипт с нужным проектом и сгенерируй коммит:
+
+```powershell
+# Для content-factory
+powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1" -project factory
+
+# Для entuziastov75-vps (seo_entuziastov75)
+powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1" -project vps
+```
+
+**Тип коммита:** feat | fix | docs — выбери по смыслу изменений.
+**Описание:** коротко на русском, что сделано.
+
+## Неинтерактивный режим (для агента)
+
+Когда задача завершена — запускай с параметрами, без запроса ввода:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1" -project factory -type docs -message "добавить правило git-sync"
+```
+
+## Автосинхронизация каждые 30 минут
+
+Скрипт `scripts/git-auto-sync.ps1` — для планировщика Windows. Добавь задачу: триггер каждые 30 мин, действие `powershell -File git-auto-sync.ps1 -project factory`.
+
+## Важно
+
+Перед запуском — **сохрани все файлы** в Cursor (Ctrl+S / Save All).

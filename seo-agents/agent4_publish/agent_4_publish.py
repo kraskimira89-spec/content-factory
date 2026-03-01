@@ -238,6 +238,26 @@ def _strip_citation_markers(text: str) -> str:
     return re.sub(r"\[\d+\]", "", text)
 
 
+def _strip_faq_block_from_html(html: str) -> str:
+    """
+    Удаляет блок «Часто задаваемые вопросы» из HTML.
+    FAQ отображается только шаблонным аккордеоном из service_data — дубли в post_content убираем.
+    """
+    # От заголовка FAQ до следующего <h2> (след. секция) или до конца
+    for pattern in (
+        re.compile(
+            r'<h2[^>]*>\s*Часто задаваемые вопросы\s*</h2>.*?(?=<h2|\Z)',
+            re.DOTALL | re.IGNORECASE,
+        ),
+        re.compile(
+            r'<h3[^>]*>\s*FAQ\s*</h3>.*?(?=<h2|<h3|\Z)',
+            re.DOTALL | re.IGNORECASE,
+        ),
+    ):
+        html = pattern.sub("", html)
+    return html.strip()
+
+
 def parse_markdown(md_text: str):
     """
     Берёт Markdown:
@@ -424,8 +444,9 @@ def main(slug_filter: str | None = None):
             if page:
                 print(f"Найдена страница услуги: «{page['title']}» (ID={page['id']}, slug={slug})")
                 print("Обновляю post_content страницы (шаблон отображает остальные блоки из services_data)...")
+                content_no_faq = _strip_faq_block_from_html(content_html)
                 result = update_page_content(
-                    wp_url, wp_user, wp_app_password, page["id"], content_html
+                    wp_url, wp_user, wp_app_password, page["id"], content_no_faq
                 )
                 print(f"✅ Страница обновлена: ID={page['id']}, link={page['link']}")
                 _log_to_db(meta, result)

@@ -55,6 +55,8 @@ PROMPT_FILE = os.path.join(PROJECT_ROOT, "prompts", "agents", "agent1_keywords.t
 - `content-factory` (источник)
 - `entuziastov75-vps` (копия)
 
+Пути на VPS: см. `docs/vps-paths.md`
+
 ### Что синхронизировать
 
 | Файл | Назначение |

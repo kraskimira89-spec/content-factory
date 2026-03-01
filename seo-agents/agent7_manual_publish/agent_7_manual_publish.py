@@ -104,8 +104,13 @@ def copy_manual_to_output(slug: str) -> Path:
     return output_path
 
 
-def run_agent4(slug: str, draft: bool = True) -> int:
-    """Запускает agent4. draft=True — сохраняет как черновик для проверки."""
+def run_agent4(
+    slug: str,
+    draft: bool = True,
+    as_post: bool = False,
+    both: bool = False,
+) -> int:
+    """Запускает agent4. draft=True — черновик. as_post: только блог. both: страница + блог."""
     agent4_script = _AGENTS_DIR / "agent4_publish" / "agent_4_publish.py"
     if not agent4_script.is_file():
         raise FileNotFoundError(f"Agent4 не найден: {agent4_script}")
@@ -113,6 +118,10 @@ def run_agent4(slug: str, draft: bool = True) -> int:
     cmd = [sys.executable, str(agent4_script), slug]
     if draft:
         cmd.append("--draft")
+    if as_post:
+        cmd.append("--as-post")
+    if both:
+        cmd.append("--both")
     result = subprocess.run(cmd, cwd=str(PROJECT_ROOT))
     return result.returncode
 
@@ -148,13 +157,21 @@ def deploy_faq_to_service_data(slug: str, faq: list[dict]) -> bool:
         return False
 
 
-def _print_verification_checklist(slug: str) -> None:
+def _print_verification_checklist(slug: str, as_post: bool = False, both: bool = False) -> None:
     """Выводит чек-лист проверки перед публикацией."""
     load_dotenv(PROJECT_ROOT / "config" / ".env")
     wp_url = (os.getenv("WP_URL") or "").rstrip("/")
-    preview_url = f"{wp_url}/wp-admin/edit.php?post_type=page" if wp_url else ""
+    if as_post:
+        preview_url = f"{wp_url}/wp-admin/edit.php" if wp_url else ""
+        msg = "Запись в блог сохранена"
+    elif both:
+        preview_url = f"{wp_url}/wp-admin/edit.php?post_type=page (страницы), {wp_url}/wp-admin/edit.php (записи)" if wp_url else ""
+        msg = "Страница и запись в блог сохранены"
+    else:
+        preview_url = f"{wp_url}/wp-admin/edit.php?post_type=page" if wp_url else ""
+        msg = "Страница сохранена"
     print(f"""
-✅ Страница сохранена как ЧЕРНОВИК. Проверьте перед публикацией:
+✅ {msg} как ЧЕРНОВИК. Проверьте перед публикацией:
 
 📋 Чек-лист:
   • Логика текста: структура блоков, последовательность, призывы
@@ -162,21 +179,31 @@ def _print_verification_checklist(slug: str) -> None:
   • Соответствие промптам: простой язык, ощущения, метафора, без крика
 
 🌐 Черновик в админке: {preview_url}
-   Найдите страницу «{slug}» → просмотр → проверьте → опубликуйте вручную.
+   Найдите «{slug}» → просмотр → проверьте → опубликуйте вручную.
 """)
 
 
-def main(slug: str, publish: bool = False) -> None:
+def main(
+    slug: str,
+    publish: bool = False,
+    as_post: bool = False,
+    both: bool = False,
+) -> None:
     print("=== Agent 7: manual → output → WordPress ===\n")
 
     # 1. Копируем
     output_path = copy_manual_to_output(slug)
     print(f"✅ Файл {output_path.relative_to(PROJECT_ROOT)} обновлён из materials/pages_manual/{slug}.md\n")
 
-    # 2. Запускаем agent4 (по умолчанию — черновик)
+    # 2. Запускаем agent4
     draft_mode = not publish
-    print("Запуск agent4..." + (" (черновик)" if draft_mode else " (публикация)"))
-    returncode = run_agent4(slug, draft=draft_mode)
+    mode_parts = ["черновик" if draft_mode else "публикация"]
+    if as_post:
+        mode_parts.append("только блог")
+    if both:
+        mode_parts.append("страница + блог")
+    print("Запуск agent4... (" + ", ".join(mode_parts) + ")")
+    returncode = run_agent4(slug, draft=draft_mode, as_post=as_post, both=both)
 
     if returncode == 0:
         # 3. Парсим FAQ из ручного файла и отправляем в service-data
@@ -198,9 +225,14 @@ def main(slug: str, publish: bool = False) -> None:
                 pass
 
         if draft_mode:
-            _print_verification_checklist(slug)
+            _print_verification_checklist(slug, as_post=as_post, both=both)
         else:
-            print(f"\n✅ Готово. Страница опубликована: /uslugi/{slug}/")
+            if as_post:
+                print(f"\n✅ Готово. Запись в блог опубликована.")
+            elif both:
+                print(f"\n✅ Готово. Страница и запись в блог опубликованы: /uslugi/{slug}/")
+            else:
+                print(f"\n✅ Готово. Страница опубликована: /uslugi/{slug}/")
     else:
         print(f"\n⚠️ Agent4 завершился с кодом {returncode}. Проверьте вывод выше.")
         sys.exit(returncode)
@@ -221,5 +253,20 @@ if __name__ == "__main__":
         action="store_true",
         help="Сразу опубликовать (без черновика). По умолчанию — сохранить как черновик.",
     )
+    parser.add_argument(
+        "--as-post",
+        action="store_true",
+        help="Только пост в блог (без страницы под /uslugi/)",
+    )
+    parser.add_argument(
+        "--both",
+        action="store_true",
+        help="Страница + пост в блог (дублирование контента)",
+    )
     args = parser.parse_args()
-    main(args.slug, publish=args.publish)
+    main(
+        args.slug,
+        publish=args.publish,
+        as_post=args.as_post,
+        both=args.both,
+    )

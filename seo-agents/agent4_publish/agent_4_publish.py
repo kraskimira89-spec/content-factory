@@ -326,6 +326,43 @@ def find_page_by_slug(
     }
 
 
+def create_page(
+    wp_url: str,
+    wp_user: str,
+    wp_app_password: str,
+    title: str,
+    content_html: str,
+    slug: str,
+    *,
+    status: str = "draft",
+    parent_slug: str = "uslugi",
+) -> dict:
+    """
+    Создаёт новую WordPress-страницу (page).
+    parent_slug: slug родительской страницы (по умолчанию «uslugi» для /uslugi/{slug}/).
+    """
+    parent_id = 0
+    if parent_slug:
+        parent_page = find_page_by_slug(wp_url, wp_user, wp_app_password, parent_slug)
+        if parent_page:
+            parent_id = parent_page["id"]
+
+    api_url = f"{wp_url}/wp-json/wp/v2/pages"
+    payload = {
+        "title": title,
+        "content": content_html,
+        "slug": slug,
+        "status": status,
+        "parent": parent_id,
+    }
+    resp = _wp_request("POST", api_url, wp_user, wp_app_password, json=payload)
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(
+            f"Ошибка создания страницы: {resp.status_code}\n{resp.text}"
+        )
+    return resp.json()
+
+
 def update_page_content(
     wp_url: str,
     wp_user: str,
@@ -427,7 +464,13 @@ def publish_post(
 
 # === Точка входа Агента 4 ===
 
-def main(slug_filter: str | None = None, draft: bool = False):
+def main(
+    slug_filter: str | None = None,
+    draft: bool = False,
+    as_post: bool = False,
+    both: bool = False,
+):
+    """as_post: только пост в блог, игнорировать страницу. both: страница + пост."""
     print("=== Агент 4: публикация в WordPress ===")
 
     wp_url, wp_user, wp_app_password = load_env()
@@ -450,10 +493,12 @@ def main(slug_filter: str | None = None, draft: bool = False):
 
     meta = load_metadata_for_md(md_path)
 
-    # --- Режим обновления страницы услуги ---
-    # Если в имени файла есть услуга — пробуем найти существующую страницу (page)
-    # и обновить её post_content вместо создания нового поста.
-    if service_name:
+    # --- Режим обновления/создания страницы услуги ---
+    # as_post: пропускаем страницу, сразу идём в пост. both: страница + пост.
+    skip_page = as_post
+    do_both = both
+
+    if service_name and not skip_page:
         slug = resolve_page_slug(service_name)
         if slug:
             page = find_page_by_slug(wp_url, wp_user, wp_app_password, slug)
@@ -469,11 +514,32 @@ def main(slug_filter: str | None = None, draft: bool = False):
                 )
                 print(f"✅ Страница обновлена: ID={page['id']}, link={page['link']}" + (" (черновик)" if draft else ""))
                 _log_to_db(meta, result)
-                return
+                if not do_both:
+                    return
 
-            print(f"Страница со slug «{slug}» не найдена — создаю пост в блог.")
-        else:
+            else:
+                print(f"Страница со slug «{slug}» не найдена — создаю новую страницу.")
+                content_no_faq = _strip_faq_block_from_html(content_html)
+                content_no_faq = _strip_indications_block_from_html(content_no_faq)
+                result = create_page(
+                    wp_url, wp_user, wp_app_password,
+                    title=title,
+                    content_html=content_no_faq,
+                    slug=slug,
+                    status="draft" if draft else "publish",
+                    parent_slug="uslugi",
+                )
+                page_id = result.get("id")
+                link = result.get("link", "")
+                print(f"[OK] Страница создана: ID={page_id}, link={link}" + (" (черновик)" if draft else ""))
+                _log_to_db(meta, result)
+                if not do_both:
+                    return
+        elif not do_both:
             print(f"Slug для услуги «{service_name}» не найден в маппинге — создаю пост в блог.")
+
+    if as_post:
+        print("Режим --as-post: создаю запись в блог.")
 
     # --- Режим создания поста в блог ---
     categories = None
@@ -585,5 +651,20 @@ if __name__ == "__main__":
         action="store_true",
         help="Сохранить страницу как черновик (для проверки перед публикацией)",
     )
+    parser.add_argument(
+        "--as-post",
+        action="store_true",
+        help="Только пост в блог, без страницы под /uslugi/",
+    )
+    parser.add_argument(
+        "--both",
+        action="store_true",
+        help="Страница + пост в блог (дублирование контента)",
+    )
     args = parser.parse_args()
-    main(slug_filter=args.slug, draft=args.draft)
+    main(
+        slug_filter=args.slug,
+        draft=args.draft,
+        as_post=args.as_post,
+        both=args.both,
+    )

@@ -67,9 +67,11 @@ tasks/YYYY-MM-DD_краткое-описание.md
 
 ## Ключевые пути (VPS, entuziastov75-vps)
 
-- Контракт: `config/shared-config.json` (синхронизировать с content-factory)
+- **Путь на сервере:** `/root/sites/entuziastov75VPS/`
+- Контракт: `shared-config.json` в корне репо (источник — content-factory `config/shared-config.json`)
 - Дефолты услуг: `wp-content/themes/flavor/inc/service-pages-defaults.php`
 - REST: `/wp-json/entuziastov75/v1/service-data/{slug}`
+- Подробнее: `docs/vps-paths.md`
 
 ## Реакция на задачу
 

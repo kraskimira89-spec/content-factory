@@ -90,10 +90,19 @@ def save_brief(service_name: str, city: str, brief_text: str) -> str:
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Агент 2 — структура страницы и ТЗ")
+    parser.add_argument("--service", "-s", help="Название услуги")
+    parser.add_argument("--city", "-c", default="Ноябрьск", help="Город")
+    args = parser.parse_args()
+
     console.print("\n[bold cyan]Агент 2 — структура страницы и ТЗ[/bold cyan]\n")
 
-    service_name = console.input("Введите [green]название услуги[/green]: ")
-    city = console.input("Введите [green]город[/green]: ")
+    if args.service:
+        service_name, city = args.service.strip(), args.city.strip()
+    else:
+        service_name = console.input("Введите [green]название услуги[/green]: ")
+        city = console.input("Введите [green]город[/green]: ")
     logger.info("Старт генерации брифа: service=%s, city=%s", service_name, city)
 
     console.print("\n[dim]Пробую загрузить ключевые фразы из базы...[/dim]\n")

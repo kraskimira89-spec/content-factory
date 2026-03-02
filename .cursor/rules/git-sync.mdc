@@ -20,10 +20,10 @@ alwaysApply: true
 
 ```powershell
 # Для content-factory
-powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1" -project factory
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\git-entuziastov.ps1" -project factory
 
 # Для entuziastov75-vps (seo_entuziastov75)
-powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1" -project vps
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\git-entuziastov.ps1" -project vps
 ```
 
 **Тип коммита:** feat | fix | docs — выбери по смыслу изменений.
@@ -34,12 +34,16 @@ powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1" -project vps
 Когда задача завершена — запускай с параметрами, без запроса ввода:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1" -project factory -type docs -message "добавить правило git-sync"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\git-entuziastov.ps1" -project factory -type docs -message "добавить правило git-sync"
 ```
 
 ## Автосинхронизация каждые 30 минут
 
-Скрипт `scripts/git-auto-sync.ps1` — для планировщика Windows. Добавь задачу: триггер каждые 30 мин, действие `powershell -File git-auto-sync.ps1 -project factory`.
+Скрипт `scripts/git-auto-sync.ps1` — для планировщика Windows:
+- триггер: повторять каждые 30 мин
+- действие: `powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\git-auto-sync.ps1" -project factory`
+
+Логика: 30 мин + события задач — норм. Не вызывать параллельно слишком часто.
 
 ## Важно
 

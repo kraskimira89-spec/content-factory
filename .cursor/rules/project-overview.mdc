@@ -18,7 +18,9 @@ agent1_keywords → agent_planner → agent2_brief → agent3_content
   → agent_editor → agent4_publish → agent_publish_vk → agent_analyst
 ```
 
-Все агенты в `seo-agents/`, промпты в `system_prompt.txt` рядом с каждым агентом.
+Отдельно: **agent_checker** → **agent_checker_executor** → **agent_checker_implementer** — проверка страницы по чек-листу, ТЗ по тексту/верстке, конкретные правки в теме.
+
+Все агенты в `seo-agents/`, промпты в `prompts/agents/` (agent_*.txt).
 
 ## Ключевые правила
 

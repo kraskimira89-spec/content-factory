@@ -92,7 +92,7 @@ tasks/YYYY-MM-DD_краткое-описание.md
 
 ## Синхронизация с GitHub после задачи
 
-Когда **все шаги задачи выполнены** — выполни или предложи git sync. Определи проект (content-factory или entuziastov75-vps), сгенерируй коммит и запусти `D:\git-entuziastov.ps1`.
+Когда **все шаги задачи выполнены** — выполни или предложи git sync. Определи проект (content-factory или entuziastov75-vps), сгенерируй коммит и запусти `D:\content-factory\git-entuziastov.ps1`.
 
 ## Формирование diff для связанных файлов
 

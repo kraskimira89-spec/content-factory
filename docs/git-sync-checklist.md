@@ -25,7 +25,7 @@ powershell -ExecutionPolicy Bypass -File .\git-vps.ps1
 
 **Вариант C — с выбором проекта:**
 ```powershell
-powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\git-entuziastov.ps1"
 ```
 
 ---
@@ -61,9 +61,7 @@ powershell -ExecutionPolicy Bypass -File "D:\git-entuziastov.ps1"
 
 Скрипт `git-auto-sync.ps1`:
 - Делает `git status --porcelain` → при пустом результате выходит
-- При изменениях вызывает `git-sync.ps1` с `-type chore -message "автосинхронизация YYYY-MM-DD HH:mm"`
-
-Копия `D:\git-entuziastov.ps1` — для ручного запуска; автосинхронизация использует скрипт из репозитория.
+- При изменениях вызывает `git-entuziastov.ps1` с `-type chore -message "автосинхронизация YYYY-MM-DD HH:mm"`
 
 ---
 

@@ -45,6 +45,33 @@
     "storage_root_env": "CF_IMAGE_STORAGE_ROOT",
     "storage_root_default": "media",
     "relative_path_pattern": "images/{year}/{month}/{slug}-{index}.jpg",
+    "relative_path_pattern_with_size": "images/{year}/{month}/{day}/{slug}_{network}_{variant}_{width}x{height}_{index}.jpg",
+    "variants": {
+      "site": [
+        { "name": "hero",  "width": 1280, "height": 720 },
+        { "name": "thumb", "width": 800,  "height": 450 }
+      ],
+      "vk": [
+        { "name": "feed", "width": 1200, "height": 630 }
+      ],
+      "insta": [
+        { "name": "square", "width": 1080, "height": 1080 },
+        { "name": "story",  "width": 1080, "height": 1920 }
+      ],
+      "tg": [
+        { "name": "post", "width": 1280, "height": 720 }
+      ],
+      "wa": [
+        { "name": "post", "width": 1280, "height": 720 }
+      ],
+      "yt": [
+        { "name": "thumb", "width": 1280, "height": 720 }
+      ],
+      "ok": [
+        { "name": "thumb", "width": 720, "height": 405 }
+      ]
+    },
+    "_variant_by_channel": "site→hero, vk→feed, insta→square|story, tg→post, wa→post, yt→thumb, ok→thumb",
     "count": {
       "min": 1,
       "max": 3

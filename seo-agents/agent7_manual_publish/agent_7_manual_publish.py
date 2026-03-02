@@ -4,7 +4,8 @@ Agent 7: manual_to_publish — мост от materials/pages_manual к output и
 Шаги:
 1. Читает отредактированный .md из materials/pages_manual/{slug}.md
 2. Копирует в output/, перезаписывая существующий *_page_*.md
-3. Запускает agent4 — сохраняет страницу в WordPress как ЧЕРНОВИК (не публикует)
+3. Запускает agent4 — сохраняет страницу в WordPress как ЧЕРНОВИК (не публикует).
+   Agent4 перед публикацией вызывает get_hero_image(post_id) и прикрепляет hero как featured_media.
 4. Парсит FAQ из .md и отправляет в service-data (REST API)
 5. Выводит чек-лист для проверки перед публикацией
 

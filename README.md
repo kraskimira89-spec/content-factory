@@ -31,9 +31,12 @@
 ## Цепочка агентов
 
 ```
-agent1_keywords → agent_planner → agent2_brief → agent3_content
-    → agent_editor → agent4_publish → agent_publish_vk → agent_analyst
+agent1_keywords → agent_planner → agent2_brief → agent3_content → agent_editor
+    → agent8_images_planner → agent9_images_runner → agent4_publish → agent_publish_vk → agent_analyst
 ```
+
+- **agent8_images_planner** — после agent3_content (есть полный текст и service_slug), генерирует промпты для картинок.
+- **agent9_images_runner** — после agent8, до agent4; генерирует картинки через Stable Diffusion/ComfyUI, сохраняет в хранилище (контракт: `config/shared-config.json` → `image_protocol`).
 
 Запуск всей цепочки: `run_agents.bat`
 

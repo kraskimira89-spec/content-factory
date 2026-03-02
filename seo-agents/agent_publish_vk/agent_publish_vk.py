@@ -1,4 +1,5 @@
 # Publisher ВК: публикация анонса в группу (wall.post) и запись в publishing_log
+# Картинка для поста: из images-generated брать vk.feed — get_image_path_for_network(rec, "vk")
 import os
 import sys
 import json

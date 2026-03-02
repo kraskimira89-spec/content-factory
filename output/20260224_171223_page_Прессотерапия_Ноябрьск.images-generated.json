@@ -1,0 +1,13 @@
+{
+  "images": [
+    {
+      "prompt": "High-quality photo of Прессотерапия (pressotherapy) procedure in a modern health and wellness center, clean interior, calm atmosphere, professional medical equipment, no faces, no logos, no text. Процедура Прессотерапия в современном оздоровительном центре, чистое светлое помещение, профессиональное оборудование, спокойная расслабляющая атмосфера, без лиц и без логотипов.",
+      "style": "realistic photo",
+      "alt": "Прессотерапия в центре здоровья Энтузиаст, Ноябрьск",
+      "image_path": "images/2026/03/pressoterapiya-1.jpg",
+      "width": 1280,
+      "height": 720
+    }
+  ],
+  "service_slug": "pressoterapiya"
+}

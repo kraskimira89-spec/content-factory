@@ -44,5 +44,15 @@ materials/*.docx
 # Логи
 logs/
 
+# Агенты картинок: сгенерированные изображения и джобы (папки с .gitkeep — в репо)
+output/images/*
+!output/images/.gitkeep
+output/image_jobs/
+output/image_queue/
+
+# Медиа: сгенерированные картинки (agent9)
+media/images/*
+!media/images/.gitkeep
+
 # Отладочные файлы
 debug-*.log

@@ -18,6 +18,12 @@ echo.
 echo === Агент Editor: правка черновика, утверждение ===
 python seo-agents\agent_editor\agent_editor.py
 echo.
+echo === Агент 8: планировщик картинок (prompts + alt) ===
+python seo-agents\agent8_images_planner.py
+echo.
+echo === Агент 9: генератор картинок (ComfyUI/SD, пока заглушка) ===
+python seo-agents\agent9_images_runner.py
+echo.
 echo === Агент 4: публикация в WordPress ===
 python seo-agents\agent4_publish\agent_4_publish.py
 echo.

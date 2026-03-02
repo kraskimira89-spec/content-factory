@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 import base64
 import glob
 import re
@@ -20,6 +21,21 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]  # .../content-factory
 
 # Папка, куда Агент 3 кладёт Markdown-страницы
 OUTPUT_DIR = PROJECT_ROOT / "output"
+
+# Публикующий агент обязан перед публикацией вызвать get_hero_image(post_id) и прикрепить как featured image
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+try:
+    from scripts.shared_config import get_image_path_for_network, resolve_image_path
+except ImportError:
+    get_image_path_for_network = None  # type: ignore[assignment]
+    resolve_image_path = None  # type: ignore[assignment]
+try:
+    from scripts.image_repository import get_hero_image, get_images, set_attachment_id
+except ImportError:
+    get_hero_image = None  # type: ignore[assignment]
+    get_images = None  # type: ignore[assignment]
+    set_attachment_id = None  # type: ignore[assignment]
 
 # === Загрузка контракта ===
 
@@ -149,6 +165,40 @@ def load_metadata_for_md(md_path: Path) -> dict:
         return json.loads(meta_path.read_text(encoding="utf-8"))
     except Exception:
         return {}
+
+
+# Связка agent8/agent9 → agent4: images-generated.json рядом с .md, имя {stem}.images-generated.json
+def get_images_generated_path(md_path: Path) -> Path:
+    """Путь к JSON с картинками от agent9 для данного поста (по конвенции: тот же каталог, stem.images-generated.json)."""
+    return md_path.parent / (md_path.stem + ".images-generated.json")
+
+
+def load_images_generated_for_md(md_path: Path) -> dict | None:
+    """
+    Читает images-generated.json для поста (от agent9).
+    Возвращает {"images": [{"variants": {"site": {...}, "vk": {...}, ...}, "alt", ...}], "service_slug": "..."} или None.
+    """
+    path = get_images_generated_path(md_path)
+    if not path.is_file():
+        return None
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+
+
+def _get_site_image_path(image_rec: dict) -> str | None:
+    """Путь к картинке для сайта (WordPress): site.hero, жёстко для пайплайна."""
+    if get_image_path_for_network is not None:
+        return get_image_path_for_network(image_rec, "site")  # variant hero по умолчанию
+    variants = image_rec.get("variants") or {}
+    site = variants.get("site")
+    if isinstance(site, list) and site:
+        for item in site:
+            if item.get("name") == "hero":
+                return item.get("image_path")
+        return site[0].get("image_path")
+    return image_rec.get("image_path") if isinstance(site, dict) else image_rec.get("image_path")
 
 
 def select_rubric(title: str, content_text: str) -> str:
@@ -443,6 +493,128 @@ def create_page(
     return resp.json()
 
 
+def upload_image_to_wp(
+    wp_url: str, wp_user: str, wp_app_password: str, file_path: Path
+) -> int:
+    """
+    Загружает файл в WordPress Media. Возвращает attachment ID.
+    file_path — абсолютный путь к PNG/JPEG.
+    """
+    if not file_path.is_file():
+        raise FileNotFoundError(f"Файл картинки не найден: {file_path}")
+    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/media"
+    headers = _wp_headers(wp_user, wp_app_password, content_type=False)
+    # WP ожидает multipart: поле file с именем файла
+    with open(file_path, "rb") as f:
+        files = {"file": (file_path.name, f, "image/png" if file_path.suffix.lower() == ".png" else "image/jpeg")}
+        resp = _wp_request("POST", api_url, wp_user, wp_app_password, files=files, headers=headers, timeout=60)
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(f"Ошибка загрузки медиа: {resp.status_code}\n{resp.text}")
+    data = resp.json()
+    return int(data.get("id", 0))
+
+
+def _get_attachment_source_url(
+    wp_url: str, wp_user: str, wp_app_password: str, attachment_id: int
+) -> str:
+    """Возвращает source_url вложения для вставки в контент."""
+    api_url = f"{wp_url.rstrip('/')}/wp-json/wp/v2/media/{attachment_id}"
+    resp = _wp_request("GET", api_url, wp_user, wp_app_password)
+    if resp.status_code != 200:
+        return ""
+    return resp.json().get("source_url", "")
+
+
+def _resolve_image_url(
+    wp_url: str, wp_user: str, wp_app_password: str, page_id: int, rec: dict
+) -> tuple[int | None, str]:
+    """
+    По записи из индекса возвращает (attachment_id, source_url).
+    Если есть wp_attachment_id — берём URL через API; иначе загружаем файл, обновляем индекс.
+    """
+    aid = rec.get("wp_attachment_id")
+    if aid is not None:
+        url = _get_attachment_source_url(wp_url, wp_user, wp_app_password, int(aid))
+        return int(aid), url
+    path_raw = rec.get("file_path")
+    if not path_raw:
+        return None, ""
+    if Path(path_raw).is_absolute():
+        abs_path = Path(path_raw)
+    elif resolve_image_path is not None:
+        abs_path = resolve_image_path(path_raw)
+    else:
+        abs_path = PROJECT_ROOT / path_raw
+    if not abs_path.is_file():
+        return None, ""
+    try:
+        aid = upload_image_to_wp(wp_url, wp_user, wp_app_password, abs_path)
+        if set_attachment_id:
+            set_attachment_id(str(page_id), rec.get("image_id", "img"), aid)
+        url = _get_attachment_source_url(wp_url, wp_user, wp_app_password, aid)
+        return aid, url
+    except Exception:
+        return None, ""
+
+
+def _embed_images_in_content(content_html: str, images: list[dict]) -> str:
+    """
+    Вставляет блоки <figure><img></figure> после первого абзаца.
+    images: список { "url": "...", "alt": "..." }.
+    """
+    if not images:
+        return content_html
+    block_parts = []
+    for img in images:
+        if not img.get("url"):
+            continue
+        url = img["url"].replace('"', "&quot;")
+        alt = (img.get("alt") or "").replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+        block_parts.append(f'<figure><img src="{url}" alt="{alt}" /></figure>')
+    block = "".join(block_parts)
+    # Вставка после первого </p>
+    pos = content_html.find("</p>")
+    if pos != -1:
+        insert_at = pos + len("</p>")
+        return content_html[:insert_at] + block + content_html[insert_at:]
+    return content_html + block
+
+
+def _resolve_hero_attachment_id(
+    wp_url: str, wp_user: str, wp_app_password: str, page_id: int, hero_record: dict | None
+) -> int | None:
+    """
+    По записи hero из get_hero_image возвращает attachment ID для featured_media.
+    Если в записи есть wp_attachment_id — возвращает его; иначе загружает file_path в WP Media,
+    обновляет индекс и возвращает новый id.
+    """
+    if not hero_record or get_hero_image is None or set_attachment_id is None:
+        return None
+    aid = hero_record.get("wp_attachment_id")
+    if aid is not None:
+        return int(aid)
+    path_raw = hero_record.get("file_path")
+    if not path_raw:
+        return None
+    if Path(path_raw).is_absolute():
+        abs_path = Path(path_raw)
+    elif resolve_image_path is not None:
+        abs_path = resolve_image_path(path_raw)
+    else:
+        abs_path = PROJECT_ROOT / path_raw
+    if not abs_path.is_file():
+        print(f"  ⚠️ Hero-картинка не найдена по пути: {abs_path} (TODO: загрузить в WP)")
+        return None
+    try:
+        aid = upload_image_to_wp(wp_url, wp_user, wp_app_password, abs_path)
+        set_attachment_id(str(page_id), hero_record.get("image_id", "hero"), aid)
+        print(f"  📷 Hero-картинка загружена в медиа: attachment_id={aid}")
+        return aid
+    except Exception as e:
+        print(f"  ⚠️ Не удалось загрузить hero-картинку: {e}")
+        return None
+
+
 def update_page_content(
     wp_url: str,
     wp_user: str,
@@ -451,20 +623,35 @@ def update_page_content(
     content_html: str,
     *,
     status: str | None = None,
+    featured_media: int | None = None,
 ) -> dict:
     """
     Обновляет post_content существующей WordPress-страницы.
     status: если задан (draft, publish, private) — обновляет и статус страницы.
+    featured_media: ID вложения для миниатюры страницы.
     """
     api_url = f"{wp_url}/wp-json/wp/v2/pages/{page_id}"
     payload: dict = {"content": content_html}
     if status:
         payload["status"] = status
+    if featured_media is not None:
+        payload["featured_media"] = featured_media
     resp = _wp_request("POST", api_url, wp_user, wp_app_password, json=payload)
     if resp.status_code not in (200, 201):
         raise RuntimeError(
             f"Ошибка обновления страницы {page_id}: {resp.status_code}\n{resp.text}"
         )
+    return resp.json()
+
+
+def set_page_featured_media(
+    wp_url: str, wp_user: str, wp_app_password: str, page_id: int, attachment_id: int
+) -> dict:
+    """Устанавливает только featured_media для страницы (PATCH)."""
+    api_url = f"{wp_url}/wp-json/wp/v2/pages/{page_id}"
+    resp = _wp_request("POST", api_url, wp_user, wp_app_password, json={"featured_media": attachment_id})
+    if resp.status_code not in (200, 201):
+        raise RuntimeError(f"Ошибка установки featured_media: {resp.status_code}\n{resp.text}")
     return resp.json()
 
 
@@ -573,6 +760,21 @@ def main(
 
     meta = load_metadata_for_md(md_path)
 
+    # Картинки от agent8/agent9 (images-generated.json рядом с .md; для сайта — variants.site)
+    images_generated = load_images_generated_for_md(md_path)
+    if images_generated:
+        imgs = images_generated.get("images", [])
+        if imgs:
+            first = imgs[0]
+            site_path = _get_site_image_path(first)
+            print(f"[agent4] Найден images-generated.json: featured_media будет: {site_path or '—'} (alt: {first.get('alt', '')})")
+            for i, rec in enumerate(imgs[1:], start=2):
+                print(f"[agent4]   в контент img[{i}]: {_get_site_image_path(rec) or '—'}")
+        else:
+            print("[agent4] images-generated.json пустой (images: [])")
+    else:
+        print("[agent4] images-generated.json не найден — featured/embed по текущему индексу (get_hero_image, get_images)")
+
     # --- Режим обновления/создания страницы услуги ---
     # as_post: пропускаем страницу, сразу идём в пост. both: страница + пост.
     skip_page = as_post
@@ -585,12 +787,36 @@ def main(
             if page:
                 print(f"Найдена страница услуги: «{page['title']}» (ID={page['id']}, slug={slug})")
                 status_msg = "черновик" if draft else "публикация"
-                print(f"Обновляю post_content страницы ({status_msg})...")
                 content_no_faq = _strip_faq_block_from_html(content_html)
                 content_no_faq = _strip_indications_block_from_html(content_no_faq)
+                hero_attachment_id = None
+                images_to_embed: list[dict] = []
+                if get_hero_image and get_images:
+                    hero_record = get_hero_image(str(page["id"]))
+                    hero_attachment_id = _resolve_hero_attachment_id(
+                        wp_url, wp_user, wp_app_password, page["id"], hero_record
+                    )
+                    # Остальные картинки — в контент (первая с purpose hero уже как featured)
+                    all_images = get_images(str(page["id"]))
+                    hero_id = hero_record.get("image_id") if hero_record else None
+                    for rec in all_images:
+                        if rec.get("image_id") == hero_id:
+                            continue
+                        _aid, url = _resolve_image_url(
+                            wp_url, wp_user, wp_app_password, page["id"], rec
+                        )
+                        if url:
+                            images_to_embed.append({
+                                "url": url,
+                                "alt": rec.get("alt") or rec.get("purpose") or rec.get("image_id", ""),
+                            })
+                if images_to_embed:
+                    content_no_faq = _embed_images_in_content(content_no_faq, images_to_embed)
+                print(f"Обновляю post_content страницы ({status_msg})...")
                 result = update_page_content(
                     wp_url, wp_user, wp_app_password, page["id"], content_no_faq,
                     status="draft" if draft else None,
+                    featured_media=hero_attachment_id,
                 )
                 print(f"✅ Страница обновлена: ID={page['id']}, link={page['link']}" + (" (черновик)" if draft else ""))
                 _log_to_db(meta, result)
@@ -611,6 +837,13 @@ def main(
                 )
                 page_id = result.get("id")
                 link = result.get("link", "")
+                if page_id and get_hero_image:
+                    hero_record = get_hero_image(str(page_id))
+                    hero_attachment_id = _resolve_hero_attachment_id(
+                        wp_url, wp_user, wp_app_password, page_id, hero_record
+                    )
+                    if hero_attachment_id is not None:
+                        set_page_featured_media(wp_url, wp_user, wp_app_password, page_id, hero_attachment_id)
                 print(f"[OK] Страница создана: ID={page_id}, link={link}" + (" (черновик)" if draft else ""))
                 _log_to_db(meta, result)
                 if not do_both:

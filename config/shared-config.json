@@ -40,6 +40,25 @@
     "file_naming": "{timestamp}_page_{услуга}_{город}.md — Агент 3 → Агент 4"
   },
 
+  "image_protocol": {
+    "_comment": "Контракт для agent8 (придумывает промпты) и agent9 (генерирует картинки через Stable Diffusion / ComfyUI)",
+    "storage_root_env": "CF_IMAGE_STORAGE_ROOT",
+    "storage_root_default": "media",
+    "relative_path_pattern": "images/{year}/{month}/{slug}-{index}.jpg",
+    "count": {
+      "min": 1,
+      "max": 3
+    },
+    "fields": {
+      "prompt": "string, текст для Stable Diffusion",
+      "style": "string, например 'realistic photo' или 'flat illustration'",
+      "alt": "string, alt-текст для HTML/img и WP",
+      "image_path": "string, относительный путь к файлу от storage_root",
+      "width": "int, опционально",
+      "height": "int, опционально"
+    }
+  },
+
   "rubrics": {
     "health_fitness":       { "title": "Здоровье и фитнес",      "wp_cat_env": "WP_CAT_HEALTH_FITNESS",       "keywords": "упражнения лфк восстановление травм операций фитнес здоровье тренажер зал" },
     "relax_massage":        { "title": "Релаксация и массаж",     "wp_cat_env": "WP_CAT_RELAX_MASSAGE",        "keywords": "лимфодренаж кедровая бочка фитобочка массаж релаксация оздоровление омоложение обертывание соляная комната" },
@@ -98,5 +117,16 @@
     "vps_user_env": "VPS_USER",
     "vps_key_env":  "VPS_SSH_KEY",
     "theme_path":   "/var/www/html/wp-content/themes/flavor/inc/service-pages-defaults.php"
+  },
+
+  "image_agents": {
+    "_comment": "Цепочка агентов картинок: agent8 промпты -> agent9 генератор -> media/images, индекс db/image_index.json",
+    "image_storage_path": "output/images",
+    "media_images_path": "media/images",
+    "image_jobs_path": "output/image_jobs",
+    "image_queue_path": "output/image_queue",
+    "image_index_path": "db/image_index.json",
+    "image_generator_url": "http://localhost:7860/generate",
+    "image_generator_timeout_sec": 120
   }
 }

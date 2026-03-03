@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from openai import APIError, APIConnectionError, RateLimitError, AuthenticationError
 
 from logger import get_logger
 
@@ -13,46 +14,63 @@ ENV_PATH = os.path.join(BASE_DIR, "config", ".env")
 # Загружаем переменные окружения
 load_dotenv(ENV_PATH)
 
-API_KEY = os.getenv("PERPLEXITY_API_KEY")
-BASE_URL = os.getenv("BASE_URL")
-MODEL_NAME = os.getenv("MODEL_NAME", "sonar-pro")
-
 logger = get_logger("seo_agents.api_client")
 
-if not API_KEY:
-    logger.error("PERPLEXITY_API_KEY не найден в .env")
-    raise RuntimeError("PERPLEXITY_API_KEY не найден в .env")
+# Список запасных API: (api_key_env, base_url_env, model_env/default)
+# При сбое (401, 429, соединение) пробуем следующий
+_API_BACKENDS = [
+    ("PERPLEXITY_API_KEY", "BASE_URL", "MODEL_NAME"),
+    ("OPENAI_API_KEY", "OPENAI_BASE_URL", "OPENAI_MODEL"),
+]
+_DEFAULT_MODELS = ["sonar-pro", "gpt-4o-mini"]
 
-client = OpenAI(
-    api_key=API_KEY,
-    base_url=BASE_URL,
-)
+
+def _get_clients():
+    """Возвращает список (client, model) для fallback."""
+    result = []
+    for i, (key_env, url_env, model_env) in enumerate(_API_BACKENDS):
+        api_key = os.getenv(key_env, "").strip()
+        base_url = os.getenv(url_env, "").strip()
+        model = os.getenv(model_env, "").strip() or (_DEFAULT_MODELS[i] if i < len(_DEFAULT_MODELS) else "gpt-4o-mini")
+        if api_key and base_url:
+            result.append((OpenAI(api_key=api_key, base_url=base_url), model))
+    return result
+
 
 def ask_ai(messages, model: str | None = None, **kwargs) -> str:
     """
     Универсальная функция для запросов к AI.
-    messages — список сообщений формата OpenAI.
-    Возвращает текст первого ответа.
+    При сбое (401, 429, соединение) пробует запасные API из .env.
     """
-    if model is None:
-        model = MODEL_NAME
+    clients = _get_clients()
+    if not clients:
+        raise RuntimeError(
+            "Нет доступных API. Добавьте PERPLEXITY_API_KEY+BASE_URL или "
+            "OPENAI_API_KEY+OPENAI_BASE_URL в config/.env"
+        )
 
-    logger.info(
-        "ask_ai: model=%s, messages=%d, max_tokens=%s",
-        model,
-        len(messages),
-        kwargs.get("max_tokens"),
-    )
+    last_error = None
+    for idx, (client, backend_model) in enumerate(clients):
+        use_model = model or backend_model
+        try:
+            logger.info(
+                "ask_ai: backend=%d, model=%s, messages=%d",
+                idx + 1, use_model, len(messages),
+            )
+            response = client.chat.completions.create(
+                model=use_model,
+                messages=messages,
+                **kwargs,
+            )
+            content = response.choices[0].message.content
+            logger.info("ask_ai: got response (%d chars) from backend %d", len(content or ""), idx + 1)
+            return content
+        except (AuthenticationError, RateLimitError, APIConnectionError, APIError) as e:
+            last_error = e
+            logger.warning("ask_ai: backend %d failed (%s), trying next...", idx + 1, type(e).__name__)
+            continue
 
-    response = client.chat.completions.create(
-        model=model,
-        messages=messages,
-        **kwargs,
-    )
-
-    content = response.choices[0].message.content
-    logger.info("ask_ai: got response (%d chars)", len(content or ""))
-    return content
+    raise RuntimeError(f"Все API недоступны. Последняя ошибка: {last_error}") from last_error
 
 
 if __name__ == "__main__":

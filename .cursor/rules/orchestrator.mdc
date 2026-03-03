@@ -59,7 +59,7 @@ tasks/YYYY-MM-DD_краткое-описание.md
 ## Ключевые пути (content-factory)
 
 - Контракт: `config/shared-config.json`
-- Ручные страницы: `materials/pages_manual/{slug}.md` (solyanaya-komnata, pressoterapiya)
+- Ручные страницы: `materials/pages_manual/{slug}.md` — slug из `config/shared-config.json` (services + uslugi): solyanaya-komnata, pressoterapiya, uglekislaya-vanna и т.д.
 - Промпты: `prompts/agents/`, `prompts/context/brand_voice.md`, `prompts/templates/service_page.md`
 - Публикация: `python seo-agents/agent7_manual_publish/agent_7_manual_publish.py {slug}` (черновик по умолчанию)
 - Деплой на VPS: `scripts/deploy_to_vps.py --mode rest`
@@ -79,8 +79,9 @@ tasks/YYYY-MM-DD_краткое-описание.md
 1. Классифицировать тип.
 2. Создать `tasks/YYYY-MM-DD_описание.md` с полями из шаблона.
 3. Если нужен Мозг/ТЗ: выполнить запрос прямо в этом чате (режим Ask/Composer) и записать ответ в раздел «Ответ от Мозга» в файле задачи. Либо дать пользователю формулировку для @Ask в Cursor — он вставит ответ в задачу.
-4. Указать конкретные файлы/команды для Cursor.
-5. Напоминать о синхронизации shared-config при изменениях контракта.
+4. **Подставлять uslugi/services из конфига**: при упоминании услуги по имени («углекислая ванна», «прессотерапия», «соляная комната» и т.п.) — брать slug из `config/shared-config.json` (секции `services` и `uslugi`) и сразу предлагать правильную команду с этим slug. Пример: «Опубликуй углекислую ванну» → `python seo-agents/agent4_publish/agent_4_publish.py uglekislaya-vanna`.
+5. Указать конкретные файлы/команды для Cursor.
+6. Напоминать о синхронизации shared-config при изменениях контракта.
 
 ## Авто-обновление статуса (чекбоксы)
 

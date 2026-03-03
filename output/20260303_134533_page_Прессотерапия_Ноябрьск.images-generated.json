@@ -1,0 +1,14 @@
+{
+  "service_slug": "pressoterapiya",
+  "images": [
+    {
+      "image_path": "images/2026/03/pressoterapiya_site_hero_1280x720_1.jpg",
+      "alt": "Прессотерапия в Ноябрьске",
+      "variants": {
+        "site": [
+          { "name": "hero", "image_path": "images/2026/03/pressoterapiya_site_hero_1280x720_1.jpg" }
+        ]
+      }
+    }
+  ]
+}

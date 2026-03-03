@@ -107,13 +107,17 @@
   },
 
   "services": {
-    "gidromassazh":            { "name": "Гидромассаж (АКВАСПА)",  "aliases": ["акваспа", "гидромассаж"] },
     "dolgoletie":              { "name": "Долголетие" },
-    "nastolnyy-tennis":        { "name": "Настольный теннис" },
     "konferenc-zal":           { "name": "Конференц-зал" },
     "master-klepa":            { "name": "Мастер Клёпа",           "aliases": ["мастер клепа", "мастер клёпа"] },
     "prokat":                  { "name": "Прокат" },
     "yuridicheskaya-pomoshch": { "name": "Юридическая помощь" },
+    "trenazhernyy-zal":        { "name": "Тренажёрный зал",        "aliases": ["тренажерный зал"] }
+  },
+
+  "uslugi": {
+    "gidromassazh":            { "name": "Гидромассаж (АКВАСПА)",  "aliases": ["акваспа", "гидромассаж"] },
+    "nastolnyy-tennis":        { "name": "Настольный теннис" },
     "solyanaya-komnata":       { "name": "Соляная комната" },
     "fitobochka":              { "name": "Кедровая фитобочка",     "aliases": ["кедровая бочка", "фитобочка"] },
     "massazh":                 { "name": "Массаж" },
@@ -121,17 +125,8 @@
     "vlok":                    { "name": "ВЛОК" },
     "uglekislaya-vanna":       { "name": "Углекислая ванна" },
     "lfk":                     { "name": "ЛФК" },
-    "trenazhernyy-zal":        { "name": "Тренажёрный зал",        "aliases": ["тренажерный зал"] },
-    "limfodrenazh-nog":       { "name": "Аппаратный лимфодренаж ног", "aliases": ["лимфодренаж ног", "аппаратный лимфодренаж"] }
+    "limfodrenazh-nog":        { "name": "Аппаратный лимфодренаж ног", "aliases": ["лимфодренаж ног", "аппаратный лимфодренаж"] }
   },
-
-  "services_slugs": [
-    "solyanaya-komnata", "massazh", "pressoterapiya",
-    "uglekislaya-vanna", "fitobochka", "vlok", "lfk",
-    "trenazhernyy-zal", "gidromassazh", "dolgoletie",
-    "nastolnyy-tennis", "konferenc-zal", "master-klepa",
-    "prokat", "yuridicheskaya-pomoshch", "limfodrenazh-nog"
-  ],
 
   "service_data_fields": {
     "_comment": "Поля, которые content-factory генерирует для inc/service-pages-defaults.php на VPS",

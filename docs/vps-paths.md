@@ -25,7 +25,7 @@
 - `factory` — output_dir, agents
 - `vps` — wp_url, custom_api (publish, status)
 - `services` — slug → name, category, aliases
-- `services_slugs` — список slug'ов
+- `uslugi` — услуги под /uslugi/ (slug → name, aliases); slugs = ключи объекта
 - `rubrics` — рубрики блога
 
 ---

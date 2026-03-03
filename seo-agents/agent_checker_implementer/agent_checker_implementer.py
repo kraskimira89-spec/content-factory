@@ -63,14 +63,14 @@ def slug_from_service_name(service_name: str) -> str | None:
     if not os.path.isfile(CONFIG_FILE):
         return None
     cfg = json.load(open(CONFIG_FILE, "r", encoding="utf-8"))
-    services = cfg.get("services", {})
     name_lower = service_name.strip().lower()
-    for slug, data in services.items():
-        if data.get("name", "").lower() == name_lower:
-            return slug
-        for alias in data.get("aliases", []):
-            if alias.lower() == name_lower:
+    for src in (cfg.get("services", {}), cfg.get("uslugi", {})):
+        for slug, data in src.items():
+            if data.get("name", "").lower() == name_lower:
                 return slug
+            for alias in data.get("aliases", []):
+                if alias.lower() == name_lower:
+                    return slug
     return None
 
 

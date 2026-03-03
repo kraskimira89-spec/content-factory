@@ -12,7 +12,7 @@
 
 ## Маппинг slug ↔ услуга
 
-Из `config/shared-config.json` → `services`: `uglekislaya-vanna` = «Углекислая ванна», `vlok` = «ВЛОК», `solyanaya-komnata` = «Соляная комната», `pressoterapiya` = «Прессотерапия» и т.д.
+Из `config/shared-config.json` → `services` (6 шт.) + `uslugi` (10 шт.): slug → name, aliases. Например: `uglekislaya-vanna` = «Углекислая ванна», `vlok` = «ВЛОК», `solyanaya-komnata` = «Соляная комната», `pressoterapiya` = «Прессотерапия».
 
 ## Поля services_data (на slug услуги)
 

@@ -45,10 +45,11 @@ OUTPUT_DIR = PROJECT_ROOT / "output"
 
 _CONFIG = json.loads((PROJECT_ROOT / "config" / "shared-config.json").read_text("utf-8"))
 
-# Маппинг slug → имя услуги (для поиска файла в output)
-SLUG_TO_NAME: dict[str, str] = {
-    slug: svc["name"] for slug, svc in _CONFIG["services"].items()
-}
+# Маппинг slug → имя услуги (services + uslugi)
+SLUG_TO_NAME: dict[str, str] = {}
+for src in (_CONFIG.get("services", {}), _CONFIG.get("uslugi", {})):
+    for slug, svc in src.items():
+        SLUG_TO_NAME[slug] = svc["name"]
 
 DEFAULT_CITY = "Ноябрьск"
 

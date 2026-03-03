@@ -64,14 +64,15 @@ def apply_blog_heading_styles(html: str) -> str:
 
 
 def _build_service_phrase_map() -> list[tuple[str, str]]:
-    """(phrase, slug) из services, длинные фразы первыми."""
+    """(phrase, slug) из services + uslugi, длинные фразы первыми."""
     phrases = []
-    for slug, data in _CONFIG.get("services", {}).items():
-        name = data.get("name", "")
-        aliases = data.get("aliases") or []
-        for p in [name] + list(aliases):
-            if p and str(p).strip():
-                phrases.append((str(p).strip(), slug))
+    for src in (_CONFIG.get("services", {}), _CONFIG.get("uslugi", {})):
+        for slug, data in src.items():
+            name = data.get("name", "")
+            aliases = data.get("aliases") or []
+            for p in [name] + list(aliases):
+                if p and str(p).strip():
+                    phrases.append((str(p).strip(), slug))
     phrases.sort(key=lambda x: -len(x[0]))
     return phrases
 

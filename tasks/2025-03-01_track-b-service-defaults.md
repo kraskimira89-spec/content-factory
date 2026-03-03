@@ -10,8 +10,8 @@
 
 **Файл:** `www/entuziastov75.ru/wp-content/themes/flavor/inc/service-pages-defaults.php`
 
-### Вариант 1: шаблон читает services_slugs из контракта
-Если theme подгружает shared-config или wp_options с services_slugs — slug уже есть, блоки (FAQ, results, показания) могут браться из REST `/service-data/{slug}`. Agent7 уже POST-ит FAQ туда.
+### Вариант 1: шаблон читает uslugi из контракта
+Если theme подгружает shared-config или wp_options с uslugi (ключи = slugs) — slug уже есть, блоки (FAQ, results, показания) могут браться из REST `/service-data/{slug}`. Agent7 уже POST-ит FAQ туда.
 
 ### Вариант 2: нужна запись в $defaults
 Если PHP использует статичный массив `$defaults['slug']`, добавь:

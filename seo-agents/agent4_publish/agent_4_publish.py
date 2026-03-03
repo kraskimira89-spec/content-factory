@@ -374,14 +374,15 @@ def apply_blog_heading_styles(html: str) -> str:
 
 
 def _build_service_phrase_map() -> list[tuple[str, str]]:
-    """(phrase, slug) из services, длинные фразы первыми (для корректной перелинковки)."""
+    """(phrase, slug) из services + uslugi, длинные фразы первыми (для корректной перелинковки)."""
     phrases = []
-    for slug, data in _CONFIG.get("services", {}).items():
-        name = data.get("name", "")
-        aliases = data.get("aliases") or []
-        for p in [name] + list(aliases):
-            if p and str(p).strip():
-                phrases.append((str(p).strip(), slug))
+    for src in (_CONFIG.get("services", {}), _CONFIG.get("uslugi", {})):
+        for slug, data in src.items():
+            name = data.get("name", "")
+            aliases = data.get("aliases") or []
+            for p in [name] + list(aliases):
+                if p and str(p).strip():
+                    phrases.append((str(p).strip(), slug))
     phrases.sort(key=lambda x: -len(x[0]))
     return phrases
 
@@ -655,12 +656,18 @@ def set_page_featured_media(
     return resp.json()
 
 
-# Маппинг: имя файла (service) → slug WordPress-страницы (из shared-config.json)
-SERVICE_SLUG_MAP: dict[str, str] = {}
-for _slug, _svc in _CONFIG["services"].items():
-    SERVICE_SLUG_MAP[_svc["name"].lower()] = _slug
-    for _alias in _svc.get("aliases", []):
-        SERVICE_SLUG_MAP[_alias.lower()] = _slug
+# Маппинг: имя файла (service) → slug WordPress-страницы (из services + uslugi)
+def _build_service_slug_map() -> dict[str, str]:
+    out: dict[str, str] = {}
+    for src in (_CONFIG.get("services", {}), _CONFIG.get("uslugi", {})):
+        for _slug, _svc in src.items():
+            out[_svc["name"].lower()] = _slug
+            for _alias in _svc.get("aliases", []):
+                out[_alias.lower()] = _slug
+    return out
+
+
+SERVICE_SLUG_MAP = _build_service_slug_map()
 
 
 def resolve_page_slug(service_name: str) -> str | None:

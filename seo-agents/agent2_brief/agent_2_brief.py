@@ -23,6 +23,7 @@ if SHARED_DIR not in sys.path:
 from api_client import ask_ai  # type: ignore
 from keywords_db import load_keywords  # type: ignore
 from logger import get_logger  # type: ignore
+from prompt_loader import load_brand_voice  # type: ignore
 
 console = Console()
 logger = get_logger("seo_agents.agent2")
@@ -31,9 +32,14 @@ OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
 
 
 def load_system_prompt() -> str:
-    """Читаем системный промпт из отдельного файла."""
+    """Читаем системный промпт + brand_voice (показания/противопоказания по услугам)."""
     with open(PROMPT_FILE, "r", encoding="utf-8") as f:
-        return f.read().strip()
+        base = f.read().strip()
+    try:
+        brand = load_brand_voice()
+        return f"{base}\n\n--- КОНТЕКСТ БРЕНДА ---\n{brand}"
+    except FileNotFoundError:
+        return base
 
 
 def generate_brief(service_name: str, city: str, keywords_text: str) -> str:
@@ -50,7 +56,8 @@ def generate_brief(service_name: str, city: str, keywords_text: str) -> str:
         "2) «Проблемы и боли клиента» — 3–5 типичных ситуаций (усталость, хронические боли, стресс, восстановление).\n"
         "3) «Показания» — список: кому рекомендована процедура.\n"
         "4) «Противопоказания» — список: когда нельзя.\n"
-        "5) Структура post_content (строго по порядку):\n"
+        "5) «Результат для клиента» — что получит после курса (конкретные ощущения, изменения).\n"
+        "6) Структура post_content (строго по порядку):\n"
         "   - Лид (крючок, 3–4 предложения)\n"
         "   - H2 «С какими проблемами приходят» — боли ЦА\n"
         "   - H2 «Как работает [услуга]» — механизм\n"
@@ -60,9 +67,9 @@ def generate_brief(service_name: str, city: str, keywords_text: str) -> str:
         "   - H2 «Часто задаваемые вопросы» — 4–6 Q&A\n"
         "   - H2 «Почему выбирают Центр Энтузиаст?» — УТП\n"
         "   - CTA\n"
-        "6) FAQ — 4–6 пар (вопрос + краткий ответ): длительность, количество сеансов, "
+        "7) FAQ — 4–6 пар (вопрос + краткий ответ): длительность, количество сеансов, "
         "противопоказания, сочетание с другими процедурами, подготовка.\n"
-        "7) Рекомендации по тону и подсказки для автора.\n"
+        "8) Рекомендации по тону и подсказки для автора.\n"
         "Пиши на русском, структурировано, с заголовками и списками."
     )
 

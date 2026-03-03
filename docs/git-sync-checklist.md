@@ -71,3 +71,19 @@ powershell -ExecutionPolicy Bypass -File "D:\content-factory\git-entuziastov.ps1
 |--------|------|
 | content-factory | `D:\content-factory` |
 | entuziastov75-vps | `D:\entuziastov75-vps` или `C:\Users\user\Documents\seo_entuziastov75` (авто) |
+
+---
+
+## Почему в репо сайта нет коммитов
+
+| Действие | Что меняется | Где хранится |
+|----------|--------------|--------------|
+| agent4 / agent7 публикуют | post_content страниц | База WordPress на сервере |
+| deploy_to_vps.py --mode rest | service_data (FAQ, steps) | wp_options на сервере |
+| Правки темы, shared-config | PHP, JSON | Локальный репо entuziastov75-vps |
+
+Агенты и деплой работают через REST API — они **не изменяют файлы** в папке entuziastov75-vps. Коммитить нечего, пока вы вручную не правите тему, inc/, shared-config.json.
+
+**Когда будут коммиты:** если копируете shared-config из content-factory в VPS-репо или меняете PHP/шаблоны.
+
+**Скрипт git-vps.bat / git-entuziastov.ps1 -project vps:** при пустом `git status` выведет «Нет изменений для коммита» и выйдет — это ожидаемо после чистого прогона агентов.

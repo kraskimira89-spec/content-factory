@@ -56,3 +56,6 @@ media/images/*
 
 # Отладочные файлы
 debug-*.log
+
+# YandexDriver (скачивается вручную)
+scripts/drivers/*.exe

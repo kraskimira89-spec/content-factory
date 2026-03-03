@@ -81,6 +81,9 @@
       "style": "string, например 'realistic photo' или 'flat illustration'",
       "alt": "string, alt-текст для HTML/img и WP",
       "image_path": "string, относительный путь к файлу от storage_root",
+      "insert_after_block": "int, fallback: после какого H2 вставить (0=лид, 1=первый H2, …)",
+      "slot": "string, привязка к <!-- image_slot: X --> (problems, mechanism, result, target_audience, process, faq, utp)",
+      "layout": "string, left|right|below — слева, справа или блоком под текстом",
       "width": "int, опционально",
       "height": "int, опционально"
     }
@@ -116,6 +119,7 @@
   },
 
   "uslugi": {
+    "aromaterapiya":           { "name": "Ароматерапия",          "aliases": ["ароматерапия", "сеанс ароматерапии"] },
     "gidromassazh":            { "name": "Гидромассаж (АКВАСПА)",  "aliases": ["акваспа", "гидромассаж"] },
     "nastolnyy-tennis":        { "name": "Настольный теннис" },
     "solyanaya-komnata":       { "name": "Соляная комната" },

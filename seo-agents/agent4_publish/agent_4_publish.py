@@ -558,13 +558,115 @@ def _resolve_image_url(
         return None, ""
 
 
-def _embed_images_in_content(content_html: str, images: list[dict]) -> str:
+def _build_figure_html(url: str, alt: str, layout: str = "below") -> str:
+    """Возвращает HTML figure с img. layout: left|right|below."""
+    url_s = url.replace('"', "&quot;")
+    alt_s = (alt or "").replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
+    if layout == "left":
+        style = "float:left; margin:0 1.5em 1em 0; max-width:45%;"
+    elif layout == "right":
+        style = "float:right; margin:0 0 1em 1.5em; max-width:45%;"
+    else:
+        style = "display:block; margin:1.5em auto; max-width:100%; clear:both;"
+    return f'<figure style="{style}"><img src="{url_s}" alt="{alt_s}" style="width:100%;height:auto;" /></figure>'
+
+
+SLOT_COMMENT_PATTERN = re.compile(r"<!--\s*image_slot:\s*(\w+)\s*-->", re.IGNORECASE)
+
+
+def _embed_images_by_slots(content_html: str, images: list[dict]) -> str:
     """
-    Вставляет блоки <figure><img></figure> после первого абзаца.
-    images: список { "url": "...", "alt": "..." }.
+    Вставляет картинки после <!-- image_slot: X -->. Ищет комментарий, вставляет figure после него.
+    images: [{ url, alt, slot, layout }].
     """
     if not images:
         return content_html
+    by_slot: dict[str, list[dict]] = {}
+    for img in images:
+        if not img.get("url") or not img.get("slot"):
+            continue
+        by_slot.setdefault(img["slot"].lower(), []).append(img)
+    if not by_slot:
+        return content_html
+    # Вставляем с конца, чтобы позиции не съезжали
+    result = content_html
+    for m in reversed(list(SLOT_COMMENT_PATTERN.finditer(content_html))):
+        slot = m.group(1).lower()
+        imgs = by_slot.get(slot, [])
+        if not imgs:
+            continue
+        insert_pos = m.end()
+        html_parts = [
+            _build_figure_html(
+                img["url"], img.get("alt") or "", img.get("layout") or "below"
+            )
+            for img in imgs
+        ]
+        result = result[:insert_pos] + "".join(html_parts) + result[insert_pos:]
+    return result
+
+
+def _split_html_by_h2(content_html: str) -> list[str]:
+    """Разбивает HTML на блоки по <h2>...; parts[0] — лид до первого h2, parts[1] — первый H2-блок и т.д."""
+    parts: list[str] = []
+    # Ищем все <h2 и позиции
+    pattern = re.compile(r"<h2\b", re.IGNORECASE)
+    matches = list(pattern.finditer(content_html))
+    if not matches:
+        return [content_html]
+    start = 0
+    for m in matches:
+        if m.start() > start:
+            parts.append(content_html[start : m.start()])
+        start = m.start()
+    parts.append(content_html[start:])
+    return parts
+
+
+def _embed_images_by_blocks(content_html: str, images: list[dict]) -> str:
+    """
+    Вставляет картинки после указанных H2-блоков с учётом layout (left|right|below).
+    images: [{ url, alt, insert_after_block: int, layout }].
+    """
+    if not images:
+        return content_html
+    parts = _split_html_by_h2(content_html)
+    # Группируем картинки по insert_after_block
+    by_block: dict[int, list[dict]] = {}
+    for img in images:
+        if not img.get("url"):
+            continue
+        block_idx = img.get("insert_after_block", 0)
+        if block_idx < 0:
+            block_idx = 0
+        if block_idx >= len(parts):
+            block_idx = len(parts) - 1
+        by_block.setdefault(block_idx, []).append(img)
+    if not by_block:
+        return content_html
+    # Собираем: part + картинки после блока
+    result_parts: list[str] = []
+    for i, part in enumerate(parts):
+        result_parts.append(part)
+        for img in by_block.get(i, []):
+            result_parts.append(_build_figure_html(
+                img["url"], img.get("alt") or "", img.get("layout") or "below"
+            ))
+    return "".join(result_parts)
+
+
+def _embed_images_in_content(content_html: str, images: list[dict]) -> str:
+    """
+    Вставляет картинки. Приоритет: slot (по <!-- image_slot -->) → insert_after_block → после первого </p>.
+    """
+    if not images:
+        return content_html
+    has_slots = any(img.get("slot") for img in images)
+    if has_slots and SLOT_COMMENT_PATTERN.search(content_html):
+        return _embed_images_by_slots(content_html, images)
+    has_positions = any(img.get("insert_after_block") is not None for img in images)
+    if has_positions:
+        return _embed_images_by_blocks(content_html, images)
     block_parts = []
     for img in images:
         if not img.get("url"):
@@ -573,7 +675,6 @@ def _embed_images_in_content(content_html: str, images: list[dict]) -> str:
         alt = (img.get("alt") or "").replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;")
         block_parts.append(f'<figure><img src="{url}" alt="{alt}" /></figure>')
     block = "".join(block_parts)
-    # Вставка после первого </p>
     pos = content_html.find("</p>")
     if pos != -1:
         insert_at = pos + len("</p>")
@@ -821,6 +922,29 @@ def main(
                                 print(f"  Hero из images-generated загружен в медиа: attachment_id={hero_attachment_id}")
                             except Exception as e:
                                 print(f"  Не удалось загрузить hero из images-generated: {e}")
+
+                        # Картинки 2+ из images-generated — в контент с insert_after_block/layout
+                        for rec in imgs[1:]:
+                            site_rel_path = _get_site_image_path(rec)
+                            if not site_rel_path:
+                                continue
+                            abs_path = resolve_image_path(site_rel_path) if resolve_image_path else (PROJECT_ROOT / "media" / site_rel_path)
+                            if not abs_path.is_file():
+                                continue
+                            try:
+                                aid = upload_image_to_wp(
+                                    wp_url, wp_user, wp_app_password, abs_path
+                                )
+                                url = _get_attachment_source_url(wp_url, wp_user, wp_app_password, aid)
+                                if url:
+                                    item = {"url": url, "alt": rec.get("alt") or "", "layout": rec.get("layout") or "below"}
+                                    if rec.get("slot"):
+                                        item["slot"] = rec["slot"]
+                                    else:
+                                        item["insert_after_block"] = rec.get("insert_after_block", 0)
+                                    images_to_embed.append(item)
+                            except Exception as e:
+                                print(f"  Не удалось загрузить img из images-generated: {e}")
 
                 # 2) Fallback на get_hero_image / get_images
                 if hero_attachment_id is None and get_hero_image and get_images:

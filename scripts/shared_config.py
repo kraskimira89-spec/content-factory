@@ -1,7 +1,7 @@
 # scripts/shared_config.py — общее чтение shared-config.json и .env (в т.ч. image_protocol, CF_IMAGE_STORAGE_ROOT)
 """
 Единая точка: загрузка конфига и переменных для агентов.
-Импорт: from scripts.shared_config import get_config, get_image_protocol, get_image_storage_root
+Импорт: from scripts.shared_config import get_config, get_image_protocol, get_image_storage_root, get_comfyui_config, get_comfyui_url
 """
 import json
 import os
@@ -33,6 +33,21 @@ def get_image_protocol() -> dict:
     """Блок image_protocol из конфига. Для agent8: count.min/max; для agent9: relative_path_pattern."""
     cfg = _load_config()
     return cfg.get("image_protocol") or {}
+
+
+def get_comfyui_config() -> dict:
+    """Блок comfyui из конфига: url, timeout, site_hero и т.д."""
+    cfg = _load_config()
+    return cfg.get("comfyui") or {}
+
+
+def get_comfyui_url() -> str:
+    """URL ComfyUI из COMFYUI_URL (.env) или url_default из конфига."""
+    load_dotenv(_ENV_PATH)
+    comfy = get_comfyui_config()
+    env_name = comfy.get("url_env", "COMFYUI_URL")
+    default = comfy.get("url_default", "http://127.0.0.1:8000")
+    return os.getenv(env_name, "").strip() or default
 
 
 def get_image_storage_root() -> Path:

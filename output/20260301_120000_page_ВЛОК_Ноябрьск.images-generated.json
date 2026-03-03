@@ -8,13 +8,13 @@
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/02/service_site_hero_1280x720_1.jpg",
+            "image_path": "images/2026/03/03/service_site_hero_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/02/service_site_thumb_800x450_1.jpg",
+            "image_path": "images/2026/03/03/service_site_thumb_800x450_1.jpg",
             "width": 800,
             "height": 450
           }
@@ -22,7 +22,7 @@
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/02/service_vk_feed_1200x630_1.jpg",
+            "image_path": "images/2026/03/03/service_vk_feed_1200x630_1.jpg",
             "width": 1200,
             "height": 630
           }
@@ -30,13 +30,13 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/02/service_insta_square_1080x1080_1.jpg",
+            "image_path": "images/2026/03/03/service_insta_square_1080x1080_1.jpg",
             "width": 1080,
             "height": 1080
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/02/service_insta_story_1080x1920_1.jpg",
+            "image_path": "images/2026/03/03/service_insta_story_1080x1920_1.jpg",
             "width": 1080,
             "height": 1920
           }
@@ -44,7 +44,7 @@
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/02/service_tg_post_1280x720_1.jpg",
+            "image_path": "images/2026/03/03/service_tg_post_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           }
@@ -52,7 +52,7 @@
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/02/service_wa_post_1280x720_1.jpg",
+            "image_path": "images/2026/03/03/service_wa_post_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           }
@@ -60,7 +60,7 @@
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/02/service_yt_thumb_1280x720_1.jpg",
+            "image_path": "images/2026/03/03/service_yt_thumb_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           }
@@ -68,7 +68,7 @@
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/02/service_ok_thumb_720x405_1.jpg",
+            "image_path": "images/2026/03/03/service_ok_thumb_720x405_1.jpg",
             "width": 720,
             "height": 405
           }

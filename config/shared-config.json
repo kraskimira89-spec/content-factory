@@ -86,6 +86,17 @@
     }
   },
 
+  "comfyui": {
+    "_comment": "Настройки для генерации картинок через ComfyUI. URL ComfyUI: http://127.0.0.1:8000/",
+    "url_env": "COMFYUI_URL",
+    "url_default": "http://127.0.0.1:8000",
+    "timeout_sec": 120,
+    "site_hero": {
+      "width": 1280,
+      "height": 720
+    }
+  },
+
   "rubrics": {
     "health_fitness":       { "title": "Здоровье и фитнес",      "wp_cat_env": "WP_CAT_HEALTH_FITNESS",       "keywords": "упражнения лфк восстановление травм операций фитнес здоровье тренажер зал" },
     "relax_massage":        { "title": "Релаксация и массаж",     "wp_cat_env": "WP_CAT_RELAX_MASSAGE",        "keywords": "лимфодренаж кедровая бочка фитобочка массаж релаксация оздоровление омоложение обертывание соляная комната" },

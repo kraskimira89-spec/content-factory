@@ -85,22 +85,22 @@ def _wp_request(method: str, url: str, wp_user: str, wp_app_password: str,
         try:
             resp = _session.request(method, url, **kwargs)
             if resp.status_code == 401:
-                raise RuntimeError("❌ Авторизация WP не прошла (401). Проверьте WP_USERNAME / WP_APP_PASSWORD")
+                raise RuntimeError("Авторизация WP не прошла (401). Проверьте WP_USERNAME / WP_APP_PASSWORD")
             if resp.status_code == 403:
-                raise RuntimeError("❌ Нет прав (403). Пользователю нужна capability edit_posts / edit_pages")
+                raise RuntimeError("Нет прав (403). Пользователю нужна capability edit_posts / edit_pages")
             return resp
         except requests.exceptions.ConnectionError as e:
             last_err = e
-            print(f"  ⚠️ Сетевая ошибка (попытка {attempt}/{retries}): {e}")
+            print(f"  [!] Сетевая ошибка (попытка {attempt}/{retries}): {e}")
         except requests.exceptions.Timeout as e:
             last_err = e
-            print(f"  ⚠️ Таймаут (попытка {attempt}/{retries})")
+            print(f"  [!] Таймаут (попытка {attempt}/{retries})")
         if attempt < retries:
             wait = RETRY_BACKOFF * attempt
             print(f"  ⏳ Повтор через {wait:.0f} с...")
             time.sleep(wait)
 
-    raise RuntimeError(f"❌ Все {retries} попыток неудачны: {last_err}")
+    raise RuntimeError(f"Все {retries} попыток неудачны: {last_err}")
 
 
 # === Рубрики блога (из shared-config.json) ===
@@ -603,15 +603,15 @@ def _resolve_hero_attachment_id(
     else:
         abs_path = PROJECT_ROOT / path_raw
     if not abs_path.is_file():
-        print(f"  ⚠️ Hero-картинка не найдена по пути: {abs_path} (TODO: загрузить в WP)")
+        print(f"  [!] Hero-картинка не найдена по пути: {abs_path} (TODO: загрузить в WP)")
         return None
     try:
         aid = upload_image_to_wp(wp_url, wp_user, wp_app_password, abs_path)
         set_attachment_id(str(page_id), hero_record.get("image_id", "hero"), aid)
-        print(f"  📷 Hero-картинка загружена в медиа: attachment_id={aid}")
+        print(f"  [img] Hero-картинка загружена в медиа: attachment_id={aid}")
         return aid
     except Exception as e:
-        print(f"  ⚠️ Не удалось загрузить hero-картинку: {e}")
+        print(f"  [!] Не удалось загрузить hero-картинку: {e}")
         return None
 
 
@@ -791,12 +791,36 @@ def main(
                 content_no_faq = _strip_indications_block_from_html(content_no_faq)
                 hero_attachment_id = None
                 images_to_embed: list[dict] = []
-                if get_hero_image and get_images:
+
+                # 1) Приоритет hero: images-generated.json (site.hero)
+                if images_generated:
+                    imgs = images_generated.get("images", [])
+                    if imgs:
+                        first = imgs[0]
+                        site_rel_path = _get_site_image_path(first)
+                        if site_rel_path:
+                            if resolve_image_path is not None:
+                                abs_path = resolve_image_path(site_rel_path)
+                            else:
+                                abs_path = PROJECT_ROOT / "media" / site_rel_path
+                        else:
+                            abs_path = None
+
+                        if abs_path is not None and abs_path.is_file():
+                            try:
+                                hero_attachment_id = upload_image_to_wp(
+                                    wp_url, wp_user, wp_app_password, abs_path
+                                )
+                                print(f"  Hero из images-generated загружен в медиа: attachment_id={hero_attachment_id}")
+                            except Exception as e:
+                                print(f"  Не удалось загрузить hero из images-generated: {e}")
+
+                # 2) Fallback на get_hero_image / get_images
+                if hero_attachment_id is None and get_hero_image and get_images:
                     hero_record = get_hero_image(str(page["id"]))
                     hero_attachment_id = _resolve_hero_attachment_id(
                         wp_url, wp_user, wp_app_password, page["id"], hero_record
                     )
-                    # Остальные картинки — в контент (первая с purpose hero уже как featured)
                     all_images = get_images(str(page["id"]))
                     hero_id = hero_record.get("image_id") if hero_record else None
                     for rec in all_images:
@@ -810,6 +834,7 @@ def main(
                                 "url": url,
                                 "alt": rec.get("alt") or rec.get("purpose") or rec.get("image_id", ""),
                             })
+
                 if images_to_embed:
                     content_no_faq = _embed_images_in_content(content_no_faq, images_to_embed)
                 print(f"Обновляю post_content страницы ({status_msg})...")
@@ -818,7 +843,7 @@ def main(
                     status="draft" if draft else None,
                     featured_media=hero_attachment_id,
                 )
-                print(f"✅ Страница обновлена: ID={page['id']}, link={page['link']}" + (" (черновик)" if draft else ""))
+                print(f"[OK] Страница обновлена: ID={page['id']}, link={page['link']}" + (" (черновик)" if draft else ""))
                 _log_to_db(meta, result)
                 if not do_both:
                     return
@@ -921,7 +946,7 @@ def main(
 
     post_id = result.get("id")
     link = result.get("link")
-    print(f"✅ Запись создана: ID={post_id}, link={link}")
+    print(f"[OK] Запись создана: ID={post_id}, link={link}")
 
     _log_to_db(meta, result)
 

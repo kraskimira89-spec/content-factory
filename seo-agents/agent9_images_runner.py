@@ -14,6 +14,8 @@ import sys
 from pathlib import Path
 from typing import Any
 
+import requests
+
 # Корень проекта content-factory — для импорта scripts.shared_config
 _PROJECT_ROOT = Path(__file__).resolve().parents[1]
 _OUTPUT_DIR = _PROJECT_ROOT / "output"
@@ -22,6 +24,8 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from scripts.shared_config import (
     build_image_relative_path_with_size,
+    get_comfyui_config,
+    get_comfyui_url,
     get_image_protocol,
     get_image_storage_root,
 )  # noqa: E402
@@ -37,6 +41,31 @@ def fake_generate_image(prompt: str, width: int, height: int) -> tuple[bytes, in
     Вместо вызова ComfyUI возвращает пустые байты и заданный размер.
     """
     return b"", width, height
+
+
+def run_comfyui_generation(abs_path: Path, prompt: str, width: int, height: int) -> tuple[int, int]:
+    """
+    Вызов ComfyUI для site.hero. Пока при любой ошибке API — fallback на заглушку.
+    Реальные картинки можно подложить вручную в media/ по тем же именам.
+    """
+    # TODO: подключить ComfyUI /prompt (сейчас fallback на заглушку и fake_generate_image)
+    base_url = get_comfyui_url().rstrip("/")
+    comfy_cfg = get_comfyui_config()
+    timeout = int(comfy_cfg.get("timeout_sec", 120))
+
+    payload = {"prompt": prompt, "width": width, "height": height}
+    abs_path.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        resp = requests.post(f"{base_url}/generate", json=payload, timeout=timeout)
+        resp.raise_for_status()
+        abs_path.write_bytes(resp.content)
+        return width, height
+    except Exception as e:
+        print(f"[agent9] ComfyUI error for {abs_path}: {e}")
+        image_bytes, w, h = fake_generate_image(prompt, width, height)
+        abs_path.write_bytes(image_bytes)
+        return w, h
 
 
 def _normalize_variants_cfg(variants_cfg: dict) -> dict[str, list[dict]]:
@@ -75,14 +104,18 @@ def run_images_generation(plan: dict[str, Any], slug: str) -> dict[str, Any]:
                 name = profile.get("name", "default")
                 width = profile.get("width", 1280)
                 height = profile.get("height", 720)
-                image_bytes, w, h = fake_generate_image(prompt, width, height)
 
                 rel_path_str = build_image_relative_path_with_size(
-                    slug, w, h, idx, network=network_name, variant=name
+                    slug, width, height, idx, network=network_name, variant=name
                 )
                 abs_path = (storage_root / rel_path_str).resolve()
-                abs_path.parent.mkdir(parents=True, exist_ok=True)
-                abs_path.write_bytes(image_bytes)
+
+                if network_name == "site" and name == "hero":
+                    w, h = run_comfyui_generation(abs_path, prompt, width, height)
+                else:
+                    image_bytes, w, h = fake_generate_image(prompt, width, height)
+                    abs_path.parent.mkdir(parents=True, exist_ok=True)
+                    abs_path.write_bytes(image_bytes)
 
                 print(f"[agent9] Картинка {idx + 1}/{len(images)} [{network_name}/{name}] -> {abs_path.name}")
                 updated["variants"][network_name].append({

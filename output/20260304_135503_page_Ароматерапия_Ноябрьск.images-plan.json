@@ -1,0 +1,98 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A symbolic representation of heavy legs, fatigue, and the burden of daily life. Imagine a pair of shoes left behind at the edge of a quiet forest path, surrounded by soft light filtering through the trees, conveying a sense of letting go and the need for relief. The background features a blurred office chair and paperwork to symbolize the stress and anxiety of work life, while the forest signifies a natural escape and rejuvenation.",
+      "style": "soft illustration",
+      "alt": "Символическая иллюстрация усталости и желания облегчения",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "An abstract illustration representing the flow of essential oils in the air, depicted as vibrant waves or light streams swirling around a silhouette of a person, symbolizing the activation of senses and the healing process. The colors should be soft and calming, creating a serene atmosphere where the essence of aromatherapy is conveyed through gentle movement and diffusion, suggesting relaxation and comfort.",
+      "style": "soft illustration",
+      "alt": "Абстракция, символизирующая ароматерапию и восстановление через запахи",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "A serene scene depicting a person walking gracefully in a lush green park, radiating joy and vitality. The sunlight filters through the leaves, creating a warm and inviting atmosphere. The person's posture reflects ease and freedom, symbolizing the release of stress and rejuvenation. Soft waves of light can be seen surrounding them, representing the calming effects of aromatherapy. The background includes gentle flowers in bloom, highlighting the connection between nature and well-being. The overall mood is uplifting, conveying a sense of harmony and revitalization.",
+      "style": "soft illustration",
+      "alt": "Сцена с человеком, идущим по зелёному парку, олицетворяющим лёгкость и гармонию",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "a serene scene depicting a diverse group of people in a natural setting, each enjoying a moment of relaxation and self-care; one is meditating under a tree, another is lying on a blanket with nature around, a third is enjoying a soothing aroma from essential oils; soft sunlight filters through the leaves, creating a warm and inviting atmosphere of harmony and tranquility",
+      "style": "soft illustration",
+      "alt": "люди в гармонии с природой, наслаждающиеся ароматерапией",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "process",
+      "prompt": "A serene spa-like scene featuring a person lying comfortably on a massage table, eyes gently closed, surrounded by soft ambient light. The room is filled with hints of essential oils in beautiful bottles, delicate plants, and calming textures. There is an atmosphere of warmth and care, evoking a sense of relaxation and tranquility. The person feels enveloped in a soothing space, ready to experience aromatherapy.",
+      "style": "soft illustration",
+      "alt": "человек расслабляется во время ароматерапии в уютной атмосфере",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "faq",
+      "prompt": "A tranquil scene depicting a serene and inviting space within a health center, where soft light filters through gentle curtains. The atmosphere conveys trust and safety, with comfortable seating and soothing colors. There's a subtle hint of nature in the background, symbolizing calmness and relaxation. The environment feels nurturing, suggesting care and attention to well-being without featuring any people or explicit actions.",
+      "style": "soft illustration",
+      "alt": "Спокойная атмосфера центра здоровья",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "utp",
+      "prompt": "a serene and cozy wellness center interior, showcasing soft ambient lighting, plush seating, and gentle aromas wafting through the air; a sense of trust and care is emanating from the surroundings, with various aromatic oils artistically displayed on a wooden shelf, while the atmosphere radiates warmth and relaxation, inviting individuals to unwind and rejuvenate their spirit",
+      "style": "realistic photo",
+      "alt": "уютная атмосфера центра здоровья с аромасами",
+      "layout": "below",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "service",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на ароматерапию?",
+      "text": "- **Хроническая усталость** — как будто батарейки разрядились, и никакие выходные не помогают.\n- **Стресс и тревожность** — зажаты плечи и постоянная тревога за работу или повседневные заботы.\n- **Проблемы со сном** — бессонные ночи и утренняя разбитость.\n- **Мышечные зажимы** — дискомфорт и напряжение, делающее каждый шаг настоящим испытанием.\n- **Желание улучшить общее самочувствие** — нужно что-то, что поможет встать с утра и чувствовать себя бодрым, как в юности."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает ароматерапия?",
+      "text": "Процедура ароматерапии включает индивидуальный подбор эфирных масел, которые диффундируются в кабинете. Эти запахи — как путеводные звёзды — проникают в организм, активируя привычные для нас реакции и помогая справиться с многочисленными проблемами. Каждый аромат пробуждает что-то своё: от комфорта до незаметного, но такого важного восстановления."
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт ароматерапия?",
+      "text": "- ✅ **Устранение хронической усталости** — прощаемся с ощущением разбитости и поднимаем уровень энергии.\n- ✅ **Снижение уровня стресса** — легче дышать, мысли успокаиваются.\n- ✅ **Улучшение качества сна** — забудете о бесконечной вертке в постели и завтра проснётесь свежими.\n- ✅ **Облегчение мышечных зажимов** — с каждым вдохом уходит напряжение.\n- ✅ **Повышение жизненного тонуса** — просто ощущаете, что жить — это здорово!\n- ✅ **Общая гармония тела и духа** — каждое занятие — поездка в страну, где царит мир и покой."
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна ароматерапия?",
+      "text": "- Тем, кто переживает **сильный стресс** — руки опускаются, а мы поднимаем настроение.\n- Тем, кто страдает от **бессонницы** — забудьте о «скучных» снах и приветствуйте крепкий сон.\n- Людям с **мышечными зажимами** — как холодное мороженое в жару, приятно и нужно.\n- Тем, кто хочет **улучшить иммунитет** — ведь здоровье — это лучшее, что у нас есть.\n- Всем, кто стремится найти **гармонию и покой** — это именно то, что мы можем вам предложить."
+    },
+    {
+      "slot": "process",
+      "title": "Как проходит процедура шаг за шагом",
+      "text": "1. **Консультация:** вместе выявим ваши предпочтения и потребности.\n2. **Подбор эфирных масел:** выберем сочетания, которые лучше всего подойдут именно вам.\n3. **Процедура ароматерапии:** вам будет предложено уютное место, где можно расслабиться (20-35 минут).\n4. **Релаксация:** погрузитесь в атмосферу, которая окутывает вас теплом и заботой.\n5. **Обсуждение результатов:** расскажем, как ощутить эффект ароматерапии в повседневной жизни."
+    },
+    {
+      "slot": "faq",
+      "title": "Часто задаваемые вопросы",
+      "text": "- *Какова длительность процедуры?*  \nПроцедура длится от 20 до 35 минут, в зависимости от ваших предпочтений и задач.\n\n- *Сколько сеансов нужно пройти?*  \nРекомендуемый курс — от 5 до 10 сеансов для достижения ощутимого результата.\n\n- *Есть ли противопоказания?*  \nДа, ознакомьтесь с разделом «Противопоказания» перед записью.\n\n- *Можно ли сочетать ароматерапию с массажем?*  \nДа, это отличное сочетание для достижения глубокого релакса.\n\n- *Нужно ли как-то готовиться к сеансу?*  \nСпециальной подготовки не требуется, главное — прийти в удобной одежде."
+    },
+    {
+      "slot": "utp",
+      "title": "Почему выбирают Центр Энтузиаст?",
+      "text": "Наш центр предлагает уникальную атмосферу и профессиональный подход к каждому клиенту. Мы используем только проверенные эфирные масла бренда Gloris Aroma, индивидуально подбираем каждую сессию. Наша высокая степень удовлетворенности подтверждается рейтингом 4,8★ на Яндекс.Картах — к нам возвращаются не только за качеством, но и за отношением.\n\nЗапишитесь на ароматерапию и откройте для себя мир расслабляющих ароматов! [Записаться](https://entuziastov75.ru) по телефону +7 (904) 475-91-01."
+    }
+  ]
+}

@@ -28,6 +28,7 @@ from scripts.shared_config import (
     get_comfyui_url,
     get_image_protocol,
     get_image_storage_root,
+    get_sd_webui_url,
 )  # noqa: E402
 
 
@@ -43,29 +44,66 @@ def fake_generate_image(prompt: str, width: int, height: int) -> tuple[bytes, in
     return b"", width, height
 
 
+def _generate_via_sd_webui(prompt: str, width: int, height: int, timeout: int) -> bytes:
+    """Stable Diffusion WebUI sdapi/v1/txt2img — возвращает байты PNG."""
+    import base64
+    url = get_sd_webui_url().rstrip("/") + "/sdapi/v1/txt2img"
+    payload = {
+        "prompt": prompt,
+        "negative_prompt": "blurry, low quality, distorted, text, watermark, logo",
+        "width": min(max(width, 512), 1536),
+        "height": min(max(height, 512), 1536),
+        "steps": 25,
+        "sampler_name": "DPM++ 2M Karras",
+        "cfg_scale": 7,
+        "seed": -1,
+    }
+    resp = requests.post(url, json=payload, timeout=timeout)
+    resp.raise_for_status()
+    data = resp.json()
+    if not data.get("images"):
+        raise ValueError("SD WebUI вернул пустой images")
+    return base64.b64decode(data["images"][0])
+
+
 def run_comfyui_generation(abs_path: Path, prompt: str, width: int, height: int) -> tuple[int, int]:
     """
-    Вызов ComfyUI для site.hero. Пока при любой ошибке API — fallback на заглушку.
-    Реальные картинки можно подложить вручную в media/ по тем же именам.
+    Генерация через: 1) ComfyUI/API /generate, 2) SD WebUI sdapi/v1/txt2img.
+    При ошибке — заглушка (пустой файл).
     """
-    # TODO: подключить ComfyUI /prompt (сейчас fallback на заглушку и fake_generate_image)
-    base_url = get_comfyui_url().rstrip("/")
+    base_url = get_comfyui_url().strip().rstrip("/")
+    sd_url = get_sd_webui_url().strip().rstrip("/")
     comfy_cfg = get_comfyui_config()
     timeout = int(comfy_cfg.get("timeout_sec", 120))
-
-    payload = {"prompt": prompt, "width": width, "height": height}
     abs_path.parent.mkdir(parents=True, exist_ok=True)
 
-    try:
-        resp = requests.post(f"{base_url}/generate", json=payload, timeout=timeout)
-        resp.raise_for_status()
-        abs_path.write_bytes(resp.content)
-        return width, height
-    except Exception as e:
-        print(f"[agent9] ComfyUI error for {abs_path}: {e}")
-        image_bytes, w, h = fake_generate_image(prompt, width, height)
-        abs_path.write_bytes(image_bytes)
-        return w, h
+    # 1) SD WebUI sdapi/v1/txt2img (порт 7860) — приоритет, не требует доп. сервера
+    if sd_url:
+        try:
+            img_bytes = _generate_via_sd_webui(prompt, width, height, timeout)
+            abs_path.write_bytes(img_bytes)
+            return width, height
+        except Exception as e:
+            print(f"[agent9] SD WebUI недоступен: {e}")
+
+    # 2) ComfyUI/API /generate (порт 8000)
+    if base_url:
+        try:
+            resp = requests.post(
+                f"{base_url}/generate",
+                json={"prompt": prompt, "width": width, "height": height},
+                timeout=timeout,
+            )
+            resp.raise_for_status()
+            abs_path.write_bytes(resp.content)
+            return width, height
+        except Exception as e:
+            print(f"[agent9] ComfyUI /generate недоступен: {e}")
+
+    # 3) Fallback — заглушка
+    image_bytes, w, h = fake_generate_image(prompt, width, height)
+    abs_path.write_bytes(image_bytes)
+    return w, h
 
 
 def _normalize_variants_cfg(variants_cfg: dict) -> dict[str, list[dict]]:

@@ -90,9 +90,11 @@
   },
 
   "comfyui": {
-    "_comment": "Настройки для генерации картинок через ComfyUI. URL ComfyUI: http://127.0.0.1:8000/",
+    "_comment": "Настройки генерации. url_default — API /generate или SD WebUI. sd_webui_url — SD WebUI sdapi/v1/txt2img (альтернатива)",
     "url_env": "COMFYUI_URL",
     "url_default": "http://127.0.0.1:8000",
+    "sd_webui_url_env": "SD_WEBUI_URL",
+    "sd_webui_url_default": "http://127.0.0.1:7860",
     "timeout_sec": 120,
     "site_hero": {
       "width": 1280,

@@ -50,6 +50,15 @@ def get_comfyui_url() -> str:
     return os.getenv(env_name, "").strip() or default
 
 
+def get_sd_webui_url() -> str:
+    """URL Stable Diffusion WebUI (sdapi/v1/txt2img)."""
+    load_dotenv(_ENV_PATH)
+    comfy = get_comfyui_config()
+    env_name = comfy.get("sd_webui_url_env", "SD_WEBUI_URL")
+    default = comfy.get("sd_webui_url_default", "http://127.0.0.1:7860")
+    return os.getenv(env_name, "").strip() or default
+
+
 def get_image_storage_root() -> Path:
     """
     Корень хранилища картинок: из image_protocol берётся имя env (storage_root_env)

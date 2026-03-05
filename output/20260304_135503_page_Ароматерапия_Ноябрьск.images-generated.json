@@ -2,46 +2,28 @@
   "images": [
     {
       "slot": "problems",
-      "prompt": "High-quality illustration showing typical problems before aromatherapy: stress, tension, poor sleep, chronic fatigue, no faces, no text, clean medical spa style, soft light. Высококачественная иллюстрация типичных проблем до процедуры Ароматерапия: стресс, напряжение, нарушение сна, хроническая усталость, без лиц и текста, в спокойном медицинско-спа стиле, мягкий свет",
-      "style": "soft illustration",
-      "alt": "Кабинет ароматерапии в центре здоровья «Энтузиаст»",
+      "prompt": "A dimly lit living room scene showing signs of chronic fatigue and stress: a person sitting alone on a couch with closed eyes, rubbing temples, messy desk with scattered papers in the background, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition with empty foreground space Сцена в комнате с приглушенным светом, показывающая хроническую усталость и стресс: человек сидит один на диване с закрытыми глазами и массирует виски, на заднем плане беспорядок на столе, холодная приглушенная палитра, мягкий свет из окна, малая глубина резкости, реалистичное фото, чистая композиция, свободное место для текста",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Ароматерапия",
       "layout": "right",
       "role": "emotion_support",
-      "variant_overrides": {
-        "site.hero": {
-          "prompt": "cozy aroma therapy room in a modern health center in Noyabrsk, warm candle light, aroma diffuser with visible steam, wooden table, neatly folded towels, soft beige wall, realistic photo, high detail, professional lighting, no people, no text, no watermark, no logo",
-          "style": "realistic photo",
-          "alt": "Кабинет ароматерапии в центре здоровья «Энтузиаст»"
-        },
-        "site.thumb": {
-          "prompt": "close-up of aroma diffuser with visible steam and two candles on a wooden tray, cozy spa atmosphere, soft warm light, realistic photo, high detail, no people, no text, no watermark, no logo",
-          "style": "realistic photo",
-          "alt": "Аромадиффузор и свечи для сеанса ароматерапии"
-        },
-        "vk.feed": {
-          "prompt": "wide shot of aromatherapy session in a modern health center, massage table with person covered by towel seen from back, aroma diffuser with steam and candles in foreground, soft warm light, calm spa interior, realistic photo, high detail, no visible faces, no text, no watermark, no logo",
-          "style": "realistic photo",
-          "alt": "Сеанс ароматерапии в уютном кабинете центра здоровья"
-        },
-        "insta.square": {
-          "prompt": "square composition of aroma therapy mood: aroma diffuser with steam, three candles, essential oil bottles, green plant in the background, soft warm light, shallow depth of field, realistic photo, high detail, no people, no text, no watermark, no logo",
-          "style": "realistic photo",
-          "alt": "Атмосфера сеанса ароматерапии: диффузор, свечи и эфирные масла"
-        }
-      },
       "variants": {
         "site": [
           {
             "name": "hero",
             "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_1.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "thumb",
             "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_1.jpg",
             "width": 800,
-            "height": 450
+            "height": 450,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "vk": [
@@ -57,13 +39,17 @@
             "name": "square",
             "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_1.jpg",
             "width": 1080,
-            "height": 1080
+            "height": 1080,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "story",
             "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_1.jpg",
             "width": 1080,
-            "height": 1920
+            "height": 1920,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "tg": [
@@ -79,7 +65,9 @@
             "name": "post",
             "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_1.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "yt": [
@@ -87,7 +75,9 @@
             "name": "thumb",
             "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_1.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "ok": [
@@ -95,16 +85,18 @@
             "name": "thumb",
             "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_1.jpg",
             "width": 720,
-            "height": 405
+            "height": 405,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ]
       }
     },
     {
       "slot": "mechanism",
-      "prompt": "Abstract illustration representing the flow and mechanism of aromatherapy: waves, light streams, gentle movement around a silhouette, activation of senses, healing process, soft calming colors, serene atmosphere, no faces, no text. Абстрактная иллюстрация механизма Ароматерапия: волны, потоки света, мягкое движение, активация чувств, спокойная атмосфера, без лиц и текста",
-      "style": "soft illustration",
-      "alt": "Как работает Ароматерапия",
+      "prompt": "Close-up of aromatherapy essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting Крупный план эфирных масел и аромадиффузора для Ароматерапия на деревянном подносе, виден теплый пар, мягкая золотистая подсветка, аккуратно разложенные веточки лаванды и эвкалипта, малая глубина резкости, мягкий боке-фон, реалистичное макро-фото с аккуратными не подписанными бутылочками",
+      "style": "realistic photo",
+      "alt": "Как действует Ароматерапия: эфирные масла и аромадиффузор",
       "layout": "left",
       "role": "emotion_support",
       "variants": {
@@ -113,9 +105,7 @@
             "name": "hero",
             "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_2.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           },
           {
             "name": "thumb",
@@ -145,7 +135,9 @@
             "name": "story",
             "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_2.jpg",
             "width": 1080,
-            "height": 1920
+            "height": 1920,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "tg": [
@@ -153,7 +145,9 @@
             "name": "post",
             "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_2.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "wa": [
@@ -161,9 +155,7 @@
             "name": "post",
             "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_2.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           }
         ],
         "yt": [
@@ -186,9 +178,9 @@
     },
     {
       "slot": "result",
-      "prompt": "High-quality illustration of relaxation and relief after aromatherapy, calm person, light smile, cozy spa atmosphere, plants, candles, no text, no logos. Высококачественная иллюстрация расслабления и облегчения после процедуры Ароматерапия: спокойная атмосфера спа, растения, мягкий свет, без текста и логотипов",
-      "style": "soft illustration",
-      "alt": "Результаты после курса процедуры Ароматерапия",
+      "prompt": "Bright airy spa relaxation lounge after a aromatherapy session, person wrapped in a soft white robe resting on a comfortable daybed, gentle smile, eyes closed, completely relaxed posture, large window with warm morning sunlight, fresh flowers in a vase and a cup of herbal tea on a side table, warm golden color palette, realistic photo, peaceful welcoming atmosphere Светлая комната отдыха после сеанса Ароматерапия: человек в мягком белом халате отдыхает на шезлонге, легкая улыбка, закрытые глаза, полностью расслабленная поза, большое окно с теплым утренним светом, свежие цветы в вазе и чашка травяного чая на столике, теплая золотистая палитра, реалистичное фото, атмосфера спокойствия",
+      "style": "realistic photo",
+      "alt": "Результат после курса Ароматерапия: расслабление и хорошее самочувствие",
       "layout": "below",
       "role": "emotion_support",
       "variants": {
@@ -197,9 +189,7 @@
             "name": "hero",
             "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_3.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           },
           {
             "name": "thumb",
@@ -227,7 +217,9 @@
             "name": "story",
             "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_3.jpg",
             "width": 1080,
-            "height": 1920
+            "height": 1920,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "tg": [
@@ -245,9 +237,7 @@
             "name": "post",
             "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_3.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           }
         ],
         "yt": [
@@ -255,9 +245,7 @@
             "name": "thumb",
             "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_3.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           }
         ],
         "ok": [
@@ -265,18 +253,16 @@
             "name": "thumb",
             "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_3.jpg",
             "width": 720,
-            "height": 405,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 405
           }
         ]
       }
     },
     {
       "slot": "target_audience",
-      "prompt": "Illustration of people who need aromatherapy: office worker, active person, woman 30-45, calm modern style, no faces, no text. Иллюстрация людей, которым особенно нужна Ароматерапия: офисный сотрудник, активный человек, женщина 30–45 лет, современный спокойный стиль, без лиц и текста",
-      "style": "soft illustration",
-      "alt": "Кому особенно полезна услуга Ароматерапия",
+      "prompt": "Editorial style collage of three people who benefit from aromatherapy: a tired office worker at a desk, an active woman after workout stretching, a calm middle-aged person reading a book at home, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds Коллаж в журнальном стиле из трех людей, которым полезна Ароматерапия: уставший офисный сотрудник за столом, активная женщина после тренировки, делающая растяжку, спокойный человек среднего возраста с книгой дома, мягкий дневной свет, теплые оттенки, современная лайфстайл-эстетика, реалистичное фото с минималистичным фоном",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Ароматерапия",
       "layout": "right",
       "role": "emotion_support",
       "variants": {
@@ -285,9 +271,7 @@
             "name": "hero",
             "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_4.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           },
           {
             "name": "thumb",
@@ -309,9 +293,7 @@
             "name": "square",
             "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_4.jpg",
             "width": 1080,
-            "height": 1080,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 1080
           },
           {
             "name": "story",
@@ -335,9 +317,7 @@
             "name": "post",
             "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_4.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           }
         ],
         "yt": [
@@ -353,18 +333,16 @@
             "name": "thumb",
             "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_4.jpg",
             "width": 720,
-            "height": 405,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 405
           }
         ]
       }
     },
     {
       "slot": "process",
-      "prompt": "High-quality photo of aromatherapy procedure in a modern health center in Noyabrsk, cozy interior, professional equipment, soft warm light, no faces, no logos, realistic photo. Реалистичное фото процедуры Ароматерапия в современном центре здоровья в Ноябрьске: уютный интерьер, профессиональное оборудование, мягкий тёплый свет, без лиц и логотипов",
+      "prompt": "A tranquil aromatherapy treatment room in a modern health center in Noyabrsk, massage table with neatly folded white towels, aroma diffuser emitting soft visible steam, two candles on a wooden shelf, potted green plant in the corner, soft warm ambient light, beige and white interior, wide angle shot, realistic photo, peaceful solitary empty room Спокойный кабинет для Ароматерапия в современном центре здоровья в Ноябрьске: массажный стол с аккуратно сложенными белыми полотенцами, аромадиффузор с мягким паром, две свечи на деревянной полке, зеленое растение в углу, мягкий теплый свет, бежево-белый интерьер, широкоугольный реалистичный снимок пустого кабинета",
       "style": "realistic photo",
-      "alt": "Как проходит процедура Ароматерапия шаг за шагом",
+      "alt": "Кабинет Ароматерапия в центре здоровья «Энтузиаст» в Ноябрьске",
       "layout": "below",
       "role": "emotion_support",
       "variants": {
@@ -395,9 +373,7 @@
             "name": "square",
             "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_5.jpg",
             "width": 1080,
-            "height": 1080,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 1080
           },
           {
             "name": "story",
@@ -421,9 +397,7 @@
             "name": "post",
             "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_5.jpg",
             "width": 1280,
-            "height": 720,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 720
           }
         ],
         "yt": [
@@ -446,8 +420,8 @@
     },
     {
       "slot": "faq",
-      "prompt": "Minimalistic flat illustration with icons about aromatherapy, clean medical style, teal and white colors, no text. Минималистичная плоская иллюстрация с иконками про Ароматерапия, чистый медицинский стиль, бирюзовые и белые цвета, без текста",
-      "style": "soft illustration",
+      "prompt": "Flat lay overhead shot of aromatherapy preparation items on a light wooden surface: small amber glass bottles with essential oils, dried lavender bundles, a white ceramic aroma diffuser, a notepad and pen, eucalyptus branch, soft even overhead lighting, realistic product photography, clean organized composition, unmarked labels, warm natural colors Вид сверху на предметы для подготовки к Ароматерапия на светлой деревянной поверхности: небольшие коричневые бутылочки с эфирными маслами, сухие веточки лаванды, белый керамический аромадиффузор, блокнот и ручка, веточка эвкалипта, мягкий ровный свет сверху, аккуратная композиция без надписей",
+      "style": "realistic photo",
       "alt": "Частые вопросы об услуге Ароматерапия",
       "layout": "below",
       "role": "emotion_support",
@@ -463,9 +437,7 @@
             "name": "thumb",
             "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_6.jpg",
             "width": 800,
-            "height": 450,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 450
           }
         ],
         "vk": [
@@ -481,17 +453,13 @@
             "name": "square",
             "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_6.jpg",
             "width": 1080,
-            "height": 1080,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 1080
           },
           {
             "name": "story",
             "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_6.jpg",
             "width": 1080,
-            "height": 1920,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 1920
           }
         ],
         "tg": [
@@ -530,9 +498,9 @@
     },
     {
       "slot": "utp",
-      "prompt": "High-quality illustration of unique benefits of aromatherapy in Noyabrsk health center Enthusiast: cozy atmosphere, professional team, modern equipment, no faces, no text. Высококачественная иллюстрация уникальных преимуществ процедуры Ароматерапия в Центре здоровья «Энтузиаст»: уютная атмосфера, профессиональная команда, современное оборудование, без лиц и текста",
+      "prompt": "A welcoming reception area of a modern health and wellness center in Noyabrsk, clean minimalist interior with warm wood accents and green plants, soft ambient lighting, comfortable seating area, shelf with neatly arranged skincare and aromatherapy essential oils, realistic interior photo, bright inviting atmosphere Уютная зона ресепшн современного центра здоровья в Ноябрьске: чистый минималистичный интерьер с теплыми деревянными акцентами и зелеными растениями, мягкий рассеянный свет, удобные кресла, полка с аккуратно расставленными средствами по уходу и эфирными маслами для Ароматерапия, реалистичное интерьерное фото с дружелюбной атмосферой",
       "style": "realistic photo",
-      "alt": "Почему выбирают Ароматерапия в Центре здоровья «Энтузиаст»",
+      "alt": "Почему выбирают Ароматерапия в центре здоровья «Энтузиаст»",
       "layout": "below",
       "role": "emotion_support",
       "variants": {
@@ -563,17 +531,13 @@
             "name": "square",
             "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_7.jpg",
             "width": 1080,
-            "height": 1080,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 1080
           },
           {
             "name": "story",
             "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_7.jpg",
             "width": 1080,
-            "height": 1920,
-            "status": "error",
-            "error": "SD WebUI: генерация не удалась после ретраев"
+            "height": 1920
           }
         ],
         "tg": [

@@ -48,12 +48,12 @@ SERVICE_EN_BY_SLUG: dict[str, str] = {
 SLOT_PROMPTS: dict[str, dict[str, str]] = {
     "problems": {
         "prompt_en": (
-            "A dimly lit living room scene showing signs of chronic fatigue and stress: "
-            "a person sitting alone on a couch with closed eyes, rubbing temples, "
-            "messy desk with scattered papers in the background, "
+            "A dimly lit living room scene suggesting chronic fatigue and stress: "
+            "empty couch, messy desk with scattered papers in the background, "
+            "coffee cup, rumpled blanket, "
             "cool blue desaturated color palette, soft window light, shallow depth of field, "
             "realistic photo, 50mm lens, f/2.8 aperture, "
-            "clean composition with empty foreground space"
+            "clean composition, no people, no persons"
         ),
         "prompt_ru": (
             "Сцена в комнате с приглушенным светом, показывающая хроническую усталость и стресс: "
@@ -72,7 +72,7 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
             "lavender sprigs and eucalyptus leaves arranged neatly, "
             "shallow depth of field, creamy bokeh background, "
             "realistic macro photo, warm color temperature, "
-            "clean unmarked glass bottles, professional product lighting"
+            "clean unmarked glass bottles, professional product lighting, no people"
         ),
         "prompt_ru": (
             "Крупный план эфирных масел и аромадиффузора для {service_ru} на деревянном подносе, "
@@ -92,7 +92,7 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
             "two candles and a small green plant, "
             "soft warm studio lighting, beige and white interior, "
             "wide angle shot, 35mm lens, f/4, realistic photo, "
-            "clean composition, no text, no logo"
+            "clean composition, no text, no logo, no people, empty room"
         ),
         "prompt_ru": (
             "Спокойный кабинет для {service_ru} в современном центре здоровья в Ноябрьске: "
@@ -107,11 +107,11 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
     "result": {
         "prompt_en": (
             "Bright airy spa relaxation lounge after a {service_en} session, "
-            "person wrapped in a soft white robe resting on a comfortable daybed, "
-            "gentle smile, eyes closed, completely relaxed posture, "
+            "empty daybed with soft white robe neatly draped, "
             "large window with warm morning sunlight, "
             "fresh flowers in a vase and a cup of herbal tea on a side table, "
-            "warm golden color palette, realistic photo, peaceful welcoming atmosphere"
+            "warm golden color palette, realistic photo, peaceful welcoming atmosphere, "
+            "no people, unoccupied scene"
         ),
         "prompt_ru": (
             "Светлая комната отдыха после сеанса {service_ru}: "
@@ -126,11 +126,11 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
     },
     "target_audience": {
         "prompt_en": (
-            "Editorial style collage of three people who benefit from {service_en}: "
-            "a tired office worker at a desk, an active woman after workout stretching, "
-            "a calm middle-aged person reading a book at home, "
+            "Editorial style still life suggesting who benefits from {service_en}: "
+            "empty office desk with coffee and papers, yoga mat and water bottle, "
+            "comfortable armchair with a book and reading glasses, "
             "soft natural daylight, muted warm tones, modern lifestyle aesthetic, "
-            "realistic photo, clean minimal backgrounds"
+            "realistic photo, clean minimal backgrounds, no people"
         ),
         "prompt_ru": (
             "Коллаж в журнальном стиле из трех людей, которым полезна {service_ru}: "
@@ -150,7 +150,7 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
             "a white ceramic aroma diffuser, a notepad and pen, "
             "eucalyptus branch, soft even overhead lighting, "
             "realistic product photography, clean organized composition, "
-            "unmarked labels, warm natural colors"
+            "unmarked labels, warm natural colors, no people"
         ),
         "prompt_ru": (
             "Вид сверху на предметы для подготовки к {service_ru} на светлой деревянной поверхности: "
@@ -168,7 +168,7 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
             "clean minimalist interior with warm wood accents and green plants, "
             "soft ambient lighting, comfortable seating area, "
             "shelf with neatly arranged skincare and {service_en} essential oils, "
-            "realistic interior photo, bright inviting atmosphere"
+            "realistic interior photo, bright inviting atmosphere, no people, empty reception"
         ),
         "prompt_ru": (
             "Уютная зона ресепшн современного центра здоровья в Ноябрьске: "

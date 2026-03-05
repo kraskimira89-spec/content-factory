@@ -102,7 +102,7 @@
     "steps": 28,
     "cfg_scale": 7,
     "retries": 2,
-    "negative_prompt": "blurry, low quality, distorted, text, watermark, logo"
+    "negative_prompt": "blurry, low quality, distorted, text, watermark, logo, people, person, human, face"
   },
 
   "comfyui": {

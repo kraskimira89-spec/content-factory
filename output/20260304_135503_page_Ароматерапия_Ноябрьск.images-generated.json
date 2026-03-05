@@ -2,22 +2,44 @@
   "images": [
     {
       "slot": "problems",
-      "prompt": "A symbolic representation of heavy legs, fatigue, and the burden of daily life. Imagine a pair of shoes left behind at the edge of a quiet forest path, surrounded by soft light filtering through the trees, conveying a sense of letting go and the need for relief. The background features a blurred office chair and paperwork to symbolize the stress and anxiety of work life, while the forest signifies a natural escape and rejuvenation.",
+      "prompt": "High-quality illustration showing typical problems before aromatherapy: stress, tension, poor sleep, chronic fatigue, no faces, no text, clean medical spa style, soft light. Высококачественная иллюстрация типичных проблем до процедуры Ароматерапия: стресс, напряжение, нарушение сна, хроническая усталость, без лиц и текста, в спокойном медицинско-спа стиле, мягкий свет",
       "style": "soft illustration",
-      "alt": "Символическая иллюстрация усталости и желания облегчения",
+      "alt": "Кабинет ароматерапии в центре здоровья «Энтузиаст»",
       "layout": "right",
       "role": "emotion_support",
+      "variant_overrides": {
+        "site.hero": {
+          "prompt": "cozy aroma therapy room in a modern health center in Noyabrsk, warm candle light, aroma diffuser with visible steam, wooden table, neatly folded towels, soft beige wall, realistic photo, high detail, professional lighting, no people, no text, no watermark, no logo",
+          "style": "realistic photo",
+          "alt": "Кабинет ароматерапии в центре здоровья «Энтузиаст»"
+        },
+        "site.thumb": {
+          "prompt": "close-up of aroma diffuser with visible steam and two candles on a wooden tray, cozy spa atmosphere, soft warm light, realistic photo, high detail, no people, no text, no watermark, no logo",
+          "style": "realistic photo",
+          "alt": "Аромадиффузор и свечи для сеанса ароматерапии"
+        },
+        "vk.feed": {
+          "prompt": "wide shot of aromatherapy session in a modern health center, massage table with person covered by towel seen from back, aroma diffuser with steam and candles in foreground, soft warm light, calm spa interior, realistic photo, high detail, no visible faces, no text, no watermark, no logo",
+          "style": "realistic photo",
+          "alt": "Сеанс ароматерапии в уютном кабинете центра здоровья"
+        },
+        "insta.square": {
+          "prompt": "square composition of aroma therapy mood: aroma diffuser with steam, three candles, essential oil bottles, green plant in the background, soft warm light, shallow depth of field, realistic photo, high detail, no people, no text, no watermark, no logo",
+          "style": "realistic photo",
+          "alt": "Атмосфера сеанса ароматерапии: диффузор, свечи и эфирные масла"
+        }
+      },
       "variants": {
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/04/aromaterapiya_site_hero_1280x720_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_site_thumb_800x450_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_1.jpg",
             "width": 800,
             "height": 450
           }
@@ -25,7 +47,7 @@
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/04/aromaterapiya_vk_feed_1200x630_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_vk_feed_1200x630_1.jpg",
             "width": 1200,
             "height": 630
           }
@@ -33,13 +55,13 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_square_1080x1080_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_1.jpg",
             "width": 1080,
             "height": 1080
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_story_1080x1920_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_1.jpg",
             "width": 1080,
             "height": 1920
           }
@@ -47,7 +69,7 @@
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_tg_post_1280x720_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           }
@@ -55,7 +77,7 @@
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_wa_post_1280x720_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           }
@@ -63,7 +85,7 @@
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_yt_thumb_1280x720_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_1.jpg",
             "width": 1280,
             "height": 720
           }
@@ -71,7 +93,7 @@
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_ok_thumb_720x405_1.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_1.jpg",
             "width": 720,
             "height": 405
           }
@@ -80,30 +102,34 @@
     },
     {
       "slot": "mechanism",
-      "prompt": "An abstract illustration representing the flow of essential oils in the air, depicted as vibrant waves or light streams swirling around a silhouette of a person, symbolizing the activation of senses and the healing process. The colors should be soft and calming, creating a serene atmosphere where the essence of aromatherapy is conveyed through gentle movement and diffusion, suggesting relaxation and comfort.",
+      "prompt": "Abstract illustration representing the flow and mechanism of aromatherapy: waves, light streams, gentle movement around a silhouette, activation of senses, healing process, soft calming colors, serene atmosphere, no faces, no text. Абстрактная иллюстрация механизма Ароматерапия: волны, потоки света, мягкое движение, активация чувств, спокойная атмосфера, без лиц и текста",
       "style": "soft illustration",
-      "alt": "Абстракция, символизирующая ароматерапию и восстановление через запахи",
+      "alt": "Как работает Ароматерапия",
       "layout": "left",
       "role": "emotion_support",
       "variants": {
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/04/aromaterapiya_site_hero_1280x720_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_2.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_site_thumb_800x450_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_2.jpg",
             "width": 800,
-            "height": 450
+            "height": 450,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/04/aromaterapiya_vk_feed_1200x630_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_vk_feed_1200x630_2.jpg",
             "width": 1200,
             "height": 630
           }
@@ -111,13 +137,13 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_square_1080x1080_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_2.jpg",
             "width": 1080,
             "height": 1080
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_story_1080x1920_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_2.jpg",
             "width": 1080,
             "height": 1920
           }
@@ -125,7 +151,7 @@
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_tg_post_1280x720_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_2.jpg",
             "width": 1280,
             "height": 720
           }
@@ -133,15 +159,17 @@
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_wa_post_1280x720_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_2.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_yt_thumb_1280x720_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_2.jpg",
             "width": 1280,
             "height": 720
           }
@@ -149,7 +177,7 @@
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_ok_thumb_720x405_2.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_2.jpg",
             "width": 720,
             "height": 405
           }
@@ -158,22 +186,24 @@
     },
     {
       "slot": "result",
-      "prompt": "A serene scene depicting a person walking gracefully in a lush green park, radiating joy and vitality. The sunlight filters through the leaves, creating a warm and inviting atmosphere. The person's posture reflects ease and freedom, symbolizing the release of stress and rejuvenation. Soft waves of light can be seen surrounding them, representing the calming effects of aromatherapy. The background includes gentle flowers in bloom, highlighting the connection between nature and well-being. The overall mood is uplifting, conveying a sense of harmony and revitalization.",
+      "prompt": "High-quality illustration of relaxation and relief after aromatherapy, calm person, light smile, cozy spa atmosphere, plants, candles, no text, no logos. Высококачественная иллюстрация расслабления и облегчения после процедуры Ароматерапия: спокойная атмосфера спа, растения, мягкий свет, без текста и логотипов",
       "style": "soft illustration",
-      "alt": "Сцена с человеком, идущим по зелёному парку, олицетворяющим лёгкость и гармонию",
+      "alt": "Результаты после курса процедуры Ароматерапия",
       "layout": "below",
       "role": "emotion_support",
       "variants": {
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/04/aromaterapiya_site_hero_1280x720_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_3.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_site_thumb_800x450_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_3.jpg",
             "width": 800,
             "height": 450
           }
@@ -181,7 +211,7 @@
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/04/aromaterapiya_vk_feed_1200x630_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_vk_feed_1200x630_3.jpg",
             "width": 1200,
             "height": 630
           }
@@ -189,13 +219,13 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_square_1080x1080_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_3.jpg",
             "width": 1080,
             "height": 1080
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_story_1080x1920_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_3.jpg",
             "width": 1080,
             "height": 1920
           }
@@ -203,55 +233,65 @@
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_tg_post_1280x720_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_3.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_wa_post_1280x720_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_3.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_yt_thumb_1280x720_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_3.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_ok_thumb_720x405_3.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_3.jpg",
             "width": 720,
-            "height": 405
+            "height": 405,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ]
       }
     },
     {
       "slot": "target_audience",
-      "prompt": "a serene scene depicting a diverse group of people in a natural setting, each enjoying a moment of relaxation and self-care; one is meditating under a tree, another is lying on a blanket with nature around, a third is enjoying a soothing aroma from essential oils; soft sunlight filters through the leaves, creating a warm and inviting atmosphere of harmony and tranquility",
+      "prompt": "Illustration of people who need aromatherapy: office worker, active person, woman 30-45, calm modern style, no faces, no text. Иллюстрация людей, которым особенно нужна Ароматерапия: офисный сотрудник, активный человек, женщина 30–45 лет, современный спокойный стиль, без лиц и текста",
       "style": "soft illustration",
-      "alt": "люди в гармонии с природой, наслаждающиеся ароматерапией",
+      "alt": "Кому особенно полезна услуга Ароматерапия",
       "layout": "right",
       "role": "emotion_support",
       "variants": {
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/04/aromaterapiya_site_hero_1280x720_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_4.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_site_thumb_800x450_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_4.jpg",
             "width": 800,
             "height": 450
           }
@@ -259,7 +299,7 @@
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/04/aromaterapiya_vk_feed_1200x630_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_vk_feed_1200x630_4.jpg",
             "width": 1200,
             "height": 630
           }
@@ -267,21 +307,25 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_square_1080x1080_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_4.jpg",
             "width": 1080,
-            "height": 1080
+            "height": 1080,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_story_1080x1920_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_4.jpg",
             "width": 1080,
-            "height": 1920
+            "height": 1920,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_tg_post_1280x720_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_4.jpg",
             "width": 1280,
             "height": 720
           }
@@ -289,15 +333,17 @@
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_wa_post_1280x720_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_4.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_yt_thumb_1280x720_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_4.jpg",
             "width": 1280,
             "height": 720
           }
@@ -305,31 +351,33 @@
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_ok_thumb_720x405_4.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_4.jpg",
             "width": 720,
-            "height": 405
+            "height": 405,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ]
       }
     },
     {
       "slot": "process",
-      "prompt": "A serene spa-like scene featuring a person lying comfortably on a massage table, eyes gently closed, surrounded by soft ambient light. The room is filled with hints of essential oils in beautiful bottles, delicate plants, and calming textures. There is an atmosphere of warmth and care, evoking a sense of relaxation and tranquility. The person feels enveloped in a soothing space, ready to experience aromatherapy.",
-      "style": "soft illustration",
-      "alt": "человек расслабляется во время ароматерапии в уютной атмосфере",
+      "prompt": "High-quality photo of aromatherapy procedure in a modern health center in Noyabrsk, cozy interior, professional equipment, soft warm light, no faces, no logos, realistic photo. Реалистичное фото процедуры Ароматерапия в современном центре здоровья в Ноябрьске: уютный интерьер, профессиональное оборудование, мягкий тёплый свет, без лиц и логотипов",
+      "style": "realistic photo",
+      "alt": "Как проходит процедура Ароматерапия шаг за шагом",
       "layout": "below",
       "role": "emotion_support",
       "variants": {
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/04/aromaterapiya_site_hero_1280x720_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_5.jpg",
             "width": 1280,
             "height": 720
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_site_thumb_800x450_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_5.jpg",
             "width": 800,
             "height": 450
           }
@@ -337,7 +385,7 @@
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/04/aromaterapiya_vk_feed_1200x630_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_vk_feed_1200x630_5.jpg",
             "width": 1200,
             "height": 630
           }
@@ -345,21 +393,25 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_square_1080x1080_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_5.jpg",
             "width": 1080,
-            "height": 1080
+            "height": 1080,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_story_1080x1920_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_5.jpg",
             "width": 1080,
-            "height": 1920
+            "height": 1920,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_tg_post_1280x720_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_5.jpg",
             "width": 1280,
             "height": 720
           }
@@ -367,15 +419,17 @@
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_wa_post_1280x720_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_5.jpg",
             "width": 1280,
-            "height": 720
+            "height": 720,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_yt_thumb_1280x720_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_5.jpg",
             "width": 1280,
             "height": 720
           }
@@ -383,7 +437,7 @@
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_ok_thumb_720x405_5.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_5.jpg",
             "width": 720,
             "height": 405
           }
@@ -392,30 +446,32 @@
     },
     {
       "slot": "faq",
-      "prompt": "A tranquil scene depicting a serene and inviting space within a health center, where soft light filters through gentle curtains. The atmosphere conveys trust and safety, with comfortable seating and soothing colors. There's a subtle hint of nature in the background, symbolizing calmness and relaxation. The environment feels nurturing, suggesting care and attention to well-being without featuring any people or explicit actions.",
+      "prompt": "Minimalistic flat illustration with icons about aromatherapy, clean medical style, teal and white colors, no text. Минималистичная плоская иллюстрация с иконками про Ароматерапия, чистый медицинский стиль, бирюзовые и белые цвета, без текста",
       "style": "soft illustration",
-      "alt": "Спокойная атмосфера центра здоровья",
+      "alt": "Частые вопросы об услуге Ароматерапия",
       "layout": "below",
       "role": "emotion_support",
       "variants": {
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/04/aromaterapiya_site_hero_1280x720_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_6.jpg",
             "width": 1280,
             "height": 720
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_site_thumb_800x450_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_6.jpg",
             "width": 800,
-            "height": 450
+            "height": 450,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/04/aromaterapiya_vk_feed_1200x630_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_vk_feed_1200x630_6.jpg",
             "width": 1200,
             "height": 630
           }
@@ -423,21 +479,25 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_square_1080x1080_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_6.jpg",
             "width": 1080,
-            "height": 1080
+            "height": 1080,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_story_1080x1920_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_6.jpg",
             "width": 1080,
-            "height": 1920
+            "height": 1920,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_tg_post_1280x720_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_6.jpg",
             "width": 1280,
             "height": 720
           }
@@ -445,7 +505,7 @@
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_wa_post_1280x720_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_6.jpg",
             "width": 1280,
             "height": 720
           }
@@ -453,7 +513,7 @@
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_yt_thumb_1280x720_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_6.jpg",
             "width": 1280,
             "height": 720
           }
@@ -461,7 +521,7 @@
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_ok_thumb_720x405_6.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_6.jpg",
             "width": 720,
             "height": 405
           }
@@ -470,22 +530,22 @@
     },
     {
       "slot": "utp",
-      "prompt": "a serene and cozy wellness center interior, showcasing soft ambient lighting, plush seating, and gentle aromas wafting through the air; a sense of trust and care is emanating from the surroundings, with various aromatic oils artistically displayed on a wooden shelf, while the atmosphere radiates warmth and relaxation, inviting individuals to unwind and rejuvenate their spirit",
+      "prompt": "High-quality illustration of unique benefits of aromatherapy in Noyabrsk health center Enthusiast: cozy atmosphere, professional team, modern equipment, no faces, no text. Высококачественная иллюстрация уникальных преимуществ процедуры Ароматерапия в Центре здоровья «Энтузиаст»: уютная атмосфера, профессиональная команда, современное оборудование, без лиц и текста",
       "style": "realistic photo",
-      "alt": "уютная атмосфера центра здоровья с аромасами",
+      "alt": "Почему выбирают Ароматерапия в Центре здоровья «Энтузиаст»",
       "layout": "below",
       "role": "emotion_support",
       "variants": {
         "site": [
           {
             "name": "hero",
-            "image_path": "images/2026/03/04/aromaterapiya_site_hero_1280x720_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_hero_1280x720_7.jpg",
             "width": 1280,
             "height": 720
           },
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_site_thumb_800x450_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_site_thumb_800x450_7.jpg",
             "width": 800,
             "height": 450
           }
@@ -493,7 +553,7 @@
         "vk": [
           {
             "name": "feed",
-            "image_path": "images/2026/03/04/aromaterapiya_vk_feed_1200x630_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_vk_feed_1200x630_7.jpg",
             "width": 1200,
             "height": 630
           }
@@ -501,21 +561,25 @@
         "insta": [
           {
             "name": "square",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_square_1080x1080_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_square_1080x1080_7.jpg",
             "width": 1080,
-            "height": 1080
+            "height": 1080,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           },
           {
             "name": "story",
-            "image_path": "images/2026/03/04/aromaterapiya_insta_story_1080x1920_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_insta_story_1080x1920_7.jpg",
             "width": 1080,
-            "height": 1920
+            "height": 1920,
+            "status": "error",
+            "error": "SD WebUI: генерация не удалась после ретраев"
           }
         ],
         "tg": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_tg_post_1280x720_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_tg_post_1280x720_7.jpg",
             "width": 1280,
             "height": 720
           }
@@ -523,7 +587,7 @@
         "wa": [
           {
             "name": "post",
-            "image_path": "images/2026/03/04/aromaterapiya_wa_post_1280x720_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_wa_post_1280x720_7.jpg",
             "width": 1280,
             "height": 720
           }
@@ -531,7 +595,7 @@
         "yt": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_yt_thumb_1280x720_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_yt_thumb_1280x720_7.jpg",
             "width": 1280,
             "height": 720
           }
@@ -539,7 +603,7 @@
         "ok": [
           {
             "name": "thumb",
-            "image_path": "images/2026/03/04/aromaterapiya_ok_thumb_720x405_7.jpg",
+            "image_path": "images/2026/03/05/aromaterapiya_ok_thumb_720x405_7.jpg",
             "width": 720,
             "height": 405
           }
@@ -547,7 +611,7 @@
       }
     }
   ],
-  "service_slug": "service",
+  "service_slug": "aromaterapiya",
   "blocks": [
     {
       "slot": "problems",

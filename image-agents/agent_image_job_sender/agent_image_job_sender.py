@@ -28,11 +28,15 @@ logger = get_logger("image_agents.job_sender")
 _CONFIG_PATH = PROJECT_ROOT / "config" / "shared-config.json"
 _CONFIG = json.loads(_CONFIG_PATH.read_text("utf-8")) if _CONFIG_PATH.exists() else {}
 _IMG = _CONFIG.get("image_agents", {})
+# Переопределение через IMAGE_GENERATOR_URL в config/.env (8000 = Flask image_generate_api.py)
+if (PROJECT_ROOT / "config" / ".env").exists():
+    from dotenv import load_dotenv
+    load_dotenv(PROJECT_ROOT / "config" / ".env")
+GENERATOR_URL = os.getenv("IMAGE_GENERATOR_URL", "").strip() or _IMG.get("image_generator_url", "http://127.0.0.1:8000/generate")
 
 JOBS_DIR = PROJECT_ROOT / _IMG.get("image_jobs_path", "output/image_jobs")
 QUEUE_DIR = PROJECT_ROOT / _IMG.get("image_queue_path", "output/image_queue")
 STORAGE_DIR = PROJECT_ROOT / _IMG.get("image_storage_path", "output/images")
-GENERATOR_URL = _IMG.get("image_generator_url", "http://localhost:7860/generate")
 GENERATOR_TIMEOUT = _IMG.get("image_generator_timeout_sec", 120)
 
 

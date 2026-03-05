@@ -48,15 +48,13 @@
     "relative_path_pattern_with_size": "images/{year}/{month}/{day}/{slug}_{network}_{variant}_{width}x{height}_{index}.jpg",
     "variants": {
       "site": [
-        { "name": "hero",  "width": 1280, "height": 720 },
-        { "name": "thumb", "width": 800,  "height": 450 }
+        { "name": "hero",  "width": 1280, "height": 720 }
       ],
       "vk": [
         { "name": "feed", "width": 1200, "height": 630 }
       ],
       "insta": [
-        { "name": "square", "width": 1080, "height": 1080 },
-        { "name": "story",  "width": 1080, "height": 1920 }
+        { "name": "square", "width": 1080, "height": 1080 }
       ],
       "tg": [
         { "name": "post", "width": 1280, "height": 720 }
@@ -71,11 +69,13 @@
         { "name": "thumb", "width": 720, "height": 405 }
       ]
     },
-    "_variant_by_channel": "site→hero, vk→feed, insta→square|story, tg→post, wa→post, yt→thumb, ok→thumb",
+    "_variant_by_channel": "по 1 варианту на канал: site→hero, vk→feed, insta→square, tg→post, wa→post, yt→thumb, ok→thumb",
     "count": {
-      "min": 1,
-      "max": 3
+      "min": 4,
+      "max": 4
     },
+    "test_max_images": 1,
+    "test_slug": "aromaterapiya",
     "fields": {
       "prompt": "string, текст для Stable Diffusion",
       "style": "string, например 'realistic photo' или 'flat illustration'",
@@ -89,10 +89,26 @@
     }
   },
 
+  "sd_webui": {
+    "base_url": "http://127.0.0.1:7860",
+    "base_url_env": "SD_WEBUI_URL",
+    "_comment_port": "если 7860 занят, WebUI стартует на 7861, 7862… — agent9 автоматически пробует 7860–7865 при ошибке подключения",
+    "root_env": "SD_WEBUI_ROOT",
+    "root_default": "D:\\AI\\stable-diffusion-webui",
+    "checkpoint": "v1-5-pruned-emaonly.safetensors [6ce0161689]",
+    "default_width": 1280,
+    "default_height": 720,
+    "sampler_name": "DPM++ 2M",
+    "steps": 28,
+    "cfg_scale": 7,
+    "retries": 2,
+    "negative_prompt": "blurry, low quality, distorted, text, watermark, logo"
+  },
+
   "comfyui": {
-    "_comment": "Настройки генерации. url_default — API /generate или SD WebUI. sd_webui_url — SD WebUI sdapi/v1/txt2img (альтернатива)",
+    "_comment": "ComfyUI на 8188 (типичный порт). SD WebUI — sd_webui. agent9 читает из .env (COMFYUI_URL, SD_WEBUI_URL).",
     "url_env": "COMFYUI_URL",
-    "url_default": "http://127.0.0.1:8000",
+    "url_default": "http://127.0.0.1:8188",
     "sd_webui_url_env": "SD_WEBUI_URL",
     "sd_webui_url_default": "http://127.0.0.1:7860",
     "timeout_sec": 120,
@@ -103,46 +119,46 @@
   },
 
   "rubrics": {
-    "health_fitness":       { "title": "Здоровье и фитнес",      "wp_cat_env": "WP_CAT_HEALTH_FITNESS",       "keywords": "упражнения лфк восстановление травм операций фитнес здоровье тренажер зал" },
-    "relax_massage":        { "title": "Релаксация и массаж",     "wp_cat_env": "WP_CAT_RELAX_MASSAGE",        "keywords": "лимфодренаж кедровая бочка фитобочка массаж релаксация оздоровление омоложение обертывание соляная комната" },
-    "nutrition_lifestyle":  { "title": "Питание и образ жизни",   "wp_cat_env": "WP_CAT_NUTRITION_LIFESTYLE",  "keywords": "питание антистресс долголетие образ жизни рекомендации" },
-    "client_stories":       { "title": "Истории клиентов",        "wp_cat_env": "WP_CAT_CLIENT_STORIES",       "keywords": "история клиента кейс было стало отзыв результат специалист врач рекомендация до после" },
-    "ai_health":            { "title": "ИИ и здоровье",           "wp_cat_env": "WP_CAT_AI_HEALTH",            "keywords": "искусственный интеллект ии ai нейросеть цифровизация технологии здоровье телемедицина приложения" },
-    "services":             { "title": "Услуги",                  "wp_cat_env": "WP_CAT_SERVICES" }
+    "health_fitness":      { "title": "Здоровье и фитнес",       "wp_cat_env": "WP_CAT_HEALTH_FITNESS",       "keywords": "упражнения лфк восстановление травм операций фитнес здоровье тренажер зал" },
+    "relax_massage":       { "title": "Релаксация и массаж",      "wp_cat_env": "WP_CAT_RELAX_MASSAGE",        "keywords": "лимфодренаж кедровая бочка фитобочка массаж релаксация оздоровление омоложение обертывание соляная комната" },
+    "nutrition_lifestyle": { "title": "Питание и образ жизни",    "wp_cat_env": "WP_CAT_NUTRITION_LIFESTYLE",  "keywords": "питание антистресс долголетие образ жизни рекомендации" },
+    "client_stories":      { "title": "Истории клиентов",         "wp_cat_env": "WP_CAT_CLIENT_STORIES",       "keywords": "история клиента кейс было стало отзыв результат специалист врач рекомендация до после" },
+    "ai_health":           { "title": "ИИ и здоровье",            "wp_cat_env": "WP_CAT_AI_HEALTH",            "keywords": "искусственный интеллект ии ai нейросеть цифровизация технологии здоровье телемедицина приложения" },
+    "services":            { "title": "Услуги",                   "wp_cat_env": "WP_CAT_SERVICES" }
   },
 
   "services": {
     "dolgoletie":              { "name": "Долголетие" },
     "konferenc-zal":           { "name": "Конференц-зал" },
-    "master-klepa":            { "name": "Мастер Клёпа",           "aliases": ["мастер клепа", "мастер клёпа"] },
+    "master-klepa":            { "name": "Мастер Клёпа",            "aliases": ["мастер клепа", "мастер клёпа"] },
     "prokat":                  { "name": "Прокат" },
     "yuridicheskaya-pomoshch": { "name": "Юридическая помощь" },
-    "trenazhernyy-zal":        { "name": "Тренажёрный зал",        "aliases": ["тренажерный зал"] }
+    "trenazhernyy-zal":        { "name": "Тренажёрный зал",         "aliases": ["тренажерный зал"] }
   },
 
   "uslugi": {
-    "aromaterapiya":           { "name": "Ароматерапия",          "aliases": ["ароматерапия", "сеанс ароматерапии"] },
-    "gidromassazh":            { "name": "Гидромассаж (АКВАСПА)",  "aliases": ["акваспа", "гидромассаж"] },
-    "nastolnyy-tennis":        { "name": "Настольный теннис" },
-    "solyanaya-komnata":       { "name": "Соляная комната" },
-    "fitobochka":              { "name": "Кедровая фитобочка",     "aliases": ["кедровая бочка", "фитобочка"] },
-    "massazh":                 { "name": "Массаж" },
-    "pressoterapiya":          { "name": "Прессотерапия" },
-    "vlok":                    { "name": "ВЛОК" },
-    "uglekislaya-vanna":       { "name": "Углекислая ванна" },
-    "lfk":                     { "name": "ЛФК" },
-    "limfodrenazh-nog":        { "name": "Аппаратный лимфодренаж ног", "aliases": ["лимфодренаж ног", "аппаратный лимфодренаж"] }
+    "aromaterapiya":        { "name": "Ароматерапия",                "aliases": ["ароматерапия", "сеанс ароматерапии"] },
+    "gidromassazh":         { "name": "Гидромассаж (АКВАСПА)",       "aliases": ["акваспа", "гидромассаж"] },
+    "nastolnyy-tennis":     { "name": "Настольный теннис" },
+    "solyanaya-komnata":    { "name": "Соляная комната" },
+    "fitobochka":           { "name": "Кедровая фитобочка",          "aliases": ["кедровая бочка", "фитобочка"] },
+    "massazh":              { "name": "Массаж" },
+    "pressoterapiya":       { "name": "Прессотерапия" },
+    "vlok":                 { "name": "ВЛОК" },
+    "uglekislaya-vanna":    { "name": "Углекислая ванна" },
+    "lfk":                  { "name": "ЛФК" },
+    "limfodrenazh-nog":     { "name": "Аппаратный лимфодренаж ног", "aliases": ["лимфодренаж ног", "аппаратный лимфодренаж"] }
   },
 
   "service_data_fields": {
     "_comment": "Поля, которые content-factory генерирует для inc/service-pages-defaults.php на VPS",
-    "results":            "array<string> — результаты процедуры",
-    "comparison":         "{ headers: string[], rows: string[][] } — таблица сравнения",
-    "faq":                "array<{ q: string, a: string }> — FAQ",
-    "steps":              "array<{ text: string }> — шаги процедуры",
-    "indications":        "array<string> — показания (опционально)",
-    "contraindications":  "array<string> — противопоказания (опционально)",
-    "pricing":            "{ headers: string[], rows: string[][] } — таблица цен (опционально)"
+    "results":          "array<string> — результаты процедуры",
+    "comparison":       "{ headers: string[], rows: string[][] } — таблица сравнения",
+    "faq":              "array<{ q: string, a: string }> — FAQ",
+    "steps":            "array<{ text: string }> — шаги процедуры",
+    "indications":      "array<string> — показания (опционально)",
+    "contraindications":"array<string> — противопоказания (опционально)",
+    "pricing":          "{ headers: string[], rows: string[][] } — таблица цен (опционально)"
   },
 
   "vk": {
@@ -165,7 +181,8 @@
     "image_jobs_path": "output/image_jobs",
     "image_queue_path": "output/image_queue",
     "image_index_path": "db/image_index.json",
-    "image_generator_url": "http://localhost:7860/generate",
+    "image_generator_url": "http://127.0.0.1:8000/generate",
+    "image_generator_url_comment": "8000 = Flask scripts/image_generate_api.py; 7860 = SD WebUI (нет /generate)",
     "image_generator_timeout_sec": 120
   }
 }

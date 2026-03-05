@@ -195,9 +195,13 @@ def _get_site_image_path(image_rec: dict) -> str | None:
     site = variants.get("site")
     if isinstance(site, list) and site:
         for item in site:
+            if item.get("status") == "error":
+                continue
             if item.get("name") == "hero":
                 return item.get("image_path")
-        return site[0].get("image_path")
+        for item in site:
+            if item.get("status") != "error":
+                return item.get("image_path")
     return image_rec.get("image_path") if isinstance(site, dict) else image_rec.get("image_path")
 
 

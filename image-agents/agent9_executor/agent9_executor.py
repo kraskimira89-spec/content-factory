@@ -5,6 +5,7 @@
 На выход: { "image_path": "images/2026/03/slug-1.jpg", "alt": "..." } (путь относительно storage_root).
 """
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -21,9 +22,15 @@ from scripts.shared_config import (
     get_config,
     get_image_storage_root,
 )  # noqa: E402
+from scripts.image_utils import save_image_bytes  # noqa: E402
 
+# URL Flask API (порт 8000); переопределение через IMAGE_GENERATOR_URL в config/.env
+_env_path = PROJECT_ROOT / "config" / ".env"
+if _env_path.exists():
+    from dotenv import load_dotenv
+    load_dotenv(_env_path)
 _IMG = get_config().get("image_agents", {})
-GENERATOR_URL = _IMG.get("image_generator_url", "http://localhost:7860/generate")
+GENERATOR_URL = os.getenv("IMAGE_GENERATOR_URL", "").strip() or _IMG.get("image_generator_url", "http://127.0.0.1:8000/generate")
 TIMEOUT = _IMG.get("image_generator_timeout_sec", 120)
 
 
@@ -64,8 +71,7 @@ def run(
     storage_root = get_image_storage_root()
     relative_path = build_image_relative_path(slug, index)
     full_path = (storage_root / relative_path).resolve()
-    full_path.parent.mkdir(parents=True, exist_ok=True)
-    full_path.write_bytes(image_bytes)
+    save_image_bytes(image_bytes, full_path)
     return {"image_path": relative_path.replace("\\", "/"), "alt": alt or slug}
 
 

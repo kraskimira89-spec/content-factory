@@ -28,11 +28,196 @@ from api_client import ask_ai  # noqa: E402
 
 PROMPT_FILE = _PROJECT_ROOT / "prompts" / "agents" / "agent8_images.txt"
 
+# Маппинг slug → английское название для промптов SD (Flux)
+SERVICE_EN_BY_SLUG: dict[str, str] = {
+    "aromaterapiya": "aromatherapy",
+    "pressoterapiya": "pressotherapy",
+    "fitobochka": "cedar sauna",
+    "solyanaya-komnata": "salt room",
+    "massazh": "massage",
+    "vlok": "VLOK",
+    "uglekislaya-vanna": "dry CO2 bath",
+    "gidromassazh": "hydrotherapy massage",
+    "limfodrenazh-nog": "lymphatic drainage",
+    "karboksiterapiya": "carboxytherapy",
+    "fitoparolechenie": "herbal steam therapy",
+    "galoterapiya": "halotherapy salt room",
+    "infrakrasnaya-sauna": "infrared sauna",
+}
+
+SLOT_PROMPTS: dict[str, dict[str, str]] = {
+    "problems": {
+        "prompt_en": (
+            "A dimly lit living room scene showing signs of chronic fatigue and stress: "
+            "a person sitting alone on a couch with closed eyes, rubbing temples, "
+            "messy desk with scattered papers in the background, "
+            "cool blue desaturated color palette, soft window light, shallow depth of field, "
+            "realistic photo, 50mm lens, f/2.8 aperture, "
+            "clean composition with empty foreground space"
+        ),
+        "prompt_ru": (
+            "Сцена в комнате с приглушенным светом, показывающая хроническую усталость и стресс: "
+            "человек сидит один на диване с закрытыми глазами и массирует виски, "
+            "на заднем плане беспорядок на столе, "
+            "холодная приглушенная палитра, мягкий свет из окна, малая глубина резкости, "
+            "реалистичное фото, чистая композиция, свободное место для текста"
+        ),
+        "alt_template": "Проблемы, с которыми помогает справиться {service_ru}",
+        "style": "realistic photo",
+    },
+    "mechanism": {
+        "prompt_en": (
+            "Close-up of {service_en} essential oils and aroma diffuser on a wooden tray, "
+            "visible warm steam rising, soft golden backlight, "
+            "lavender sprigs and eucalyptus leaves arranged neatly, "
+            "shallow depth of field, creamy bokeh background, "
+            "realistic macro photo, warm color temperature, "
+            "clean unmarked glass bottles, professional product lighting"
+        ),
+        "prompt_ru": (
+            "Крупный план эфирных масел и аромадиффузора для {service_ru} на деревянном подносе, "
+            "виден теплый пар, мягкая золотистая подсветка, "
+            "аккуратно разложенные веточки лаванды и эвкалипта, "
+            "малая глубина резкости, мягкий боке-фон, "
+            "реалистичное макро-фото с аккуратными не подписанными бутылочками"
+        ),
+        "alt_template": "Как действует {service_ru}: эфирные масла и аромадиффузор",
+        "style": "realistic photo",
+    },
+    "process": {
+        "prompt_en": (
+            "High-end spa photography of {service_en} treatment room in a modern health center, "
+            "massage table with neatly folded white towels, "
+            "aroma diffuser with soft visible steam on a wooden side table, "
+            "two candles and a small green plant, "
+            "soft warm studio lighting, beige and white interior, "
+            "wide angle shot, 35mm lens, f/4, realistic photo, "
+            "clean composition, no text, no logo"
+        ),
+        "prompt_ru": (
+            "Спокойный кабинет для {service_ru} в современном центре здоровья в Ноябрьске: "
+            "массажный стол с аккуратно сложенными белыми полотенцами, "
+            "аромадиффузор с мягким паром, две свечи на деревянной полке, "
+            "зеленое растение в углу, мягкий теплый свет, "
+            "бежево-белый интерьер, широкоугольный реалистичный снимок пустого кабинета"
+        ),
+        "alt_template": "Кабинет {service_ru} в центре здоровья «Энтузиаст» в Ноябрьске",
+        "style": "realistic photo",
+    },
+    "result": {
+        "prompt_en": (
+            "Bright airy spa relaxation lounge after a {service_en} session, "
+            "person wrapped in a soft white robe resting on a comfortable daybed, "
+            "gentle smile, eyes closed, completely relaxed posture, "
+            "large window with warm morning sunlight, "
+            "fresh flowers in a vase and a cup of herbal tea on a side table, "
+            "warm golden color palette, realistic photo, peaceful welcoming atmosphere"
+        ),
+        "prompt_ru": (
+            "Светлая комната отдыха после сеанса {service_ru}: "
+            "человек в мягком белом халате отдыхает на шезлонге, "
+            "легкая улыбка, закрытые глаза, полностью расслабленная поза, "
+            "большое окно с теплым утренним светом, "
+            "свежие цветы в вазе и чашка травяного чая на столике, "
+            "теплая золотистая палитра, реалистичное фото, атмосфера спокойствия"
+        ),
+        "alt_template": "Результат после курса {service_ru}: расслабление и хорошее самочувствие",
+        "style": "realistic photo",
+    },
+    "target_audience": {
+        "prompt_en": (
+            "Editorial style collage of three people who benefit from {service_en}: "
+            "a tired office worker at a desk, an active woman after workout stretching, "
+            "a calm middle-aged person reading a book at home, "
+            "soft natural daylight, muted warm tones, modern lifestyle aesthetic, "
+            "realistic photo, clean minimal backgrounds"
+        ),
+        "prompt_ru": (
+            "Коллаж в журнальном стиле из трех людей, которым полезна {service_ru}: "
+            "уставший офисный сотрудник за столом, "
+            "активная женщина после тренировки, делающая растяжку, "
+            "спокойный человек среднего возраста с книгой дома, "
+            "мягкий дневной свет, теплые оттенки, современная лайфстайл-эстетика, "
+            "реалистичное фото с минималистичным фоном"
+        ),
+        "alt_template": "Кому особенно полезна {service_ru}",
+        "style": "realistic photo",
+    },
+    "faq": {
+        "prompt_en": (
+            "Flat lay overhead shot of {service_en} preparation items on a light wooden surface: "
+            "small amber glass bottles with essential oils, dried lavender bundles, "
+            "a white ceramic aroma diffuser, a notepad and pen, "
+            "eucalyptus branch, soft even overhead lighting, "
+            "realistic product photography, clean organized composition, "
+            "unmarked labels, warm natural colors"
+        ),
+        "prompt_ru": (
+            "Вид сверху на предметы для подготовки к {service_ru} на светлой деревянной поверхности: "
+            "небольшие коричневые бутылочки с эфирными маслами, "
+            "сухие веточки лаванды, белый керамический аромадиффузор, "
+            "блокнот и ручка, веточка эвкалипта, "
+            "мягкий ровный свет сверху, аккуратная композиция без надписей"
+        ),
+        "alt_template": "Частые вопросы об услуге {service_ru}",
+        "style": "realistic photo",
+    },
+    "utp": {
+        "prompt_en": (
+            "A welcoming reception area of a modern health and wellness center in Noyabrsk, "
+            "clean minimalist interior with warm wood accents and green plants, "
+            "soft ambient lighting, comfortable seating area, "
+            "shelf with neatly arranged skincare and {service_en} essential oils, "
+            "realistic interior photo, bright inviting atmosphere"
+        ),
+        "prompt_ru": (
+            "Уютная зона ресепшн современного центра здоровья в Ноябрьске: "
+            "чистый минималистичный интерьер с теплыми деревянными акцентами и зелеными растениями, "
+            "мягкий рассеянный свет, удобные кресла, "
+            "полка с аккуратно расставленными средствами по уходу и эфирными маслами для {service_ru}, "
+            "реалистичное интерьерное фото с дружелюбной атмосферой"
+        ),
+        "alt_template": "Почему выбирают {service_ru} в центре здоровья «Энтузиаст»",
+        "style": "realistic photo",
+    },
+}
+
+DEFAULT_SLOT = "process"
+
+
+def _parse_service_from_filename(md_path: Path) -> tuple[str | None, str | None]:
+    """Из *_page_{услуга}_{город}.md извлекает (service_name, city)."""
+    name = md_path.stem
+    parts = name.split("_page_")
+    if len(parts) != 2 or "approved" in parts[1].lower():
+        return None, None
+    tail_parts = parts[1].split("_")
+    if len(tail_parts) < 2:
+        return None, None
+    city = tail_parts[-1]
+    service = " ".join(tail_parts[:-1])
+    return service or None, city or None
+
+
+def _resolve_slug_from_name(service_name: str) -> str:
+    """По имени услуги возвращает slug из shared-config (uslugi + services)."""
+    from scripts.shared_config import get_config
+    cfg = get_config()
+    for section in (cfg.get("uslugi", {}), cfg.get("services", {})):
+        for slug, svc in section.items():
+            if (svc.get("name") or "").strip().lower() == (service_name or "").strip().lower():
+                return slug
+            for alias in svc.get("aliases", []):
+                if (alias or "").strip().lower() == (service_name or "").strip().lower():
+                    return slug
+    return "service"
+
 
 def load_post_context(input_path: Path) -> dict[str, Any]:
     """
     Загружает контекст для генерации картинок.
     Простейший вариант: читаем markdown-файл и метаданные из JSON рядом.
+    Если meta пустой — берём service_name и city из имени файла.
     """
     md_text = input_path.read_text(encoding="utf-8")
 
@@ -41,13 +226,76 @@ def load_post_context(input_path: Path) -> dict[str, Any]:
     if meta_path.exists():
         meta = json.loads(meta_path.read_text(encoding="utf-8"))
 
+    parsed_name, parsed_city = _parse_service_from_filename(input_path)
+    if parsed_name and (not meta.get("service_slug") or meta.get("service_slug") == "service"):
+        meta["service_name"] = meta.get("service_name") or parsed_name
+        meta["service_slug"] = _resolve_slug_from_name(parsed_name)
+    if parsed_city and not meta.get("city"):
+        meta["city"] = parsed_city
+
     return {
         "markdown": md_text,
         "meta": meta,
+        "input_path": input_path,
     }
 
 
 SLOT_PATTERN = re.compile(r"<!--\s*image_slot:\s*(\w+)\s*-->", re.IGNORECASE)
+
+
+def _service_en(service_slug: str, service_name: str) -> str:
+    """Английское название услуги для промптов SD."""
+    slug = (service_slug or "").strip().lower()
+    if slug in SERVICE_EN_BY_SLUG:
+        return SERVICE_EN_BY_SLUG[slug]
+    # Fallback: берём первое слово или транслитерируем slug
+    name_lower = (service_name or "").strip().lower()
+    if "арома" in name_lower or "aroma" in slug:
+        return "aromatherapy"
+    if "прессо" in name_lower or "presso" in slug:
+        return "pressotherapy"
+    if "фито" in name_lower or "кедр" in name_lower:
+        return "cedar sauna"
+    if "солян" in name_lower:
+        return "salt room"
+    return slug.replace("-", " ") if slug else "wellness procedure"
+
+
+def build_prompt_for_slot(
+    slot: str,
+    service_ru: str,
+    service_en: str,
+) -> tuple[str, str, str]:
+    """
+    Собирает промпт для слота из таблицы SLOT_PROMPTS.
+
+    Возвращает:
+        prompt  — англ + рус в одной строке (для SD)
+        alt     — alt-текст по-русски
+        style   — стиль ("realistic photo" и т.п.)
+    """
+    key = (slot or "").strip().lower()
+
+    # targetaudience в markdown → target_audience в таблице
+    if key == "targetaudience":
+        key = "target_audience"
+    if key == "procedure":
+        key = "process"
+
+    cfg = SLOT_PROMPTS.get(key)
+    if cfg is None:
+        cfg = SLOT_PROMPTS[DEFAULT_SLOT]
+
+    prompt_en = cfg["prompt_en"].format(service_en=service_en, service_ru=service_ru)
+    prompt_ru = cfg["prompt_ru"].format(service_en=service_en, service_ru=service_ru)
+
+    # Только английский для SD 1.5 — без смешения языков
+    prompt = prompt_en
+
+    alt = cfg["alt_template"].format(service_ru=service_ru, service_en=service_en)
+    style = cfg.get("style", "realistic photo")
+
+    return prompt, alt, style
 
 
 def _parse_blocks_by_slots(md_text: str) -> list[dict[str, Any]]:
@@ -163,16 +411,33 @@ def plan_images_for_post(context: dict[str, Any]) -> dict[str, Any]:
     images: list[dict[str, Any]] = []
 
     if blocks:
-        # Режим слотов: для каждого блока — свой промпт
+        # Лимит изображений: в режиме теста (test_slug + test_max_images) — меньше, иначе count.max
+        protocol = get_image_protocol()
+        count_cfg = protocol.get("count", {})
+        test_slug = protocol.get("test_slug")
+        test_max = protocol.get("test_max_images")
+        if test_slug and str(service_slug).strip().lower() == str(test_slug).strip().lower() and test_max is not None:
+            max_images = int(test_max)
+        else:
+            max_images = int(count_cfg.get("max", 4))
+        blocks = blocks[:max_images]
+
+        service_en = _service_en(service_slug, service_name)
+
         layouts = ["right", "left", "below"]
         for idx, block in enumerate(blocks):
-            ai_result = _ask_prompt_for_block(block, service_name)
+            slot = block.get("slot", DEFAULT_SLOT)
+            prompt, alt_ru, style = build_prompt_for_slot(
+                slot=slot,
+                service_ru=service_name,
+                service_en=service_en,
+            )
             layout = layouts[idx % 3] if idx < 4 else "below"
             images.append({
-                "slot": block["slot"],
-                "prompt": ai_result.get("prompt", ""),
-                "style": ai_result.get("style", "realistic photo"),
-                "alt": ai_result.get("alt", f"{service_name} — {block.get('title', '')}"),
+                "slot": slot,
+                "prompt": prompt,
+                "style": style,
+                "alt": alt_ru,
                 "layout": layout,
                 "role": "emotion_support",
             })

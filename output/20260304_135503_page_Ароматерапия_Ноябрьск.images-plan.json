@@ -2,62 +2,62 @@
   "images": [
     {
       "slot": "problems",
-      "prompt": "A symbolic representation of heavy legs, fatigue, and the burden of daily life. Imagine a pair of shoes left behind at the edge of a quiet forest path, surrounded by soft light filtering through the trees, conveying a sense of letting go and the need for relief. The background features a blurred office chair and paperwork to symbolize the stress and anxiety of work life, while the forest signifies a natural escape and rejuvenation.",
-      "style": "soft illustration",
-      "alt": "Символическая иллюстрация усталости и желания облегчения",
+      "prompt": "A dimly lit living room scene showing signs of chronic fatigue and stress: a person sitting alone on a couch with closed eyes, rubbing temples, messy desk with scattered papers in the background, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition with empty foreground space",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Ароматерапия",
       "layout": "right",
       "role": "emotion_support"
     },
     {
       "slot": "mechanism",
-      "prompt": "An abstract illustration representing the flow of essential oils in the air, depicted as vibrant waves or light streams swirling around a silhouette of a person, symbolizing the activation of senses and the healing process. The colors should be soft and calming, creating a serene atmosphere where the essence of aromatherapy is conveyed through gentle movement and diffusion, suggesting relaxation and comfort.",
-      "style": "soft illustration",
-      "alt": "Абстракция, символизирующая ароматерапию и восстановление через запахи",
+      "prompt": "Close-up of aromatherapy essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting",
+      "style": "realistic photo",
+      "alt": "Как действует Ароматерапия: эфирные масла и аромадиффузор",
       "layout": "left",
       "role": "emotion_support"
     },
     {
       "slot": "result",
-      "prompt": "A serene scene depicting a person walking gracefully in a lush green park, radiating joy and vitality. The sunlight filters through the leaves, creating a warm and inviting atmosphere. The person's posture reflects ease and freedom, symbolizing the release of stress and rejuvenation. Soft waves of light can be seen surrounding them, representing the calming effects of aromatherapy. The background includes gentle flowers in bloom, highlighting the connection between nature and well-being. The overall mood is uplifting, conveying a sense of harmony and revitalization.",
-      "style": "soft illustration",
-      "alt": "Сцена с человеком, идущим по зелёному парку, олицетворяющим лёгкость и гармонию",
+      "prompt": "Bright airy spa relaxation lounge after a aromatherapy session, person wrapped in a soft white robe resting on a comfortable daybed, gentle smile, eyes closed, completely relaxed posture, large window with warm morning sunlight, fresh flowers in a vase and a cup of herbal tea on a side table, warm golden color palette, realistic photo, peaceful welcoming atmosphere",
+      "style": "realistic photo",
+      "alt": "Результат после курса Ароматерапия: расслабление и хорошее самочувствие",
       "layout": "below",
       "role": "emotion_support"
     },
     {
       "slot": "target_audience",
-      "prompt": "a serene scene depicting a diverse group of people in a natural setting, each enjoying a moment of relaxation and self-care; one is meditating under a tree, another is lying on a blanket with nature around, a third is enjoying a soothing aroma from essential oils; soft sunlight filters through the leaves, creating a warm and inviting atmosphere of harmony and tranquility",
-      "style": "soft illustration",
-      "alt": "люди в гармонии с природой, наслаждающиеся ароматерапией",
+      "prompt": "Editorial style collage of three people who benefit from aromatherapy: a tired office worker at a desk, an active woman after workout stretching, a calm middle-aged person reading a book at home, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Ароматерапия",
       "layout": "right",
       "role": "emotion_support"
     },
     {
       "slot": "process",
-      "prompt": "A serene spa-like scene featuring a person lying comfortably on a massage table, eyes gently closed, surrounded by soft ambient light. The room is filled with hints of essential oils in beautiful bottles, delicate plants, and calming textures. There is an atmosphere of warmth and care, evoking a sense of relaxation and tranquility. The person feels enveloped in a soothing space, ready to experience aromatherapy.",
-      "style": "soft illustration",
-      "alt": "человек расслабляется во время ароматерапии в уютной атмосфере",
+      "prompt": "High-end spa photography of a aromatherapy treatment room in a modern health center, massage table with neatly folded white towels, aroma diffuser with soft visible steam on a wooden side table, two candles and a small green plant, soft warm studio lighting, beige and white interior, wide angle shot, 35mm lens, f/4, realistic photo, clean composition, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Кабинет Ароматерапия в центре здоровья «Энтузиаст» в Ноябрьске",
       "layout": "below",
       "role": "emotion_support"
     },
     {
       "slot": "faq",
-      "prompt": "A tranquil scene depicting a serene and inviting space within a health center, where soft light filters through gentle curtains. The atmosphere conveys trust and safety, with comfortable seating and soothing colors. There's a subtle hint of nature in the background, symbolizing calmness and relaxation. The environment feels nurturing, suggesting care and attention to well-being without featuring any people or explicit actions.",
-      "style": "soft illustration",
-      "alt": "Спокойная атмосфера центра здоровья",
+      "prompt": "Flat lay overhead shot of aromatherapy preparation items on a light wooden surface: small amber glass bottles with essential oils, dried lavender bundles, a white ceramic aroma diffuser, a notepad and pen, eucalyptus branch, soft even overhead lighting, realistic product photography, clean organized composition, unmarked labels, warm natural colors",
+      "style": "realistic photo",
+      "alt": "Частые вопросы об услуге Ароматерапия",
       "layout": "below",
       "role": "emotion_support"
     },
     {
       "slot": "utp",
-      "prompt": "a serene and cozy wellness center interior, showcasing soft ambient lighting, plush seating, and gentle aromas wafting through the air; a sense of trust and care is emanating from the surroundings, with various aromatic oils artistically displayed on a wooden shelf, while the atmosphere radiates warmth and relaxation, inviting individuals to unwind and rejuvenate their spirit",
+      "prompt": "A welcoming reception area of a modern health and wellness center in Noyabrsk, clean minimalist interior with warm wood accents and green plants, soft ambient lighting, comfortable seating area, shelf with neatly arranged skincare and aromatherapy essential oils, realistic interior photo, bright inviting atmosphere",
       "style": "realistic photo",
-      "alt": "уютная атмосфера центра здоровья с аромасами",
+      "alt": "Почему выбирают Ароматерапия в центре здоровья «Энтузиаст»",
       "layout": "below",
       "role": "emotion_support"
     }
   ],
-  "service_slug": "service",
+  "service_slug": "aromaterapiya",
   "blocks": [
     {
       "slot": "problems",

@@ -1,10 +1,11 @@
 @echo off
 chcp 65001 > nul
+set PYTHONIOENCODING=utf-8
 echo.
 echo === Генерация изображений для agent9 ===
 echo.
 echo Agent9 использует (по порядку):
-echo   1. ComfyUI/API на COMFYUI_URL (по умолчанию :8000) - POST /generate
+echo   1. ComfyUI на COMFYUI_URL (по умолчанию :8188) или Flask API
 echo   2. SD WebUI на SD_WEBUI_URL (по умолчанию :7860) - sdapi/v1/txt2img
 echo.
 echo Запустите Stable Diffusion WebUI с API:

@@ -1,5 +1,6 @@
 @echo off
 chcp 65001 > nul
+set PYTHONIOENCODING=utf-8
 cd /d D:\content-factory
 call venv\Scripts\activate.bat
 echo.

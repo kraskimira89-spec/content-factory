@@ -46,7 +46,7 @@ def get_comfyui_url() -> str:
     load_dotenv(_ENV_PATH)
     comfy = get_comfyui_config()
     env_name = comfy.get("url_env", "COMFYUI_URL")
-    default = comfy.get("url_default", "http://127.0.0.1:8000")
+    default = comfy.get("url_default", "http://127.0.0.1:8188")
     return os.getenv(env_name, "").strip() or default
 
 
@@ -56,6 +56,15 @@ def get_sd_webui_url() -> str:
     comfy = get_comfyui_config()
     env_name = comfy.get("sd_webui_url_env", "SD_WEBUI_URL")
     default = comfy.get("sd_webui_url_default", "http://127.0.0.1:7860")
+    return os.getenv(env_name, "").strip() or default
+
+
+def get_sd_webui_root() -> str:
+    """Путь к папке SD WebUI (root_env → .env → root_default из image_protocol.sd_webui)."""
+    load_dotenv(_ENV_PATH)
+    cfg = (get_config().get("image_protocol") or {}).get("sd_webui") or {}
+    env_name = cfg.get("root_env", "SD_WEBUI_ROOT")
+    default = cfg.get("root_default", "D:\\AI\\stable-diffusion-webui")
     return os.getenv(env_name, "").strip() or default
 
 
@@ -109,10 +118,14 @@ def get_image_path_for_network(
         return channel_list.get("image_path") if isinstance(channel_list, dict) else None
     name = variant_name or DEFAULT_IMAGE_VARIANT_BY_NETWORK.get(network, "post")
     for item in channel_list:
+        if item.get("status") == "error":
+            continue
         if item.get("name") == name:
             return item.get("image_path")
     if channel_list:
-        return channel_list[0].get("image_path")
+        for item in channel_list:
+            if item.get("status") != "error":
+                return item.get("image_path")
     return None
 
 

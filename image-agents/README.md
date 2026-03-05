@@ -28,7 +28,7 @@
 - `image_jobs_path` — папка JSON-джоб от агента prompt
 - `image_queue_path` — папка очереди для генератора (если не HTTP)
 - `image_index_path` — файл индекса (по умолчанию `db/image_index.json`)
-- `image_generator_url` — URL локального генератора (например `http://localhost:7860/generate`)
+- `image_generator_url` — URL локального генератора: **`http://127.0.0.1:8000/generate`** (Flask `scripts/image_generate_api.py`). Переопределение: `IMAGE_GENERATOR_URL` в `config/.env`. На порту 7860 у SD WebUI нет `/generate`, только `/sdapi/v1/txt2img`.
 - `image_generator_timeout_sec` — таймаут HTTP-запроса
 
 ## Запуск

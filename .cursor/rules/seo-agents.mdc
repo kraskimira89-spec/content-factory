@@ -28,6 +28,13 @@ prompts/agents/
 - Именование: `{timestamp}_{тип}_{услуга}_{город}.{ext}`
 - Типы: keywords (.txt), brief (.md), page (.md), approved (.md)
 
+## SD WebUI и порты (agent8, agent9)
+
+- **agent9** вызывает SD WebUI по `sdapi/v1/txt2img` для генерации картинок
+- URL берётся из `SD_WEBUI_URL` в `config/.env` (по умолчанию `http://127.0.0.1:7860`)
+- **Перебор портов:** если порт занят или отклоняет подключение (WinError 10061), agent9 пробует 7861, 7862… до 7865
+- При изменении agent9/agent8 и SD: сохранять логику `_get_sd_webui_candidate_urls()` и `_is_connection_error()` — не убирать автоматический перебор портов
+
 ## Публикация
 
 - `agent4_publish` → WordPress REST API (посты и страницы)

@@ -19,7 +19,8 @@
 | **booking_steps** | Строки массива | Формулировки шагов |
 | **form** | `title`, `description`, `fields[].label`, `submit_text` | Под ЦА |
 | **gallery** | `title`, `description` | Подписи к фото |
-| **testimonials** | `text`, `author`, `company` | Тексты отзывов |
+| **testimonials** | `text`, `author`, `company` | Мини‑отзывы 2–4 строки: задача → как прошло → результат |
+| **cases** | `title`, `client`, `goal`, `result` | Кейсы мероприятий: кто → что делали → результат |
 | **faq** | Массив `{ question, answer }` | Вопросы и ответы, 5–7 пар |
 
 ---
@@ -29,7 +30,7 @@
 | Элемент | Правило |
 |---------|---------|
 | **Ключи JSON** | Имена ключей (`hero`, `for_whom`, `benefits` и т.д.) не менять |
-| **Порядок блоков** | hero → for_whom → benefits → features → equipment → pricing → booking_steps → form → gallery → testimonials → faq |
+| **Порядок блоков** | hero → for_whom → benefits → features → pricing → equipment → booking_steps → form → gallery → cases → testimonials → faq |
 | **Структура объектов** | `hero` всегда объект с `title`, `subtitle`, `price_line`, `cta_primary`, `cta_secondary` |
 | **meta** | `page_type`, `locale`, `city` — константы |
 | **slug** | `konferenc-zal` — не менять |

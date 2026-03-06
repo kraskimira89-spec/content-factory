@@ -57,8 +57,11 @@
 
 **Порядок блоков в HTML:**
 ```
-hero → for_whom → benefits → features → equipment → pricing → booking_steps → form → gallery → testimonials → faq
+hero → for_whom → benefits → features → pricing → equipment → booking_steps → form → gallery → cases → testimonials → faq
 ```
+
+**Стили для блоков cases/testimonials (рекомендация):**
+- `.landing-case-result` — акцент на результате (font-weight: 600 или цвет). B2B/коучинг-аудитория чаще цепляется за итог.
 
 ---
 
@@ -87,7 +90,7 @@ hero → for_whom → benefits → features → equipment → pricing → bookin
 
 | Файл | Назначение |
 |------|------------|
-| `scripts/publish_konferenc_zal.py` | **Скрипт публикации** JSON → HTML → WP (hero, for_whom, benefits, features, equipment, pricing, booking_steps, form, gallery, testimonials, faq) |
+| `scripts/publish_konferenc_zal.py` | **Скрипт публикации** JSON → HTML → WP (hero, for_whom, benefits, features, pricing, equipment, booking_steps, form, gallery, testimonials, faq) |
 | `docs/konferenc-zal-*.json` | JSON‑шаблоны |
 | `prompts/konferenc-zal-rewrite.md` | Промпт для LLM |
 | `docs/konferenc-zal-json-protocol.md` | Протокол |

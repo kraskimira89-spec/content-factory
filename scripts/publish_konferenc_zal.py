@@ -127,16 +127,45 @@ def update_page(
     return resp.json()
 
 
-def json_to_html(data: dict) -> str:
-    """
-    Конвертирует JSON‑блоки в семантический HTML.
-    Классы: landing-hero, landing-for-whom, landing-benefits и т.д.
-    """
-    parts = []
+# Порядок секций страницы залов (источник правды для рендера).
+# pricing → equipment: тарифы раньше оснащения (UX).
+# gallery → cases → testimonials: социальные доказательства перед FAQ.
+SECTIONS_ORDER = [
+    "hero",
+    "for_whom",
+    "benefits",
+    "features",
+    "pricing",
+    "equipment",
+    "booking_steps",
+    "form",
+    "gallery",
+    "cases",
+    "testimonials",
+    "faq",
+]
 
-    # Hero
-    h = data.get("hero", {})
-    if h.get("title"):
+
+def _has_section_content(data: dict, section_key: str) -> bool:
+    """Проверяет, есть ли в JSON контент для секции."""
+    val = data.get(section_key)
+    if val is None:
+        return False
+    if isinstance(val, dict):
+        return bool(val)
+    if isinstance(val, list):
+        return len(val) > 0
+    return True
+
+
+def _render_section(section_key: str, data: dict) -> list[str]:
+    """Рендерит одну секцию. Возвращает список HTML‑строк."""
+    parts: list[str] = []
+
+    if section_key == "hero":
+        h = data.get("hero", {})
+        if not h.get("title"):
+            return []
         parts.append('<section class="landing-hero">')
         parts.append(f'  <h1>{_esc(h["title"])}</h1>')
         if h.get("subtitle"):
@@ -147,9 +176,8 @@ def json_to_html(data: dict) -> str:
             parts.append(f'  <a href="#bron" class="button cta-primary">{_esc(h["cta_primary"])}</a>')
         parts.append("</section>")
 
-    # For whom
-    fw = data.get("for_whom", [])
-    if fw:
+    elif section_key == "for_whom":
+        fw = data.get("for_whom", [])
         parts.append('<section class="landing-for-whom"><h2>Для кого</h2>')
         for item in fw:
             parts.append('  <div class="landing-card">')
@@ -158,9 +186,8 @@ def json_to_html(data: dict) -> str:
             parts.append("  </div>")
         parts.append("</section>")
 
-    # Benefits
-    ben = data.get("benefits", [])
-    if ben:
+    elif section_key == "benefits":
+        ben = data.get("benefits", [])
         parts.append('<section class="landing-benefits"><h2>Преимущества</h2>')
         for item in ben:
             parts.append('  <div class="landing-card">')
@@ -169,9 +196,8 @@ def json_to_html(data: dict) -> str:
             parts.append("  </div>")
         parts.append("</section>")
 
-    # Features (характеристики)
-    feat = data.get("features", [])
-    if feat:
+    elif section_key == "features":
+        feat = data.get("features", [])
         parts.append('<section class="landing-features"><h2>Характеристики</h2>')
         parts.append("  <dl>")
         for item in feat:
@@ -180,9 +206,19 @@ def json_to_html(data: dict) -> str:
         parts.append("  </dl>")
         parts.append("</section>")
 
-    # Equipment
-    eq = data.get("equipment", [])
-    if eq:
+    elif section_key == "pricing":
+        pr = data.get("pricing", [])
+        parts.append('<section class="landing-pricing"><h2>Тарифы</h2>')
+        for item in pr:
+            parts.append('  <div class="landing-tariff">')
+            parts.append(f'    <h4>{_esc(item.get("name", ""))}</h4>')
+            parts.append(f'    <p>{_esc(item.get("description", ""))}</p>')
+            parts.append(f'    <p class="price">{_esc(item.get("price", ""))}</p>')
+            parts.append("  </div>")
+        parts.append("</section>")
+
+    elif section_key == "equipment":
+        eq = data.get("equipment", [])
         parts.append('<section class="landing-equipment"><h2>Оснащение</h2>')
         for cat in eq:
             items = cat.get("items", [])
@@ -194,29 +230,15 @@ def json_to_html(data: dict) -> str:
                 parts.append("  </ul>")
         parts.append("</section>")
 
-    # Pricing
-    pr = data.get("pricing", [])
-    if pr:
-        parts.append('<section class="landing-pricing"><h2>Тарифы</h2>')
-        for item in pr:
-            parts.append('  <div class="landing-tariff">')
-            parts.append(f'    <h4>{_esc(item.get("name", ""))}</h4>')
-            parts.append(f'    <p>{_esc(item.get("description", ""))}</p>')
-            parts.append(f'    <p class="price">{_esc(item.get("price", ""))}</p>')
-            parts.append("  </div>")
-        parts.append("</section>")
-
-    # Booking steps
-    bs = data.get("booking_steps", [])
-    if bs:
+    elif section_key == "booking_steps":
+        bs = data.get("booking_steps", [])
         parts.append('<section class="landing-booking-steps"><h2>Как забронировать</h2><ol>')
         for s in bs:
             parts.append(f'  <li>{_esc(s)}</li>')
         parts.append("</ol></section>")
 
-    # Form (якорь)
-    form = data.get("form", {})
-    if form:
+    elif section_key == "form":
+        form = data.get("form", {})
         fid = form.get("id", "bron")
         parts.append(f'<section class="landing-form" id="{_esc(fid)}">')
         parts.append(f'  <h2>{_esc(form.get("title", ""))}</h2>')
@@ -224,9 +246,8 @@ def json_to_html(data: dict) -> str:
         parts.append("  <!-- форма вставляется шорткодом/виджетом -->")
         parts.append("</section>")
 
-    # Gallery
-    gallery = data.get("gallery", [])
-    if gallery:
+    elif section_key == "gallery":
+        gallery = data.get("gallery", [])
         parts.append('<section class="landing-gallery"><h2>Как выглядит зал</h2>')
         for item in gallery:
             title = item.get("title", "")
@@ -241,10 +262,24 @@ def json_to_html(data: dict) -> str:
             parts.append("  </div>")
         parts.append("</section>")
 
-    # Testimonials
-    testimonials = data.get("testimonials", [])
-    if testimonials:
-        parts.append('<section class="landing-testimonials"><h2>Отзывы</h2>')
+    elif section_key == "cases":
+        cases = data.get("cases", [])
+        parts.append('<section class="landing-cases"><h2>Кейсы мероприятий в нашем зале</h2>')
+        for c in cases:
+            parts.append('  <div class="landing-case">')
+            parts.append(f'    <h3>{_esc(c.get("title", ""))}</h3>')
+            if c.get("client"):
+                parts.append(f'    <p class="landing-case-client">{_esc(c.get("client", ""))}</p>')
+            if c.get("goal"):
+                parts.append(f'    <p><strong>Задача:</strong> {_esc(c.get("goal", ""))}</p>')
+            if c.get("result"):
+                parts.append(f'    <p class="landing-case-result"><strong>Результат:</strong> {_esc(c.get("result", ""))}</p>')
+            parts.append("  </div>")
+        parts.append("</section>")
+
+    elif section_key == "testimonials":
+        testimonials = data.get("testimonials", [])
+        parts.append('<section class="landing-testimonials"><h2>Отзывы организаторов</h2>')
         for t in testimonials:
             parts.append('  <blockquote class="landing-testimonial">')
             parts.append(f'    <p>{_esc(t.get("text", ""))}</p>')
@@ -255,9 +290,8 @@ def json_to_html(data: dict) -> str:
             parts.append("  </blockquote>")
         parts.append("</section>")
 
-    # FAQ
-    faq = data.get("faq", [])
-    if faq:
+    elif section_key == "faq":
+        faq = data.get("faq", [])
         parts.append('<section class="landing-faq"><h2>Вопросы и ответы</h2>')
         for item in faq:
             parts.append('  <details>')
@@ -266,7 +300,21 @@ def json_to_html(data: dict) -> str:
             parts.append("  </details>")
         parts.append("</section>")
 
-    return "\n".join(parts)
+    return parts
+
+
+def json_to_html(data: dict) -> str:
+    """
+    Конвертирует JSON‑блоки в семантический HTML.
+    Порядок секций задаётся SECTIONS_ORDER (pricing перед equipment).
+    Секции без контента не выводятся.
+    """
+    result: list[str] = []
+    for section_key in SECTIONS_ORDER:
+        if not _has_section_content(data, section_key):
+            continue
+        result.extend(_render_section(section_key, data))
+    return "\n".join(result)
 
 
 def _esc(s: str) -> str:

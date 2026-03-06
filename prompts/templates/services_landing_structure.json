@@ -1,0 +1,99 @@
+{
+  "_comment": "Структура лендинга для страниц меню Сервисы. Образец: Конференц-зал. Используется LLM/агентами для генерации контента.",
+  "services_list": [
+    "konferenc-zal",
+    "dolgoletie",
+    "master-klepa",
+    "prokat",
+    "yuridicheskaya-pomoshch",
+    "trenazhernyy-zal"
+  ],
+  "blocks": [
+    {
+      "id": "hero",
+      "required": true,
+      "elements": ["h1", "subtitle", "price_line", "button_primary", "button_secondary"],
+      "button_primary_link": "#bron"
+    },
+    {
+      "id": "for_whom",
+      "required": true,
+      "title_template": "Для кого подходит {service_name}",
+      "cards_min": 4,
+      "cards_max": 6
+    },
+    {
+      "id": "advantages",
+      "required": true,
+      "title_template": "Почему выбирают {service_name} в «Энтузиаст»",
+      "cards_min": 4,
+      "cards_max": 6
+    },
+    {
+      "id": "characteristics",
+      "required": false,
+      "title_template": "Характеристики {service_name}",
+      "apply_to": ["konferenc-zal", "prokat"]
+    },
+    {
+      "id": "equipment",
+      "required": false,
+      "title_template": "Оснащение / Что входит",
+      "apply_to": ["konferenc-zal", "prokat"]
+    },
+    {
+      "id": "tariffs",
+      "required": false,
+      "title_template": "Тарифы и цены",
+      "apply_to": ["konferenc-zal", "prokat", "yuridicheskaya-pomoshch", "trenazhernyy-zal"]
+    },
+    {
+      "id": "how_to_order",
+      "required": true,
+      "title_template": "Как {action} {service_name}",
+      "action_by_type": {
+        "rental": "забронировать",
+        "service": "записаться",
+        "consultation": "записаться на консультацию"
+      },
+      "steps_count": 4
+    },
+    {
+      "id": "form",
+      "required": true,
+      "html_id": "bron",
+      "title": "Оставить заявку",
+      "fields": ["Имя", "Телефон", "Доп. поля по сервису"]
+    },
+    {
+      "id": "gallery",
+      "required": false,
+      "title_template": "Как выглядит {service_name}"
+    },
+    {
+      "id": "reviews",
+      "required": false,
+      "title_template": "Отзывы {audience}"
+    },
+    {
+      "id": "faq",
+      "required": true,
+      "title": "Частые вопросы",
+      "items_min": 5,
+      "items_max": 7
+    },
+    {
+      "id": "cta",
+      "required": true,
+      "description": "Финальный блок с повтором оффера и формой/кнопкой"
+    }
+  ],
+  "service_types": {
+    "konferenc-zal": "rental",
+    "prokat": "rental",
+    "dolgoletie": "program",
+    "master-klepa": "children",
+    "yuridicheskaya-pomoshch": "consultation",
+    "trenazhernyy-zal": "sport"
+  }
+}

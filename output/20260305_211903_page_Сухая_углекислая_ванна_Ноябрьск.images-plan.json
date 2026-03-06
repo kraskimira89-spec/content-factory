@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Сухая углекислая ванна",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of dry CO2 bath essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует Сухая углекислая ванна: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after dry CO2 bath, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса Сухая углекислая ванна: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from dry CO2 bath: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Сухая углекислая ванна",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "sukhaya-uglekislaya-vanna",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на сухую углекислую ванну?",
+      "text": "- Постоянная усталость и тяжесть в теле.\n- Хронические боли в мышцах.\n- Усталость от стресса и напряжённой работы."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает сухая углекислая ванна?",
+      "text": "Во время процедуры ваше тело помещается в капсулу, где начинается насыщение углекислым газом. Этот газ проникает в ткани, улучшая кровообращение и способствуя расслаблению. Как будто ваше тело попадает в приятное облако, где тяжесть и напряжение постепенно растворяются."
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт сухая углекислая ванна?",
+      "text": "- ✅ Устранение усталости и улучшение настроения.\n- ✅ Повышение упругости и эластичности кожи.\n- ✅ Устранение мышечных болей и напряжения.\n- ✅ Улучшение притока крови и лимфы, что способствует восстановлению.\n- ✅ Уменьшение стресса и тревожности, приближающее к состоянию покоя."
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна сухая углекислая ванна?",
+      "text": "- Тем, кто ведёт активный образ жизни и нуждается в восстановлении.\n- Людям, страдающим от хронических болей.\n- Тем, кто хочет улучшить состояние своей кожи.\n- Всем, кто испытывает стресс и хочет расслабиться.\n- Спортсменам, желающим ускорить восстановление после тренировки."
+    }
+  ]
+}

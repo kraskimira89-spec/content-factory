@@ -1,6 +1,16 @@
 {
   "_comment": "Контракт между content-factory и entuziastov75-vps. Телефон для записи: +7 (904) 475-91-01.",
-  "_version": "2.1",
+  "_version": "2.2",
+
+  "google_sheets": {
+    "spreadsheet_id": "1uL2BUXrN-E85s3OEz9DjzeT8rQouBpTQZOMjwUEmquo",
+    "credentials_env": "GOOGLE_APPLICATION_CREDENTIALS",
+    "sheets": {
+      "Queue": { "range": "A:I", "_headers": "queue_id, topic_id, service_slug, publish_date, status, wp_page_id, wp_url, agent_run_id, notes" },
+      "Services": { "range": "A:F", "_headers": "slug, wp_page_id, category, price, wp_url, name" }
+    },
+    "_comment": "Сервисный аккаунт: Редактор таблицы. GOOGLE_APPLICATION_CREDENTIALS — путь к JSON ключу."
+  },
 
   "wordpress": {
     "url_env": "WP_URL",
@@ -74,8 +84,6 @@
       "min": 4,
       "max": 4
     },
-    "test_max_images": 1,
-    "test_slug": "aromaterapiya",
     "fields": {
       "prompt": "string, текст для Stable Diffusion",
       "style": "string, например 'realistic photo' или 'flat illustration'",
@@ -127,6 +135,14 @@
     "services":            { "title": "Услуги",                   "wp_cat_env": "WP_CAT_SERVICES" }
   },
 
+  "konferenc_zal_pages": {
+    "_comment": "3 страницы в выпадающем меню Сервисы. page_template — шаблон WP (если как у konferenc-zal).",
+    "_page_template": "",
+    "korporativnye-treningi": { "json": "konferenc-zal-corporate-training.json", "parent_slug": "services", "menu_title": "Зал для тренингов" },
+    "onlajn-shkoly":          { "json": "konferenc-zal-online-school.json",  "parent_slug": "services", "menu_title": "Зал для Онлайн-школ и вебинаров" },
+    "kouchting":              { "json": "konferenc-zal-coaches.json",        "parent_slug": "services", "menu_title": "Зал для Коучей и консультантов" }
+  },
+
   "services": {
     "dolgoletie":              { "name": "Долголетие" },
     "konferenc-zal":           { "name": "Конференц-зал" },
@@ -144,10 +160,15 @@
     "fitobochka":           { "name": "Кедровая фитобочка",          "aliases": ["кедровая бочка", "фитобочка"] },
     "massazh":              { "name": "Массаж" },
     "pressoterapiya":       { "name": "Прессотерапия" },
+    "skrabirovanie":       { "name": "Скрабирование",              "aliases": ["скраб тела", "пилинг тела", "телесный скраб"] },
+    "obertyvanie":        { "name": "Обертывание",                 "aliases": ["обёртывание", "обертывание тела", "термообертывание"] },
     "vlok":                 { "name": "ВЛОК" },
     "uglekislaya-vanna":    { "name": "Углекислая ванна" },
+    "sukhaya-uglekislaya-vanna": { "name": "Сухая углекислая ванна", "aliases": ["сухая углекислая ванна", "сухая CO2 ванна", "углекислая ванна сухая"] },
     "lfk":                  { "name": "ЛФК" },
-    "limfodrenazh-nog":     { "name": "Аппаратный лимфодренаж ног", "aliases": ["лимфодренаж ног", "аппаратный лимфодренаж"] }
+    "limfodrenazh-nog":     { "name": "Аппаратный лимфодренаж ног", "aliases": ["лимфодренаж ног", "аппаратный лимфодренаж"] },
+    "nuga-best":           { "name": "Нуга Бест",                  "aliases": ["нуга бест", "массажная кровать нуга"] },
+    "fitobar":             { "name": "Фитобар",                    "aliases": ["фитобар", "здоровые напитки", "смузи бар"] }
   },
 
   "service_data_fields": {
@@ -171,7 +192,12 @@
     "vps_host_env": "VPS_HOST",
     "vps_user_env": "VPS_USER",
     "vps_key_env":  "VPS_SSH_KEY",
-    "theme_path":   "/var/www/html/wp-content/themes/flavor/inc/service-pages-defaults.php"
+    "theme_path":   "/var/www/html/wp-content/themes/flavor/inc/service-pages-defaults.php",
+    "theme_child_path": "/root/sites/entuziastov75VPS/www/entuziastov75.ru/wp-content/themes/entuziastov75-child",
+    "theme_local_paths": [
+      "C:/Users/user/Documents/seo_entuziastov75/www/entuziastov75.ru/wp-content/themes/entuziastov75-child",
+      "D:/entuziastov75-vps/www/entuziastov75.ru/wp-content/themes/entuziastov75-child"
+    ]
   },
 
   "image_agents": {

@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Фитобар",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of health bar smoothies juices essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует Фитобар: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after health bar smoothies juices, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса Фитобар: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from health bar smoothies juices: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Фитобар",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "fitobar",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на Фитобар?",
+      "text": "- Усталость и отсутствие энергии после рабочего дня — как будто побывали в командировке!\n- Стресс и напряжение от постоянной загруженности — ни сон, ни отдых не приносят облегчения.\n- Желание улучшить пищевые привычки — порой здорова пища кажется скучной и однообразной.\n- Необходимость восстановить организм после физической нагрузки — «всё болит, а силы на исходе».\n- Нехватка разнообразия в рационе — почему бы не порадовать себя чем-то более интересным и здоровым?"
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает Фитобар?",
+      "text": "**Фитобар** — это как маленькое путешествие для вашего организма. Мы предлагаем разнообразные **фитопродукты**, которые подходят для любой ситуации: хотите взбодриться? Выбирайте смузи с суперфудами. Устали? Закажите наш **фиточай**. Каждое предложение тщательно подобрано, чтобы восполнить нехватку витаминов, минералов и антиоксидантов. \n\nНаши напитки готовятся из свежих, натуральных ингредиентов, сочетающих в себе мощную силу природы и наилучшие технологии приготовления. Это не просто напитки — это полезная наука о вашем здоровье!"
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт Фитобар?",
+      "text": "✅ **Прилив энергии** — вы почувствуете, как заряд бодрости наполняет каждую клеточку тела.  \n✅ **Улучшение самочувствия** — забудьте о тяжести и усталости, наконец-то можно расслабиться.  \n✅ **Повышение уровня выносливости** — три кружки смузи, и вы готовы к новому дню!  \n✅ **Легкость в теле** — почувствуйте, как поднимается настроение вместе с вашим состоянием.  \n✅ **Благодарность организма** — он вас оценит за заботу, а вы получите удовольствие от вкусной еды!  \n✅ **Разнообразие вкусов** — забудьте о скучных диетах, здесь всегда есть что-то новенькое!  \n✅ **Поддержка пищеварения** — внутренний комфорт навсегда с вами.  \n✅ **Путь к здоровому питанию** — здесь начинают происходить настоящие изменения!"
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна Фитобар?",
+      "text": "- Людям, стремящимся к **здоровому питанию** и образу жизни, ведь уникальный вкус это вполне реально!  \n- Спортивным личностям, которые требуют от своего организма максимума.  \n- Всем, кто хочет поддерживать или восстанавливать своё здоровье после болезней — ваши клетки почувствуют это.  \n- Жителям Ноябрьска, заинтересованным в **органическом питании** и суперфудах — добро пожаловать!  \n- Если вы просто ищете разнообразие и здоровье в одном месте, наш **Фитобар** создан именно для вас!"
+    }
+  ]
+}

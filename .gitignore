@@ -5,6 +5,8 @@ env/
 
 # Секреты и ключи
 config/.env
+config/google_service_account.json
+config/client_secret_google.json
 .env
 .env.local
 *.key

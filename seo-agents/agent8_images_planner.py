@@ -31,18 +31,25 @@ PROMPT_FILE = _PROJECT_ROOT / "prompts" / "agents" / "agent8_images.txt"
 # Маппинг slug → английское название для промптов SD (Flux)
 SERVICE_EN_BY_SLUG: dict[str, str] = {
     "aromaterapiya": "aromatherapy",
+    "skrabirovanie": "body scrub",
+    "obertyvanie": "body wrap",
     "pressoterapiya": "pressotherapy",
     "fitobochka": "cedar sauna",
     "solyanaya-komnata": "salt room",
     "massazh": "massage",
     "vlok": "VLOK",
+    "nuga-best": "Nuga Best massage bed",
+    "nastolnyy-tennis": "table tennis",
     "uglekislaya-vanna": "dry CO2 bath",
+    "sukhaya-uglekislaya-vanna": "dry CO2 bath",
     "gidromassazh": "hydrotherapy massage",
     "limfodrenazh-nog": "lymphatic drainage",
     "karboksiterapiya": "carboxytherapy",
     "fitoparolechenie": "herbal steam therapy",
     "galoterapiya": "halotherapy salt room",
     "infrakrasnaya-sauna": "infrared sauna",
+    "fitobar": "health bar smoothies juices",
+    "trenazhernyy-zal": "gym fitness room",
 }
 
 SLOT_PROMPTS: dict[str, dict[str, str]] = {
@@ -86,13 +93,13 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
     },
     "process": {
         "prompt_en": (
-            "High-end spa photography of {service_en} treatment room in a modern health center, "
+            "High-end spa photo of {service_en} treatment room in a modern health center, "
             "massage table with neatly folded white towels, "
             "aroma diffuser with soft visible steam on a wooden side table, "
             "two candles and a small green plant, "
             "soft warm studio lighting, beige and white interior, "
             "wide angle shot, 35mm lens, f/4, realistic photo, "
-            "clean composition, no text, no logo, no people, empty room"
+            "clean composition, no people, no text, no logo"
         ),
         "prompt_ru": (
             "Спокойный кабинет для {service_ru} в современном центре здоровья в Ноябрьске: "
@@ -106,12 +113,12 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
     },
     "result": {
         "prompt_en": (
-            "Bright airy spa relaxation lounge after a {service_en} session, "
-            "empty daybed with soft white robe neatly draped, "
-            "large window with warm morning sunlight, "
-            "fresh flowers in a vase and a cup of herbal tea on a side table, "
-            "warm golden color palette, realistic photo, peaceful welcoming atmosphere, "
-            "no people, unoccupied scene"
+            "Realistic spa photo of a relaxed person after {service_en}, "
+            "wearing a soft white robe, lying comfortably on a lounge chair, "
+            "gentle smile, eyes closed, completely calm body language, "
+            "large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, "
+            "soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, "
+            "clean background, no text, no logo"
         ),
         "prompt_ru": (
             "Светлая комната отдыха после сеанса {service_ru}: "
@@ -164,11 +171,13 @@ SLOT_PROMPTS: dict[str, dict[str, str]] = {
     },
     "utp": {
         "prompt_en": (
-            "A welcoming reception area of a modern health and wellness center in Noyabrsk, "
-            "clean minimalist interior with warm wood accents and green plants, "
-            "soft ambient lighting, comfortable seating area, "
-            "shelf with neatly arranged skincare and {service_en} essential oils, "
-            "realistic interior photo, bright inviting atmosphere, no people, empty reception"
+            "High-end interior photo of the reception area of a modern health and wellness center, "
+            "clean minimalist design with warm wooden accents and green plants, "
+            "friendly receptionist desk, comfortable armchairs, "
+            "soft ambient lighting, bright inviting atmosphere, "
+            "realistic professional photography, 24mm lens, f/5.6, "
+            "small sign with the word Enthusiast on the wall, "
+            "no people, no extra text, no logo overlays"
         ),
         "prompt_ru": (
             "Уютная зона ресепшн современного центра здоровья в Ноябрьске: "
@@ -411,15 +420,9 @@ def plan_images_for_post(context: dict[str, Any]) -> dict[str, Any]:
     images: list[dict[str, Any]] = []
 
     if blocks:
-        # Лимит изображений: в режиме теста (test_slug + test_max_images) — меньше, иначе count.max
-        protocol = get_image_protocol()
-        count_cfg = protocol.get("count", {})
-        test_slug = protocol.get("test_slug")
-        test_max = protocol.get("test_max_images")
-        if test_slug and str(service_slug).strip().lower() == str(test_slug).strip().lower() and test_max is not None:
-            max_images = int(test_max)
-        else:
-            max_images = int(count_cfg.get("max", 4))
+        # Лимит изображений на услугу из image_protocol.count
+        count_cfg = get_image_protocol().get("count", {})
+        max_images = int(count_cfg.get("max", 4))
         blocks = blocks[:max_images]
 
         service_en = _service_en(service_slug, service_name)

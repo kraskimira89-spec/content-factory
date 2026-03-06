@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Настольный теннис",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of table tennis essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует Настольный теннис: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after table tennis, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса Настольный теннис: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from table tennis: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Настольный теннис",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "nastolnyy-tennis",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на настольный теннис?",
+      "text": "- **Сильный стресс:** Столкнувшись с повседневной рутиной, вы ищете способы отвлечься и расслабиться.\n- **Нехватка движений:** Долгое сидение в офисе не добавляет бодрости, и вы чувствуете, как тело требует активности.\n- **Желание улучшить физическую форму:** Стремление стать более активным, но не знаете, с чего начать.\n- **Поиск интересного хобби:** Ломаете голову, чем заняться, чтобы это приносило удовольствие и радость общения."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает настольный теннис?",
+      "text": "Настольный теннис — это динамичная игра, которая помогает улучшить координацию движений и реакцию. Каждый удар по мячу — это танец между двумя соперниками, где нужно не только ловко отбивать, но и предугадывать действия противника. Игра производится на маленьком столе с сеткой, и здесь важны как физическая подготовка, так и стратегия."
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт настольный теннис?",
+      "text": "- ✅ **Снятие стресса** — почувствуйте, как напряжение уходит с каждым ударом.\n- ✅ **Улучшение физической формы** — движение, которое поддерживает вас в тонусе.\n- ✅ **Развитие координации и реакции** — для любого возраста и уровня подготовки.\n- ✅ **Новые знакомства** — взаимодействие с другими любителями игры создаёт атмосферу дружбы.\n- ✅ **Веселое хобби** — азарт и интерес, который никогда не иссякнет.\n- ✅ **Сплочение в команде** — совместные тренировки и соревнования объединяют."
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна настольный теннис?",
+      "text": "- Тем, кто хочет снять стресс после долгого рабочего дня.\n- Активным людям, стремящимся поддерживать форму.\n- Родителям, желающим развить у детей координацию и социальные навыки.\n- Тем, кто ищет интересные и новые увлечения, полные адреналина.\n- Мужчинам и женщинам всех возрастов, желающим стать частью спортивного сообщества."
+    }
+  ]
+}

@@ -1,19 +1,21 @@
 """
 Деплой данных услуг на VPS.
 
-Два режима:
-  --mode rest  : отправляет JSON по REST API (POST /wp-json/entuziastov75/v1/service-data/{slug})
-  --mode ssh   : копирует PHP-файл по SSH (SCP) — фоллбэк
+Режимы:
+  --mode rest   : отправляет JSON по REST API (POST /wp-json/entuziastov75/v1/service-data/{slug})
+  --mode ssh    : копирует PHP-файл по SSH (SCP) — фоллбэк
+  --mode theme  : копирует шаблон темы (template-page-landing-konferenc-zal.php) на VPS
 
 Опции:
-  --slug NAME  : деплоить только одну услугу (по умолчанию — все из services-patch-data.json)
-  --dry-run    : показать что будет отправлено, без реального запроса
+  --slug NAME   : деплоить только одну услугу (по умолчанию — все из services-patch-data.json)
+  --dry-run     : показать что будет отправлено, без реального запроса
 
 Использование:
   python scripts/deploy_to_vps.py --mode rest
   python scripts/deploy_to_vps.py --mode rest --slug solyanaya-komnata
   python scripts/deploy_to_vps.py --mode rest --dry-run
   python scripts/deploy_to_vps.py --mode ssh
+  python scripts/deploy_to_vps.py --mode theme
 """
 import argparse
 import json
@@ -136,11 +138,74 @@ def deploy_ssh():
         sys.exit(1)
 
 
+def deploy_theme():
+    """Копирует шаблон страницы лендинга (template-page-landing-konferenc-zal.php) на VPS."""
+    host = os.getenv("VPS_HOST", "").strip()
+    if not host:
+        # Fallback: хост из WP_URL (например http://91.229.11.147 → 91.229.11.147)
+        wp_url = os.getenv("WP_URL", "").strip()
+        if wp_url:
+            from urllib.parse import urlparse
+            host = urlparse(wp_url).hostname or ""
+    user = os.getenv("VPS_USER", "root").strip()
+    key_path = os.getenv("VPS_SSH_KEY", "").strip()
+
+    if not host:
+        print("❌ VPS_HOST не задан в config/.env, добавьте VPS_HOST=91.229.11.147 или WP_URL")
+        sys.exit(1)
+
+    deploy_cfg = SHARED_CONFIG.get("deploy", {})
+    remote_dir = deploy_cfg.get("theme_child_path", "")
+    local_paths = deploy_cfg.get("theme_local_paths", [])
+
+    if not remote_dir:
+        print("❌ deploy.theme_child_path не задан в shared-config.json")
+        sys.exit(1)
+
+    theme_files = [
+        "template-page-landing-konferenc-zal.php",
+        "assets/css/landing-pages.css",
+    ]
+    base_dir = None
+    for lp in local_paths:
+        if (Path(lp) / theme_files[0]).exists():
+            base_dir = Path(lp)
+            break
+
+    if not base_dir:
+        print(f"❌ Тема не найдена ни в одной папке:")
+        for lp in local_paths:
+            print(f"   {lp}")
+        sys.exit(1)
+
+    scp_cmd_base = ["scp"]
+    if key_path:
+        scp_cmd_base += ["-i", key_path]
+
+    ok_count = 0
+    for rel_path in theme_files:
+        local_file = base_dir / rel_path
+        if not local_file.exists():
+            print(f"⏭️ Пропуск (не найден): {rel_path}")
+            continue
+        remote_path = f"{remote_dir.rstrip('/')}/{rel_path.replace(chr(92), '/')}"
+        scp_cmd = scp_cmd_base + [str(local_file), f"{user}@{host}:{remote_path}"]
+        print(f"📤 SCP: {rel_path} → {user}@{host}:{remote_path}")
+        result = subprocess.run(scp_cmd, capture_output=True, text=True)
+        if result.returncode == 0:
+            ok_count += 1
+        else:
+            print(f"   ❌ Ошибка: {result.stderr}")
+            sys.exit(1)
+
+    print(f"✅ Скопировано файлов: {ok_count}")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Деплой service data на VPS")
     parser.add_argument(
-        "--mode", choices=["rest", "ssh"], default="rest",
-        help="Способ доставки: rest (WP REST API) или ssh (SCP-фоллбэк)",
+        "--mode", choices=["rest", "ssh", "theme"], default="rest",
+        help="Режим: rest (REST API), ssh (PHP-патч), theme (шаблон темы)",
     )
     parser.add_argument(
         "--slug", default=None,
@@ -156,8 +221,10 @@ def main():
 
     if args.mode == "rest":
         deploy_rest(slug_filter=args.slug, dry_run=args.dry_run)
-    else:
+    elif args.mode == "ssh":
         deploy_ssh()
+    else:
+        deploy_theme()
 
 
 if __name__ == "__main__":

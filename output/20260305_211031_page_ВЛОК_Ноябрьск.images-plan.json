@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться ВЛОК",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of VLOK essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует ВЛОК: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after VLOK, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса ВЛОК: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from VLOK: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна ВЛОК",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "vlok",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на ВЛОК?",
+      "text": "- Хроническая усталость: душа и тело как старый механизм, требуют смазки и заботы.\n- Стресс и выгорание, словно гудящий мотор, ждущий отключения.\n- Неприятные ощущения в мышцах, как после долгого сидения в одной позе.\n- Проблемы с концентрацией — мысли «плывут», как мотыльки на лету.\n- Потребность в восстановлении после нагрузок; заряжающий ужин не всегда помогает."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает ВЛОК?",
+      "text": "**ВЛОК** — это процедура, основанная на воздействии на организм через частицы, улучшающие циркуляцию и обмен веществ. Благодаря подаче чистого воздуха, вы получите не только эмоциональное, но и физическое облегчение. Эта капелька свежести наполняет тело и ум, как первое дыхание весны."
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт ВЛОК?",
+      "text": "- ✅ **Прилив энергии и бодрости**: снова почувствуете себя полным сил.\n- ✅ **Устранение мышечных зажимов**: боль как с ней ты прощайся.\n- ✅ **Улучшение концентрации и ясности мысли**: ум станет лёгким и гибким, как пушинка на ветру.\n- ✅ **Отдых и восстановление после стресса**: словно после отпуска на берегу моря.\n- ✅ **Воодушевление и позитивные эмоции**: смех и радость как лучи солнца в душе.\n- ✅ **Укрепление иммунной системы**: защитные силы организма станут мощнее."
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна ВЛОК?",
+      "text": "- Работникам умственного труда, живущим в потоке идей и задач.\n- Спортсменам и активным людям, жаждущим быстрого восстановления.\n- Тем, кто испытывает хроническую усталость, будто тянет тяжёлые камни.\n- Людям, желающим снизить уровень стресса, словно сбрасывая тяжесть с плеч.\n- Жителям Ноябрьска, которые переживают суровые зимы и нуждаются в поддержке."
+    }
+  ]
+}

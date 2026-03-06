@@ -30,3 +30,21 @@ def load_services_context() -> list[dict]:
 def get_service_names() -> list[str]:
     """Возвращает список названий услуг для подсказок."""
     return [s["name"] for s in load_services_context()]
+
+
+def get_service_name_by_slug(slug: str) -> str | None:
+    """Возвращает название услуги по slug из services.json или shared-config uslugi."""
+    for s in load_services_context():
+        if s.get("slug", "").lower() == slug.strip().lower():
+            return s.get("name")
+    # Fallback: shared-config uslugi
+    try:
+        import json
+        cfg = json.loads(open(os.path.join(PROJECT_ROOT, "config", "shared-config.json"), encoding="utf-8").read())
+        for section in (cfg.get("uslugi", {}), cfg.get("services", {})):
+            for _slug, data in section.items():
+                if _slug.lower() == slug.strip().lower():
+                    return data.get("name")
+    except Exception:
+        pass
+    return None

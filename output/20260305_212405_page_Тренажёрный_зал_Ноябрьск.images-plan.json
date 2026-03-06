@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Тренажёрный зал",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of gym fitness room essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует Тренажёрный зал: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after gym fitness room, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса Тренажёрный зал: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from gym fitness room: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Тренажёрный зал",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "trenazhernyy-zal",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят в тренажёрный зал?",
+      "text": "- Постоянная усталость и недомогание от сидячего образа жизни.\n- Хронические боли в спине и суставах из-за отсутствия физической активности.\n- Накопленный стресс и недостаток энергии."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает тренажёрный зал?",
+      "text": "Занятия в **тренажёрном зале** направлены на развитие силовых и кардионагрузок, которые способствуют ускорению метаболизма и улучшению общего состояния организма. Это не только укрепляет мышцы, но и значительно поднимает настроение!"
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт тренажёрный зал?",
+      "text": "- ✅ Улучшение физической формы.\n- ✅ Снижение стресса и улучшение настроения.\n- ✅ Укрепление мышц и суставов.\n- ✅ Повышение выносливости.\n- ✅ Совершенствование фигуры и похудение.\n- ✅ Командный дух и спортивная мотивация."
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна тренажёрный зал?",
+      "text": "- Студентам и офисным работникам с сидячим образом жизни, испытывающим дискомфорт.\n- Мамам в декрете, желающим восстановиться после родов и вернуться в форму.\n- Всем, кто мечтает сбросить лишний вес к отпуску.\n- Людям, нуждающимся в реабилитации из-за хронических болезней.\n- Тем, кто просто хочет поднять себе настроение и улучшить самочувствие."
+    }
+  ]
+}

@@ -18,6 +18,9 @@ from dotenv import load_dotenv
 # Базовая директория проекта seo-agents (папка, где лежит .env и агенты)
 BASE_DIR = Path(__file__).resolve().parents[1]  # .../seo-agents
 PROJECT_ROOT = Path(__file__).resolve().parents[2]  # .../content-factory
+SEO_AGENTS_DIR = BASE_DIR
+if str(SEO_AGENTS_DIR) not in sys.path:
+    sys.path.insert(0, str(SEO_AGENTS_DIR))
 
 # Папка, куда Агент 3 кладёт Markdown-страницы
 OUTPUT_DIR = PROJECT_ROOT / "output"
@@ -980,6 +983,8 @@ def main(
                 )
                 print(f"[OK] Страница обновлена: ID={page['id']}, link={page['link']}" + (" (черновик)" if draft else ""))
                 _log_to_db(meta, result)
+                _update_sheets_after_publish(slug, page["id"], page["link"])
+                _write_last_publish(slug, page["id"], page["link"])
                 if not do_both:
                     return
 
@@ -1006,6 +1011,8 @@ def main(
                         set_page_featured_media(wp_url, wp_user, wp_app_password, page_id, hero_attachment_id)
                 print(f"[OK] Страница создана: ID={page_id}, link={link}" + (" (черновик)" if draft else ""))
                 _log_to_db(meta, result)
+                _update_sheets_after_publish(slug, page_id, link)
+                _write_last_publish(slug, page_id, link)
                 if not do_both:
                     return
         elif not do_both:
@@ -1084,6 +1091,31 @@ def main(
     print(f"[OK] Запись создана: ID={post_id}, link={link}")
 
     _log_to_db(meta, result)
+
+
+def _write_last_publish(slug: str, wp_page_id: int | str, wp_url: str) -> None:
+    """Пишет результат публикации в output/last_publish.json для оркестратора."""
+    try:
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        path = OUTPUT_DIR / "last_publish.json"
+        path.write_text(
+            json.dumps({"slug": slug, "wp_page_id": str(wp_page_id), "wp_url": wp_url}, ensure_ascii=False),
+            encoding="utf-8",
+        )
+    except Exception:
+        pass
+
+
+def _update_sheets_after_publish(slug: str, wp_page_id: int | str, wp_url: str) -> None:
+    """После публикации страницы — обновляет Google Sheets (Services, Queue)."""
+    try:
+        from shared.sheets_client import mark_queue_done_and_update_service  # type: ignore
+        mark_queue_done_and_update_service(slug, wp_page_id, wp_url)
+        print("  (Sheets: Services + Queue обновлены)")
+    except ImportError:
+        pass
+    except Exception as e:
+        print(f"  [!] Sheets: не удалось обновить — {e}")
 
 
 def _log_to_db(meta: dict, wp_result: dict):

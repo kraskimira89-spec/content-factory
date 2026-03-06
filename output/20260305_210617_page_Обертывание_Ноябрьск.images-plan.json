@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Обертывание",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of body wrap essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует Обертывание: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after body wrap, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса Обертывание: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from body wrap: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Обертывание",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "obertyvanie",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на обертывание?",
+      "text": "- Хроническая усталость и отсутствие энергии, особенно после долгого рабочего дня.\n- Стресс и напряжение, накопившиеся за неделю — знакомое ощущение?\n- Неприятные ощущения в теле, требования восстановиться после интенсивных тренировок.\n- Предательство целлюлита и лишние сантиметры в проблемных зонах, как будто они решили остаться навсегда."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает обертывание?",
+      "text": "Процедура основана на использовании специальных составов для обертывания, которые активизируют обмен веществ, улучшают микроциркуляцию и способствуют выводу токсинов из организма. В результате кожа становится более упругой и эластичной, а общее состояние значительно улучшается, как если бы ваше тело прошло обновление в специальной компьютерной программе."
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт обертывание?",
+      "text": "- ✅ Легкость и комфорт в теле — никаких «пухлых» ощущений после трудового дня;\n- ✅ Устранение отечности — ваши ноги станут такими же лёгкими, как у юмориста в комедии;\n- ✅ Повышение тонуса кожи — посмотрите на себя в зеркало и удивитесь, как сильно изменились;\n- ✅ Устранение целлюлита — прощай, апельсиновая корка;\n- ✅ Улучшение обмена веществ — ваше тело начинает «переваривать» всё на ура;\n- ✅ Эстетическое улучшение фигуры — это не просто слова, а аксиома!"
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна обертывание?",
+      "text": "- Тем, кто стремится к стройности — вы на правильном пути к цели.\n- Людям с сидячей работой — ведь ваша задняя часть может болеть и не только от стула;\n- Спортсменам после интенсивных тренировок — поверьте, тело оценит восстановление;\n- Тем, кто желает улучшить состояние кожи — подарите себе уход, как в лучших спа-салонах!"
+    }
+  ]
+}

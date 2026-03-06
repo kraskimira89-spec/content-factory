@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Скрабирование",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of body scrub essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует Скрабирование: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after body scrub, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса Скрабирование: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from body scrub: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Скрабирование",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "skrabirovanie",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на скрабирование?",
+      "text": "- Усталость кожи от городской пыли и стресса.  \n- Хронические боли и напряжение после долгого рабочего дня.  \n- Неудовлетворенность внешним видом кожи (блеклость, сухость).  \n- Наличие целлюлита и лишних сантиметров в проблемных зонах.  \n- Потребность в восстановлении после интенсивных тренировок или физических нагрузок."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает скрабирование?",
+      "text": "Процесс скрабирования включает применение специальных скрабов с частичками, которые удаляют омертвевшие клетки с поверхности кожи, активируя её обновление и улучшая кровообращение. Это как глубокая чистка, где вам дарят ощущение свежести и легкости."
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт скрабирование?",
+      "text": "- ✅ Устранение омертвевших клеток, что приводит к более гладкой коже.  \n- ✅ Улучшение циркуляции крови, что способствует укреплению тканей.  \n- ✅ Снижение проявлений целлюлита благодаря активным массажным движениям.  \n- ✅ Увлажнение и питание кожи активными компонентами, входящими в состав скрабов.  \n- ✅ Заметное обновление кожи, придание ей эластичности и упругости."
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна скрабирование?",
+      "text": "- Тем, кто чувствует свою кожу усталой и безжизненной.  \n- Людям с проблемами целлюлита.  \n- Тем, кто хочет восстановить кожу после зимы.  \n- Тем, кто заботится о здоровье кожи и хочет поддерживать её в идеальном состоянии.  \n- Активным людям, которые часто испытывают стресс и нуждаются в расслаблении."
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "images": [
+    {
+      "slot": "problems",
+      "prompt": "A dimly lit living room scene suggesting chronic fatigue and stress: empty couch, messy desk with scattered papers in the background, coffee cup, rumpled blanket, cool blue desaturated color palette, soft window light, shallow depth of field, realistic photo, 50mm lens, f/2.8 aperture, clean composition, no people, no persons",
+      "style": "realistic photo",
+      "alt": "Проблемы, с которыми помогает справиться Нуга Бест",
+      "layout": "right",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "mechanism",
+      "prompt": "Close-up of Nuga Best massage bed essential oils and aroma diffuser on a wooden tray, visible warm steam rising, soft golden backlight, lavender sprigs and eucalyptus leaves arranged neatly, shallow depth of field, creamy bokeh background, realistic macro photo, warm color temperature, clean unmarked glass bottles, professional product lighting, no people",
+      "style": "realistic photo",
+      "alt": "Как действует Нуга Бест: эфирные масла и аромадиффузор",
+      "layout": "left",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "result",
+      "prompt": "Realistic spa photo of a relaxed person after Nuga Best massage bed, wearing a soft white robe, lying comfortably on a lounge chair, gentle smile, eyes closed, completely calm body language, large window with warm sunlight, fresh flowers and a cup of herbal tea on side table, soft warm lighting, 50mm lens, f/2.8, cozy high-end wellness atmosphere, clean background, no text, no logo",
+      "style": "realistic photo",
+      "alt": "Результат после курса Нуга Бест: расслабление и хорошее самочувствие",
+      "layout": "below",
+      "role": "emotion_support"
+    },
+    {
+      "slot": "target_audience",
+      "prompt": "Editorial style still life suggesting who benefits from Nuga Best massage bed: empty office desk with coffee and papers, yoga mat and water bottle, comfortable armchair with a book and reading glasses, soft natural daylight, muted warm tones, modern lifestyle aesthetic, realistic photo, clean minimal backgrounds, no people",
+      "style": "realistic photo",
+      "alt": "Кому особенно полезна Нуга Бест",
+      "layout": "right",
+      "role": "emotion_support"
+    }
+  ],
+  "service_slug": "nuga-best",
+  "blocks": [
+    {
+      "slot": "problems",
+      "title": "С какими проблемами приходят на Нуга Бест?",
+      "text": "- Усталость и подавленное настроение.\n- Хронические боли в спине, шее и суставах.\n- Нервное напряжение и стрессовые состояния."
+    },
+    {
+      "slot": "mechanism",
+      "title": "Как работает Нуга Бест?",
+      "text": "**Нуга Бест** — это система, которая комбинирует массажные технологии и специальные алгоритмы. Процедура проходит через мягкое воздействие на тело, позволяя мышцам расслабиться и улучшая кровообращение, подобно течению реки, размывающему все преграды на своем пути. Это помогает в восстановлении и релаксации."
+    },
+    {
+      "slot": "result",
+      "title": "Что даёт Нуга Бест?",
+      "text": "- ✅ Снижение уровня стресса и тревожности.\n- ✅ Устранение хронической боли и напряжения в мышцах.\n- ✅ Укрепление иммунитета и повышение энергии.\n- ✅ Восстановление после физических нагрузок.\n- ✅ Улучшение сна и общего самочувствия."
+    },
+    {
+      "slot": "target_audience",
+      "title": "Кому особенно нужна Нуга Бест?",
+      "text": "- Тем, кто испытывает хронические боли в спине и шее.\n- Работникам офисов, проводящим много времени за столом.\n- Спортсменам для восстановления после тренировок.\n- Тем, кто испытывает стресс и нуждается в релаксации."
+    }
+  ]
+}

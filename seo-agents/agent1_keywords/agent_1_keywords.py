@@ -28,7 +28,7 @@ from api_client import ask_ai  # type: ignore
 from keywords_db import save_keywords as db_save_keywords  # type: ignore
 from db_session import set_last_pair  # type: ignore
 from logger import get_logger  # type: ignore
-from prompt_loader import get_service_names  # type: ignore
+from prompt_loader import get_service_names, get_service_name_by_slug  # type: ignore
 
 console = Console()
 logger = get_logger("seo_agents.agent1")
@@ -89,6 +89,7 @@ def main():
     parser = argparse.ArgumentParser(description="Агент 1 — генератор ключевых фраз")
     parser.add_argument("--service", "-s", help="Название услуги (например, ВЛОК)")
     parser.add_argument("--city", "-c", default="Ноябрьск", help="Город (по умолчанию: Ноябрьск)")
+    parser.add_argument("--from-queue", action="store_true", help="Взять задачу из Google Sheets (Queue, status=queue)")
     args = parser.parse_args()
 
     console.print("\n[bold cyan]Агент 1 — генератор ключевых фраз[/bold cyan]\n")
@@ -99,7 +100,29 @@ def main():
     except Exception:
         pass
 
-    if args.service:
+    if args.from_queue:
+        try:
+            from sheets_client import get_queue_tasks  # type: ignore
+            tasks = get_queue_tasks(status_filter="queue")
+            if not tasks:
+                console.print("[yellow]Нет задач со статусом queue в листе Queue.[/yellow]")
+                return
+            task = tasks[0]
+            slug = task.get("slug") or task.get("service_slug") or ""
+            slug = str(slug).strip()
+            service_name = get_service_name_by_slug(slug)
+            if not service_name:
+                console.print(f"[red]Услуга со slug «{slug}» не найдена.[/red]")
+                return
+            city = args.city.strip()
+            console.print(f"[dim]Из Queue:[/dim] {task.get('id', '')} — {service_name} ({slug})\n")
+        except ImportError as e:
+            console.print(f"[red]Sheets API не подключён: {e}[/red]")
+            return
+        except RuntimeError as e:
+            console.print(f"[red]{e}[/red]")
+            return
+    elif args.service:
         service_name, city = args.service.strip(), args.city.strip()
     else:
         service_name = console.input("Введите [green]название услуги[/green]: ")

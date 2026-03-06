@@ -118,3 +118,12 @@ Host entuziastov75-vps
 # Подключение по SSH в терминале
 ssh root@91.229.11.147 -i $env:USERPROFILE\.ssh\id_rsa
 ```
+
+---
+
+## 8. Обновление PHP на VPS
+
+Если WordPress показывает предупреждение о старой версии PHP (8.1) и рекомендует 8.3:
+
+- **Инструкция:** [docs/php-upgrade-ubuntu-regru.md](php-upgrade-ubuntu-regru.md) — установка PHP 8.3, переключение CLI и веб-сервера (Nginx/Apache + FPM).
+- **Скрипт:** `scripts/upgrade-php-8.3-ubuntu.sh` — можно скопировать на сервер и запустить по SSH; правку конфига сокета FPM нужно сделать вручную.

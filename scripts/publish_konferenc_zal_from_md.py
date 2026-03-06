@@ -178,43 +178,73 @@ def sections_to_landing_html(sections: list[tuple[str, str]]) -> str:
         out.append(f"  <div class=\"landing-gallery-content\">{md_to_html(gallery)}</div>")
         out.append("</section>")
 
-    # Характеристики (картинка слева, текст справа)
-    if features:
-        out.append('<section class="landing-features landing-image-text">')
-        out.append('  <div class="landing-col landing-col-image"><!-- image_slot: features --></div>')
-        out.append('  <div class="landing-col landing-col-text">')
-        out.append("    <h2>Характеристики</h2>")
-        out.append(f"    <div>{md_to_html(features)}</div>")
-        out.append("  </div>")
+    # 1. Характеристики + Оснащение — один ряд, два блока рядом
+    if features or equipment:
+        out.append('<section class="landing-row-two-cols landing-features-equipment">')
+        if features:
+            out.append('  <div class="landing-col landing-features">')
+            out.append("    <h2>Характеристики</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(features)}</div>")
+            out.append("  </div>")
+        if equipment:
+            out.append('  <div class="landing-col landing-equipment">')
+            out.append("    <h2>Оснащение</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(equipment)}</div>")
+            out.append("  </div>")
         out.append("</section>")
 
-    # Оснащение (текст слева, картинка справа)
-    if equipment:
-        out.append('<section class="landing-equipment landing-text-image">')
-        out.append('  <div class="landing-col landing-col-text">')
-        out.append("    <h2>Оснащение</h2>")
-        out.append(f"    <div>{md_to_html(equipment)}</div>")
-        out.append("  </div>")
-        out.append('  <div class="landing-col landing-col-image"><!-- image_slot: equipment --></div>')
+    # Фото во всю ширину
+    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><!-- image_slot: photo1 --></div></section>')
+
+    # 2. Тарифы + Как забронировать — один ряд, два блока
+    if pricing or booking:
+        out.append('<section class="landing-row-two-cols landing-pricing-booking">')
+        if pricing:
+            out.append('  <div class="landing-col landing-pricing">')
+            out.append("    <h2>Тарифы</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(pricing)}</div>")
+            out.append("  </div>")
+        if booking:
+            out.append('  <div class="landing-col landing-booking">')
+            out.append("    <h2>Как забронировать</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(booking)}</div>")
+            out.append("  </div>")
         out.append("</section>")
 
-    # Текст во всю ширину: тарифы, бронирование, форма, кейсы, отзывы, FAQ
-    for title, html in [
-        ("Тарифы", pricing),
-        ("Как забронировать", booking),
-        ("Форма", form_block),
-        ("Кейсы", cases),
-        ("Отзывы", testimonials),
-        ("FAQ", faq),
-    ]:
-        if not html:
-            continue
-        slug = title.lower().replace(" ", "-").replace("ъ", "")
-        cls = f"landing-{slug}" if slug != "форма" else "landing-form"
-        bid = ' id="bron"' if "заявк" in title.lower() or "форма" in title.lower() else ""
-        out.append(f'<section class="{cls}"{bid}>')
-        out.append(f"  <h2>{_esc(title)}</h2>")
-        out.append(f"  <div>{md_to_html(html)}</div>")
+    # Фото во всю ширину
+    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><!-- image_slot: photo2 --></div></section>')
+
+    # 3. Форма + Кейсы — один ряд (форма слева, кейсы справа)
+    if form_block or cases:
+        out.append('<section class="landing-row-two-cols landing-form-cases" id="bron">')
+        if form_block:
+            out.append('  <div class="landing-col landing-form">')
+            out.append("    <h2>Оставить заявку</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(form_block)}</div>")
+            out.append("  </div>")
+        if cases:
+            out.append('  <div class="landing-col landing-cases">')
+            out.append("    <h2>Кейсы</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(cases)}</div>")
+            out.append("  </div>")
+        out.append("</section>")
+
+    # Фото во всю ширину
+    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><!-- image_slot: photo3 --></div></section>')
+
+    # 4. Отзывы + FAQ — один ряд, два блока
+    if testimonials or faq:
+        out.append('<section class="landing-row-two-cols landing-testimonials-faq">')
+        if testimonials:
+            out.append('  <div class="landing-col landing-testimonials">')
+            out.append("    <h2>Отзывы</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(testimonials)}</div>")
+            out.append("  </div>")
+        if faq:
+            out.append('  <div class="landing-col landing-faq">')
+            out.append("    <h2>Частые вопросы</h2>")
+            out.append(f"    <div class=\"landing-col-content\">{md_to_html(faq)}</div>")
+            out.append("  </div>")
         out.append("</section>")
 
     return "\n".join(out)

@@ -135,12 +135,12 @@
     "services":            { "title": "Услуги",                   "wp_cat_env": "WP_CAT_SERVICES" }
   },
 
-  "konferenc_zal_pages": {
-    "_comment": "3 страницы в выпадающем меню Сервисы. page_template — шаблон WP (если как у konferenc-zal).",
-    "_page_template": "",
-    "korporativnye-treningi": { "json": "konferenc-zal-corporate-training.json", "parent_slug": "services", "menu_title": "Зал для тренингов" },
-    "onlajn-shkoly":          { "json": "konferenc-zal-online-school.json",  "parent_slug": "services", "menu_title": "Зал для Онлайн-школ и вебинаров" },
-    "kouchting":              { "json": "konferenc-zal-coaches.json",        "parent_slug": "services", "menu_title": "Зал для Коучей и консультантов" }
+  "konferenc_zal": {
+    "_comment": "Страница аренды зала. parent=services, шаблон template-page-landing-konferenc-zal.php",
+    "slug": "konferenc-zal",
+    "parent_slug": "services",
+    "page_template": "template-page-landing-konferenc-zal.php",
+    "name": "Конференц-зал"
   },
 
   "services": {

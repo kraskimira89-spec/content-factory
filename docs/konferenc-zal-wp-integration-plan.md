@@ -55,9 +55,9 @@
 **Плюсы:** не требует изменений на VPS, использует стандартный WP REST API.  
 **Минусы:** тема должна адекватно стилизовать сгенерированный HTML, или нужны классы под существующие стили.
 
-**Порядок блоков в HTML:**
+**Порядок блоков в HTML (чередование — см. docs/landing-alternating-blocks.md):**
 ```
-hero → for_whom → benefits → features → pricing → equipment → booking_steps → form → gallery → cases → testimonials → faq
+hero → for_whom_benefits (два в ряд) → gallery → features (текст+фото) → equipment (фото+текст) → pricing → booking_steps → form → cases → testimonials → faq
 ```
 
 **Стили для блоков cases/testimonials (рекомендация):**
@@ -82,7 +82,8 @@ hero → for_whom → benefits → features → pricing → equipment → bookin
 ## 5. Что нужно на VPS (для Варианта B)
 
 - Страницы в WP уже созданы вручную (или скрипт создаёт их при первом запуске).
-- Тема/блоки поддерживают семантические классы (`section.landing-hero`, `section.landing-benefits` и т.п.) либо генерируемый HTML совместим с текущей вёрсткой.
+- Шаблон «Лендинг Конференц-зал» при **непустом** `post_content` выводит только контент страницы (наш HTML); при пустом — статичный макет темы.
+- Тема поддерживает классы из скрипта: `.landing-hero`, `.landing-row-two-cols`, `.landing-text-image`, `.landing-image-text`, `.landing-gallery`, `.landing-pricing` и т.д. (стили в `landing-pages.css`).
 
 ---
 
@@ -113,3 +114,15 @@ python scripts/publish_konferenc_zal.py korporativnye-treningi
 # Все 3 страницы
 python scripts/publish_konferenc_zal.py
 ```
+
+---
+
+## 8. Проверка реализации
+
+| Проверка | Где смотреть |
+|----------|---------------|
+| Порядок и чередование блоков | `docs/landing-zaly-wireframe.md` — таблица «Порядок секций (конференц-зал, из скрипта)»; `docs/landing-alternating-blocks.md` |
+| Классы HTML, генерируемые скриптом | `scripts/publish_konferenc_zal.py` — константа `SECTIONS_ORDER`, функция `_render_section()` |
+| Шаблон WP выводит контент скрипта | Тема: `template-page-landing-konferenc-zal.php` — при непустом `post_content` выводится `the_content()` в `.landing__content-from-editor` |
+| Стили двух колонок и текст/фото | Тема: `assets/css/landing-pages.css` — блок «Чередование блоков» в конце файла |
+| Конфиг slug → JSON, шаблон страницы | `config/shared-config.json` — `konferenc_zal_pages`, `_page_template`: `template-page-landing-konferenc-zal.php` |

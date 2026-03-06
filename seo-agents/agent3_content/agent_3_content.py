@@ -16,6 +16,7 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 SHARED_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "..", "shared"))
 PROJECT_ROOT = os.path.abspath(os.path.join(CURRENT_DIR, "..", ".."))
 PROMPT_FILE = os.path.join(PROJECT_ROOT, "prompts", "agents", "agent3_content.txt")
+KONFERENC_ZAL_PROMPT = os.path.join(PROJECT_ROOT, "prompts", "agents", "agent3_konferenc_zal.txt")
 
 if SHARED_DIR not in sys.path:
     sys.path.append(SHARED_DIR)
@@ -34,9 +35,10 @@ logger = get_logger("seo_agents.agent3")
 OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
 
 
-def load_system_prompt() -> str:
+def load_system_prompt(prompt_file: str | None = None) -> str:
     """Системный промпт + общий brand voice из prompts/context/."""
-    with open(PROMPT_FILE, "r", encoding="utf-8") as f:
+    path = prompt_file or PROMPT_FILE
+    with open(path, "r", encoding="utf-8") as f:
         base_prompt = f.read()
     try:
         brand = load_brand_voice()
@@ -193,7 +195,14 @@ def save_page_for_db(item: dict, page_text: str) -> str:
 
 
 def main():
+    import argparse
+    parser = argparse.ArgumentParser(description="Агент 3 — генератор текста страницы")
+    parser.add_argument("--konferenc-zal", action="store_true", help="Использовать промпт для конференц-зала")
+    args = parser.parse_args()
+
     console.print("\n[bold cyan]Агент 3 — генератор текста страницы[/bold cyan]\n")
+
+    prompt_file = KONFERENC_ZAL_PROMPT if args.konferenc_zal else None
 
     # Режим БД: одна задача из контент-плана (status=planned)
     item = fetch_one_planned_item()
@@ -205,7 +214,7 @@ def main():
         service_name = item["service_name"]
         city = "Ноябрьск"
         console.print("[dim]Читаю системный промпт...[/dim]")
-        system_prompt = load_system_prompt()
+        system_prompt = load_system_prompt(prompt_file)
         console.print("[dim]Генерирую текст страницы... подожди 20-40 секунд...[/dim]\n")
         page_text = generate_page_text(service_name, city, keywords_text, brief_text, system_prompt)
         logger.info("Текст сгенерирован по задаче БД id=%s, length=%d", item["id"], len(page_text or ""))
@@ -261,7 +270,7 @@ def main():
         return
 
     console.print("[dim]Читаю системный промпт...[/dim]")
-    system_prompt = load_system_prompt()
+    system_prompt = load_system_prompt(prompt_file)
 
     console.print("[dim]Генерирую текст страницы... подожди 20-40 секунд...[/dim]\n")
 

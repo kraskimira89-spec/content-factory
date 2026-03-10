@@ -33,8 +33,8 @@
 - [x] Обновить shared-config.json (slug + services) — content-factory
 - [x] Синхронизировать shared-config.json → entuziastov75-vps
 - [x] Прогнать agent7_manual_publish limfodrenazh-nog
-- [ ] Проверить публикацию на VPS (REST + валидатор)
-- [ ] Трек Б: проверить service-pages-defaults.php — нужны ли дефолты для limfodrenazh-nog
+- [x] Проверить публикацию на VPS (REST + валидатор) — OK, len=3915
+- [x] Трек Б: добавлены дефолты limfodrenazh-nog в inc/service-pages-defaults.php
 
 ## Связанные файлы
 - content-factory: materials/pages_manual/limfodrenazh-nog.md

@@ -87,3 +87,61 @@ NVIDIA RTX 3060 и ПК пользователя, чтобы:
 1. Подтвердить, что SD 1.5 генерирует изображения без ошибок.
 2. Добавить в `webui-user.bat` оптимальные флаги запуска.
 3. Установить и проверить Ollama с GPU.
+
+---
+
+## 8. Content Factory — текущая архитектура (дополнение 2026)
+
+### Polyrepo
+
+| Репозиторий | Стек | Назначение |
+|-------------|------|------------|
+| **content-factory** (этот) | Python 3.11+, PostgreSQL | Цепочка AI-агентов, генерация SEO-контента, публикация в WP |
+| **entuziastov75-vps** | PHP, WordPress | Сайт на VPS: тема, шаблоны, REST-эндпоинты, service_data |
+
+**Связь:** WordPress REST API + единый контракт `config/shared-config.json`.
+
+### Цепочка агентов
+
+```
+agent1_keywords → agent_planner → agent2_brief → agent3_content → agent_editor
+  → agent8_images_planner → agent9_images_runner → agent4_publish → agent_publish_vk → agent_analyst
+```
+
+Отдельно: **agent7_manual_publish** (ручные MD → WP), **agent_checker** → executor → implementer (проверка по чек-листу).
+
+### Структура проекта
+
+| Папка | Назначение |
+|-------|------------|
+| `seo-agents/` | Агенты: agent1–4, agent7, agent_planner, agent_editor, agent_checker*, agent_publish_vk, agent_analyst |
+| `config/` | `.env` (секреты), `shared-config.json` (контракт с VPS) |
+| `prompts/` | `agents/`, `context/`, `templates/` — промпты для агентов |
+| `materials/pages_manual/` | Ручные MD-страницы услуг (slug из shared-config) |
+| `output/` | Сгенерированный контент, `*_page_*.md` |
+| `tasks/` | Файлы-задачи от Оркестратора |
+| `scripts/` | deploy_to_vps, publish_konferenc_zal_from_md, run_konferenc_zal_chain, faq_parser |
+| `docs/` | orchestrator-chat-prompt, landing-zaly-wireframe, vps-paths |
+
+### Контракт shared-config.json (ключевые секции)
+
+- **uslugi**, **services** — slug и name услуг (агент7, agent4)
+- **konferenc_zal** — страница аренды зала (slug, шаблон, parent)
+- **wordpress**, **endpoints** — WP URL, REST paths, service_data
+- **sd_webui**, **comfyui** — генерация картинок (agent9)
+- **deploy** — VPS paths, theme_child_path, theme_local_paths
+- **rubrics** — категории блога, keywords
+
+### Оркестратор
+
+- Правило: `.cursor/rules/orchestrator.mdc`
+- Паспорт для чата: `docs/orchestrator-chat-prompt.md`
+- Workflow: `docs/orchestrator-workflow.md`
+- Типы задач: content | code_vps | tz | mixed
+
+### Генерация изображений (связь с локальным стеком)
+
+- **agent8** — формирует промпты для картинок по структуре страницы
+- **agent9** — отправляет запросы в SD WebUI (127.0.0.1:7860) или ComfyUI (8188)
+- Конфиг: `shared-config.json` → `sd_webui` (checkpoint v1.5, 1280×720, negative_prompt)
+- Хранение: `media/images/`, индекс в `db/image_index.json`

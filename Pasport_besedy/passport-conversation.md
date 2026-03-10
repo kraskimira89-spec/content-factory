@@ -66,3 +66,50 @@
 2. Добавить параметры запуска WebUI под 12 GB VRAM (`--medvram` и др.).
 3. Установить и проверить Ollama с использованием GPU.
 4. Проработать сценарии «контент‑завода» (связка SD + LLM).
+
+---
+
+## 8. Content Factory — текущий контекст (дополнение 2026)
+
+### Участники и роли
+
+| Роль | Инструмент | Назначение |
+|------|------------|------------|
+| Оркестратор | Cursor, чат «🧭 Orchestrator» | Единая точка входа: классификация задач, создание `tasks/*.md`, подсказки команд |
+| Цепочка агентов | `seo-agents/`, Python | keywords → brief → content → editor → publish → VK → analyst |
+| Ручная публикация | agent7_manual_publish | MD из `materials/pages_manual/` → WordPress (черновик/публикация) |
+| Деплой | `scripts/deploy_to_vps.py` | Тема, service_data, REST API на VPS |
+| Генерация картинок | agent9 + SD WebUI | Промпты от agent8 → SD на 127.0.0.1:7860 |
+
+### Ключевые команды
+
+```bash
+# Ручная публикация страницы услуги (slug из shared-config.json)
+python seo-agents/agent7_manual_publish/agent_7_manual_publish.py pressoterapiya
+python seo-agents/agent7_manual_publish/agent_7_manual_publish.py pressoterapiya --publish
+
+# Деплой на VPS
+python scripts/deploy_to_vps.py --mode rest   # service_data
+python scripts/deploy_to_vps.py --mode theme # тема WordPress
+
+# Конференц-зал (цепочка + публикация)
+python scripts/run_konferenc_zal_chain.py
+python scripts/publish_konferenc_zal_from_md.py
+
+# Проверка FAQ
+python scripts/faq_parser.py materials/pages_manual/pressoterapiya.md
+```
+
+### Ключевые пути
+
+- **Контракт:** `config/shared-config.json` (услуги, рубрики, endpoints, deploy)
+- **Ручные страницы:** `materials/pages_manual/{slug}.md` — slug из `uslugi`/`services` в shared-config
+- **Промпты:** `prompts/agents/`, `prompts/context/brand_voice.md`, `prompts/templates/`
+- **Задачи:** `tasks/YYYY-MM-DD_описание.md`
+- **Паспорт Оркестратора:** `docs/orchestrator-chat-prompt.md`, `.cursor/rules/orchestrator.mdc`
+
+### SD WebUI в контексте Content Factory
+
+- agent9 генерирует картинки для страниц услуг через SD WebUI (порт 7860)
+- Конфиг: `shared-config.json` → `sd_webui` (base_url, checkpoint, размеры, negative_prompt)
+- Альтернатива: ComfyUI на порту 8188

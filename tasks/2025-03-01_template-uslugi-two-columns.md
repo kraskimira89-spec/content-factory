@@ -51,9 +51,9 @@ http://91.229.11.147/uslugi/fitobochka/ — страница должна быт
 2. **В content-factory:** материалы (pressoterapiya, limfodrenazh-nog) уже используют grid в HTML — при перепубликации блоки сохранятся.
 
 ## Статус
-- [ ] Найти файл шаблона страницы услуг в entuziastov75-vps
-- [ ] Добавить grid-обёртку для контента
-- [ ] Проверить fitobochka, pressoterapiya на VPS
+- [x] Найти файл шаблона страницы услуг в entuziastov75-vps (template-page-service.php)
+- [x] Grid уже есть — entuziastov75_wrap_first_two_h2_sections_in_grid в functions.php
+- [ ] Проверить fitobochka, pressoterapiya на VPS — вручную
 
 ## Связанные файлы
 - entuziastov75-vps: `www/.../wp-content/themes/flavor/` (page.php или page-uslugi.php)

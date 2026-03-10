@@ -5,6 +5,16 @@ alwaysApply: true
 
 # Git-синхронизация
 
+## Автозапуск после правок сайта (обязательно)
+
+**Если в задании менялись файлы сайта (тема WordPress, PHP, CSS в `seo_entuziastov75` / `entuziastov75-child`):** сразу после выполнения задания **автоматически** запусти деплой и пуш — без запроса пользователя:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-theme-then-git.ps1" -type fix -message "краткое описание сделанных изменений"
+```
+
+Подставь осмысленные `-type` (feat | fix | docs) и `-message` по смыслу задачи. Перед запуском убедись, что все файлы сохранены.
+
 ## Когда отправлять изменения
 
 1. **После завершения задачи** — когда все шаги выполнены, коммить и пушить изменения.
@@ -16,11 +26,12 @@ alwaysApply: true
 - **content-factory** — правки в `seo-agents/`, `materials/`, `prompts/`, `config/`, `scripts/`, `docs/`, `output/`
 - **entuziastov75-vps** — правки в темах WordPress, wp-content, PHP
 
-**Для правок в теме (PHP, CSS):** используй `deploy-vps-and-git.ps1` — он копирует файлы на VPS и пушит в GitHub:
+**Для правок в теме (PHP, CSS):** используй `scripts/deploy-theme-then-git.ps1` — порядок: **1) деплой на VPS** (изменения на сайте), **2) коммит локально**, **3) пуш в GitHub**.
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-vps-and-git.ps1"
-powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-vps-and-git.ps1" -message "сортировка по колонке Статус"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-theme-then-git.ps1"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-theme-then-git.ps1" -message "кнопка Заказать звонок и высота Hero"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-theme-then-git.ps1" -type fix -message "лендинг конференц-зала"
 ```
 
 **Для content-factory или только git vps:** запусти скрипт с нужным проектом:

@@ -165,6 +165,9 @@ def deploy_theme():
     theme_files = [
         "template-page-landing-konferenc-zal.php",
         "assets/css/landing-pages.css",
+        "assets/css/blog.css",
+        "functions.php",
+        "inc/menu-pages.php",
     ]
     base_dir = None
     for lp in local_paths:
@@ -186,19 +189,19 @@ def deploy_theme():
     for rel_path in theme_files:
         local_file = base_dir / rel_path
         if not local_file.exists():
-            print(f"⏭️ Пропуск (не найден): {rel_path}")
+            print(f"[skip] {rel_path} (not found)")
             continue
         remote_path = f"{remote_dir.rstrip('/')}/{rel_path.replace(chr(92), '/')}"
         scp_cmd = scp_cmd_base + [str(local_file), f"{user}@{host}:{remote_path}"]
-        print(f"📤 SCP: {rel_path} → {user}@{host}:{remote_path}")
+        print(f"[SCP] {rel_path} -> {user}@{host}:{remote_path}")
         result = subprocess.run(scp_cmd, capture_output=True, text=True)
         if result.returncode == 0:
             ok_count += 1
         else:
-            print(f"   ❌ Ошибка: {result.stderr}")
+            print(f"   [ERR] {result.stderr}")
             sys.exit(1)
 
-    print(f"✅ Скопировано файлов: {ok_count}")
+    print(f"[OK] Copied {ok_count} file(s)")
 
 
 def main():

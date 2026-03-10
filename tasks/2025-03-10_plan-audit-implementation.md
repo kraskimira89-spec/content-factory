@@ -41,9 +41,10 @@
 - [x] Приоритет 1: agent7 gidromassazh — опубликовано (черновик)
 - [x] Приоритет 2: limfodrenazh-nog — дефолты добавлены в inc/service-pages-defaults.php, скопировано на VPS по SCP
 - [x] Приоритет 2: template-uslugi-two-columns — grid уже есть (entuziastov75_wrap_first_two_h2_sections_in_grid)
-- [ ] Приоритет 3: остальные страницы (по мере)
-- [ ] Приоритет 4: SD + Ollama (локальный стек)
+- [x] Приоритет 3: остальные страницы — aromaterapiya, massazh, skrabirovanie, obertyvanie, nuga-best, fitobar, nastolnyy-tennis, lfk (черновики в WP)
+- [x] Приоритет 4: docs/local-stack-sd-ollama.md — инструкция SD + Ollama
 - [ ] Приоритет 5: shared-config sync при изменениях
+- Ручные действия: загрузить featured image для konferenc-zal; заполнить блок «Специальное предложение» для флагманов (СУВ, ВЛОК, Гидромассаж)
 
 ## Связанные файлы
 - content-factory: materials/pages_manual/sukhaya-uglekislaya-vanna.md

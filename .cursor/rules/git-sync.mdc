@@ -16,7 +16,14 @@ alwaysApply: true
 - **content-factory** — правки в `seo-agents/`, `materials/`, `prompts/`, `config/`, `scripts/`, `docs/`, `output/`
 - **entuziastov75-vps** — правки в темах WordPress, wp-content, PHP
 
-Запусти скрипт с нужным проектом и сгенерируй коммит:
+**Для правок в теме (PHP, CSS):** используй `deploy-vps-and-git.ps1` — он копирует файлы на VPS и пушит в GitHub:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-vps-and-git.ps1"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\deploy-vps-and-git.ps1" -message "сортировка по колонке Статус"
+```
+
+**Для content-factory или только git vps:** запусти скрипт с нужным проектом:
 
 ```powershell
 # Для content-factory

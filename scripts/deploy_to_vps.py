@@ -168,6 +168,9 @@ def deploy_theme():
         "assets/css/blog.css",
         "functions.php",
         "inc/menu-pages.php",
+        "inc/menu-config.json",
+        "inc/menu-hybrid-builder.php",
+        "style.css",
     ]
     base_dir = None
     for lp in local_paths:

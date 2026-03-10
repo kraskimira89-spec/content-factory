@@ -16,11 +16,17 @@ config/client_secret_google.json
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyc
 .pytest_cache/
 .mypy_cache/
 *.egg-info/
 dist/
 build/
+
+# Node / дизайн-проект (локальный эталон, не коммитить)
+node_modules/
+design/Design-main/
+Design-main/
 
 # IDE / OS
 .idea/

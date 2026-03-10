@@ -48,7 +48,7 @@ if (-not (Test-Path $projectPath)) {
 
 Set-Location $projectPath
 
-Write-Host "`nТекущий статус $projectName`:"
+Write-Host ("`nТекущий статус " + $projectName + ":")
 git -C $projectPath status
 
 $status = git -C $projectPath status --porcelain
@@ -120,4 +120,5 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-Write-Host "`nDone. $projectName pushed to GitHub."
+Write-Host ""
+Write-Host ('Done. ' + $projectName + ' pushed to GitHub.')

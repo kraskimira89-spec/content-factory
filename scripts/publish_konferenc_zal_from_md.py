@@ -109,8 +109,18 @@ def _section_key(title: str) -> str | None:
     return None
 
 
-def sections_to_landing_html(sections: list[tuple[str, str]]) -> str:
-    """Преобразует секции в HTML по схеме чередования блоков."""
+def _extract_price_from_hero(hero_content: str) -> int:
+    """Извлекает цену «от X ₽» из hero-контента. По умолчанию 1500."""
+    m = re.search(r"от\s+(\d+)\s*₽|от\s+(\d+)\s+руб", hero_content, re.IGNORECASE)
+    if m:
+        return int(m.group(1) or m.group(2) or 1500)
+    return 1500
+
+
+def sections_to_landing_html(sections: list[tuple[str, str]], wp_url: str = "") -> str:
+    """Преобразует секции в HTML по схеме чередования блоков.
+    wp_url: базовый URL сайта для CTA (форма заявки на главной).
+    """
     out = []
     blocks = {
         "hero": "", "for_whom": "", "benefits": "", "gallery": "",
@@ -136,7 +146,9 @@ def sections_to_landing_html(sections: list[tuple[str, str]]) -> str:
     testimonials = blocks["testimonials"]
     faq = blocks["faq"]
 
-    # Hero
+    # Hero: парсим H1, лид, цену; CTA ведёт на форму главной
+    price = _extract_price_from_hero(hero_content)
+    contact_url = f"{wp_url.rstrip('/')}/?from=konferenc-zal#contact-form" if wp_url else "#bron"
     lines = hero_content.split("\n")
     h1 = ""
     for line in lines:
@@ -153,21 +165,21 @@ def sections_to_landing_html(sections: list[tuple[str, str]]) -> str:
         out.append(f"  <h1>{_esc(h1)}</h1>")
     if lead_html:
         out.append(f"  <div class=\"landing-hero-subtitle\">{lead_html}</div>")
-    out.append('  <p class="landing-hero-price">Почасовая аренда от 500 ₽ · до 40 человек · центр «Энтузиаст»</p>')
-    out.append(f'  <a href="#bron" class="button cta-primary">{_esc(cta_text)}</a>')
+    out.append(f'  <p class="landing-hero-price">Почасовая аренда от {price} ₽ · до 40 человек · центр «Энтузиаст»</p>')
+    out.append(f'  <a href="{_esc(contact_url)}" class="button cta-primary">{_esc(cta_text)}</a>')
     out.append("</section>")
 
-    # Два в ряд: Для кого | Преимущества
+    # Два в ряд: Для кого | Преимущества (H2 по wireframe)
     if for_whom or benefits:
         out.append('<section class="landing-row-two-cols">')
         if for_whom:
             out.append('  <div class="landing-col landing-for-whom">')
-            out.append("    <h2>Для кого</h2>")
+            out.append("    <h2>Для каких мероприятий подходит зал</h2>")
             out.append(f"    <div class=\"landing-col-content\">{md_to_html(for_whom)}</div>")
             out.append("  </div>")
         if benefits:
             out.append('  <div class="landing-col landing-benefits">')
-            out.append("    <h2>Преимущества</h2>")
+            out.append("    <h2>Почему организаторам удобно проводить мероприятия у нас</h2>")
             out.append(f"    <div class=\"landing-col-content\">{md_to_html(benefits)}</div>")
             out.append("  </div>")
         out.append("</section>")
@@ -183,18 +195,18 @@ def sections_to_landing_html(sections: list[tuple[str, str]]) -> str:
         out.append('<section class="landing-row-two-cols landing-features-equipment">')
         if features:
             out.append('  <div class="landing-col landing-features">')
-            out.append("    <h2>Характеристики</h2>")
+            out.append("    <h2>Характеристики зала</h2>")
             out.append(f"    <div class=\"landing-col-content\">{md_to_html(features)}</div>")
             out.append("  </div>")
         if equipment:
             out.append('  <div class="landing-col landing-equipment">')
-            out.append("    <h2>Оснащение</h2>")
+            out.append("    <h2>Оснащение конференц‑зала</h2>")
             out.append(f"    <div class=\"landing-col-content\">{md_to_html(equipment)}</div>")
             out.append("  </div>")
         out.append("</section>")
 
-    # Фото во всю ширину
-    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><!-- image_slot: photo1 --></div></section>')
+    # Фото во всю ширину (слот для изображения)
+    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><p>Фото зала</p></div></section>')
 
     # 2. Тарифы + Как забронировать — один ряд, два блока
     if pricing or booking:
@@ -211,16 +223,19 @@ def sections_to_landing_html(sections: list[tuple[str, str]]) -> str:
             out.append("  </div>")
         out.append("</section>")
 
-    # Фото во всю ширину
-    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><!-- image_slot: photo2 --></div></section>')
+    # Фото во всю ширину (слот для изображения)
+    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><p>Фото зала</p></div></section>')
 
     # 3. Форма + Кейсы — один ряд (форма слева, кейсы справа)
     if form_block or cases:
         out.append('<section class="landing-row-two-cols landing-form-cases" id="bron">')
         if form_block:
+            form_html = md_to_html(form_block)
+            if contact_url:
+                form_html = form_html.replace('href="#bron"', f'href="{_esc(contact_url)}"')
             out.append('  <div class="landing-col landing-form">')
             out.append("    <h2>Оставить заявку</h2>")
-            out.append(f"    <div class=\"landing-col-content\">{md_to_html(form_block)}</div>")
+            out.append(f"    <div class=\"landing-col-content\">{form_html}</div>")
             out.append("  </div>")
         if cases:
             out.append('  <div class="landing-col landing-cases">')
@@ -229,15 +244,15 @@ def sections_to_landing_html(sections: list[tuple[str, str]]) -> str:
             out.append("  </div>")
         out.append("</section>")
 
-    # Фото во всю ширину
-    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><!-- image_slot: photo3 --></div></section>')
+    # Фото во всю ширину (слот для изображения)
+    out.append('<section class="landing-photo-full"><div class="landing-photo-placeholder"><p>Фото зала</p></div></section>')
 
     # 4. Отзывы + FAQ — один ряд, два блока
     if testimonials or faq:
         out.append('<section class="landing-row-two-cols landing-testimonials-faq">')
         if testimonials:
             out.append('  <div class="landing-col landing-testimonials">')
-            out.append("    <h2>Отзывы</h2>")
+            out.append("    <h2>Отзывы организаторов</h2>")
             out.append(f"    <div class=\"landing-col-content\">{md_to_html(testimonials)}</div>")
             out.append("  </div>")
         if faq:
@@ -328,9 +343,14 @@ def main():
 
     print(f"[*] Читаю {md_path.name}")
     md_text = md_path.read_text(encoding="utf-8")
+    # Убираем обёртку ```markdown ... ``` если есть
+    if md_text.strip().startswith("```"):
+        md_text = re.sub(r"^```\w*\n", "", md_text)
+        md_text = re.sub(r"\n```\s*$", "", md_text)
 
     sections = parse_md_sections(md_text)
-    html = sections_to_landing_html(sections)
+    wp_url = os.getenv("WP_URL", "").rstrip("/")
+    html = sections_to_landing_html(sections, wp_url=wp_url)
 
     title = "Конференц‑зал 72 м² в Ноябрьске"
     link = wp_publish(html, title, args.dry_run)

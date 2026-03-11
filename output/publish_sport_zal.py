@@ -80,21 +80,30 @@ def build_html(d):
 </section>
 """)
 
-    # ── 2. ДЛЯ КОГО ──
-    _card_icons = ["🤒", "👴", "🏋️", "👩", "⚖️", "🏆"]
+    # ── 2. ДЛЯ КОГО — горизонтальные карточки с болью и решением ──
     for_whom = d.get("for_whom", [])
-    n_cards = len(for_whom)
-    cards_class = "landing__audience-cards--six" if n_cards >= 6 else "landing__audience-cards--4"
-    cards_html = "".join(
-        f'<div class="landing__audience-card"><span class="landing__card-icon" aria-hidden="true">{_card_icons[i % len(_card_icons)]}</span><h3 class="landing__audience-card-title">{_esc(c["title"])}</h3><p>{_esc(c["text"])}</p></div>'
-        for i, c in enumerate(for_whom)
-    )
+    cards_html = ""
+    for c in for_whom:
+        icon = _esc(c.get("icon", "🏋️"))
+        title = _esc(c.get("title", ""))
+        pain = _esc(c.get("pain", c.get("text", "")))
+        solution = _esc(c.get("solution", ""))
+        cards_html += f"""
+      <div class="landing__audience-card">
+        <div class="landing__audience-icon" aria-hidden="true">{icon}</div>
+        <div class="landing__audience-body">
+          <h3 class="landing__audience-title">{title}</h3>
+          <p class="landing__audience-pain"><span class="label-pain">Боль:</span> {pain}</p>
+          <p class="landing__audience-solution"><span class="label-solution">Решение:</span> {solution}</p>
+        </div>
+      </div>"""
     parts.append(f"""
-<section class="landing__audience-equipment landing__section" id="for-whom">
-  <div class="landing__container">
-    <h2 class="landing__section-title">Для кого подходит наш спортивный зал</h2>
-    <p class="landing__section-subtitle">Универсальное пространство для здоровья и формы.</p>
-    <div class="landing__audience-cards {cards_class}">{cards_html}
+<section class="landing-section landing-section--white" id="for-whom">
+  <div class="landing-section__inner">
+    <h2 class="landing-section__title">Для кого подходит наш спортивный зал</h2>
+    <p class="landing-section__subtitle">Тренажёрный зал при Центре здоровья — не обычный фитнес.<br>
+    Подбираем нагрузку под состояние здоровья каждого.</p>
+    <div class="landing__audience-grid">{cards_html}
     </div>
   </div>
 </section>

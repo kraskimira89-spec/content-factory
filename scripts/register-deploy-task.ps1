@@ -33,10 +33,9 @@ $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interac
 
 try {
     Register-ScheduledTask -TaskName $taskName -Action $actionObj -Trigger $trigger -Settings $settings -Principal $principal -Force | Out-Null
-    Write-Host "Задача '$taskName' зарегистрирована в Планировщике Windows." -ForegroundColor Green
-    Write-Host "Расписание: $Schedule (при $Schedule = daily — ежедневно в 09:00)." -ForegroundColor Cyan
-    Write-Host "Проверить: Планировщик заданий (taskschd.msc) -> Библиотека -> $taskName" -ForegroundColor Gray
+    Write-Host "Task '$taskName' registered in Task Scheduler." -ForegroundColor Green
+    Write-Host "Schedule: $Schedule (daily = 09:00). Check: taskschd.msc" -ForegroundColor Cyan
 } catch {
-    Write-Host "Ошибка регистрации задачи: $_" -ForegroundColor Red
+    Write-Host "Error: $_" -ForegroundColor Red
     exit 1
 }

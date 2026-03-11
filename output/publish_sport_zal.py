@@ -81,12 +81,13 @@ def build_html(d):
 """)
 
     # ── 2. ДЛЯ КОГО ──
+    _card_icons = ["🤒", "👴", "🏋️", "👩", "⚖️", "🏆"]
     for_whom = d.get("for_whom", [])
     n_cards = len(for_whom)
     cards_class = "landing__audience-cards--six" if n_cards >= 6 else "landing__audience-cards--4"
     cards_html = "".join(
-        f'<div class="landing__audience-card"><h3 class="landing__audience-card-title">{_esc(c["title"])}</h3><p>{_esc(c["text"])}</p></div>'
-        for c in for_whom
+        f'<div class="landing__audience-card"><span class="landing__card-icon" aria-hidden="true">{_card_icons[i % len(_card_icons)]}</span><h3 class="landing__audience-card-title">{_esc(c["title"])}</h3><p>{_esc(c["text"])}</p></div>'
+        for i, c in enumerate(for_whom)
     )
     parts.append(f"""
 <section class="landing__audience-equipment landing__section" id="for-whom">
@@ -110,7 +111,7 @@ def build_html(d):
   <div class="landing__container">
     <h2 class="landing__section-title">Почему выбирают спортивный зал «Энтузиаст»</h2>
     <p class="landing__section-subtitle">Безопасные нагрузки и синергия с процедурами центра.</p>
-    <div class="landing__advantages-cards">{ben_html}
+    <div class="landing__advantages-cards landing__benefits-grid">{ben_html}
     </div>
   </div>
 </section>
@@ -186,7 +187,7 @@ def build_html(d):
     price_html = ""
     for t in d.get("pricing", []):
         popular = " landing__tariff--popular" if t.get("highlight") else ""
-        badge = '<span class="landing__tariff-badge">Выгодно</span>' if t.get("highlight") else ''
+        badge = '<span class="landing__badge">Выгодно</span>' if t.get("highlight") else ''
         price_html += f"""
     <div class="landing__tariff{popular}">
       {badge}
@@ -209,8 +210,9 @@ def build_html(d):
 
     # ── 7. СИНЕРГИЯ ──
     syn_list = d.get("synergy", [])
+    _syn_icons = ["💆", "🛁", "🫧", "🍃", "🏥", "💊"]
     syn_html = "".join(
-        f'<div class="landing__feature-card"><span class="landing__feature-icon landing__feature-icon--{"coral" if i % 2 == 0 else "teal"}" aria-hidden="true">+</span><h3 class="landing__feature-card-title">{_esc(s["title"])}</h3><p class="landing__feature-card-desc">{_esc(s["text"])}</p></div>'
+        f'<div class="landing__synergy-card"><span class="landing__synergy-icon" aria-hidden="true">{_syn_icons[i % len(_syn_icons)]}</span><h3 class="landing__feature-card-title">{_esc(s["title"])}</h3><p class="landing__feature-card-desc">{_esc(s["text"])}</p></div>'
         for i, s in enumerate(syn_list)
     )
     if syn_html:
@@ -397,7 +399,7 @@ def main():
             print("  Используйте «Пароль приложения» из WordPress: Профиль → Безопасность приложений.")
         raise
     link = result.get("link", "—")
-    print(f"\n✅ Готово! Ссылка: {link}")
+    print(f"\n[OK] Готово! Ссылка: {link}")
     if draft:
         print("   Статус: ЧЕРНОВИК (уберите --draft для публикации)")
 

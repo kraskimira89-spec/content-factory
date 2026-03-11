@@ -126,17 +126,30 @@ def build_html(d):
 </section>
 """)
 
-    # ── 3b. ПОКАЗАНИЯ ──
+    # ── 3b. ПОКАЗАНИЯ — два столбика: проблемы и улучшения ──
     indications = d.get("indications", [])
-    if indications:
-        ind_items = "".join(f"<li>{_esc(item)}</li>" for item in indications)
+    ind_positive = d.get("indications_positive", [])
+    if indications or ind_positive:
+        col_left = "".join(f'<li>{_esc(item)}</li>' for item in indications)
+        col_right = "".join(f'<li>{_esc(item)}</li>' for item in ind_positive)
         parts.append(f"""
 <section class="landing__section landing__advantages-block" id="indications">
   <div class="landing__container">
     <h2 class="landing__section-title">Показания к применению</h2>
-    <p class="landing__section-subtitle">Зал показан при следующих состояниях (рекомендуется консультация специалиста).</p>
-    <ul class="landing__advantages-list landing__indications-list">{ind_items}
-    </ul>
+    <p class="landing__section-subtitle">Занятия в зале рекомендованы при целом ряде состояний — и дают ощутимый результат уже в первые недели.</p>
+    <div class="landing__indications-cols">
+      <div class="landing__indications-col landing__indications-col--problems">
+        <h3 class="landing__indications-col-title">🩺 Зал показан при</h3>
+        <ul class="landing__indications-list landing__indications-list--problems">{col_left}
+        </ul>
+      </div>
+      <div class="landing__indications-col landing__indications-col--positive">
+        <h3 class="landing__indications-col-title">✨ Что улучшается</h3>
+        <ul class="landing__indications-list landing__indications-list--positive">{col_right}
+        </ul>
+      </div>
+    </div>
+    <p class="landing__indications-note">Рекомендуется консультация специалиста перед началом занятий.</p>
   </div>
 </section>
 """)
@@ -157,7 +170,6 @@ def build_html(d):
         parts.append(f"""
 <section class="landing__equipment-cards-block landing__section" id="equipment">
   <div class="landing__container">
-    <p class="landing__equipment-badge">Оборудование</p>
     <h2 class="landing__section-title">Оборудование спортивного зала</h2>
     <p class="landing__section-subtitle">Пневматика HUR и силовые IRON KING — для здоровья и результата.</p>
     <div class="landing__equipment-cards-grid">{eq_html}
@@ -192,11 +204,13 @@ def build_html(d):
 </section>
 """)
 
-    # ── 6. ТАРИФЫ ──
+    # ── 6. ТАРИФЫ — выделенная карточка оранжевая, остальные зелёные ──
     price_html = ""
     for t in d.get("pricing", []):
-        popular = " landing__tariff--popular" if t.get("highlight") else ""
-        badge = '<span class="landing__badge">Выгодно</span>' if t.get("highlight") else ''
+        is_highlight = bool(t.get("highlight"))
+        popular = " landing__tariff--popular" if is_highlight else ""
+        badge = '<span class="landing__badge">Выгодно</span>' if is_highlight else ''
+        btn_class = "btn btn--coral" if is_highlight else "btn btn--primary"
         price_html += f"""
     <div class="landing__tariff{popular}">
       {badge}
@@ -204,7 +218,7 @@ def build_html(d):
       <p class="landing__tariff-price">{_esc(t['price'])}</p>
       <p class="landing__tariff-desc">{_esc(t.get('description',''))}</p>
       <p class="landing__tariff-note">{_esc(t.get('price_note',''))}</p>
-      <a href="#landing-contact" class="btn btn--coral">{_esc(t.get('cta','Записаться'))}</a>
+      <a href="#landing-contact" class="{btn_class}">{_esc(t.get('cta','Записаться'))}</a>
     </div>"""
     parts.append(f"""
 <section class="landing__tariffs landing__section" id="landing-tariffs">

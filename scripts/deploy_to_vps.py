@@ -164,6 +164,7 @@ def deploy_theme():
 
     theme_files = [
         "template-page-landing-konferenc-zal.php",
+        "template-page-landing-trenazhernyy-zal.php",
         "assets/css/landing-pages.css",
         "assets/css/blog.css",
         "functions.php",

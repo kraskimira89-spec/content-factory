@@ -178,19 +178,24 @@ def build_html(d):
 </section>
 """)
 
-    # ── 5. ПРОГРАММЫ ЗАНЯТИЙ ──
+    # ── 5. ПРОГРАММЫ ЗАНЯТИЙ — бейдж «Популярно», зелёные кнопки (кроме popular) ──
     programs = d.get("programs", [])
     prog_html = ""
     for p in programs:
+        is_popular = bool(p.get("popular"))
         price_main = f"{p['price_single']} ₽" if p.get("price_single") else _esc(p.get("price_note", "по договорённости"))
         price_sub = f"10 занятий — {p['price_10']} ₽" if p.get("price_10") else ""
+        badge = '<span class="landing__badge landing__badge--popular">Популярно</span>' if is_popular else ''
+        btn_class = "btn btn--coral" if is_popular else "btn btn--primary"
+        card_class = "landing__tariff landing__tariff--program" + (" landing__tariff--popular" if is_popular else "")
         prog_html += f"""
-    <div class="landing__tariff">
+    <div class="{card_class}">
+      {badge}
       <h3 class="landing__tariff-name">{_esc(p.get('title',''))}</h3>
       <p class="landing__tariff-desc">{_esc(p.get('description',''))}</p>
       <p class="landing__tariff-note">{p.get('duration_min', 50)} мин · {price_main}</p>
       {('<p class="landing__tariff-note">' + _esc(price_sub) + '</p>') if price_sub else ''}
-      <a href="#landing-contact" class="btn btn--coral">{_esc(p.get('cta','Записаться'))}</a>
+      <a href="#landing-contact" class="{btn_class}">{_esc(p.get('cta','Записаться'))}</a>
     </div>"""
     if prog_html:
         parts.append(f"""

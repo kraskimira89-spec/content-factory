@@ -90,7 +90,8 @@
       "duration_min": 50,
       "price_single": 500,
       "price_10": 4500,
-      "cta": "Записаться"
+      "cta": "Записаться",
+      "popular": true
     },
     {
       "title": "Дыхательная гимнастика",

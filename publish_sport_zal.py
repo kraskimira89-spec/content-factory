@@ -129,6 +129,21 @@ def build_html(d):
 </section>
 """)
 
+    # ── 3b. ПОКАЗАНИЯ (список из indications) ──
+    indications = d.get("indications", [])
+    if indications:
+        ind_items = "".join(f"<li>{_esc(item)}</li>" for item in indications)
+        parts.append(f"""
+<section class="landing__section landing__advantages-block" id="indications">
+  <div class="landing__container">
+    <h2 class="landing__section-title">Показания к применению</h2>
+    <p class="landing__section-subtitle">Зал показан при следующих состояниях (рекомендуется консультация специалиста).</p>
+    <ul class="landing__advantages-list landing__indications-list">{ind_items}
+    </ul>
+  </div>
+</section>
+""")
+
     # ── 4. ОБОРУДОВАНИЕ (coral/teal карточки, чередование) ──
     eq_list = d.get("equipment", [])
     eq_html = ""
@@ -154,16 +169,27 @@ def build_html(d):
 </section>
 """)
 
-    # ── 5. ГАЛЕРЕЯ ───────────────────────────
-    gal = d.get("gallery", {})
-    parts.append(f"""
-<section class="landing__gallery landing__section" id="gallery">
+    # ── 5. ПРОГРАММЫ ЗАНЯТИЙ (карточки: название, описание, длительность, цена, CTA) ──
+    programs = d.get("programs", [])
+    prog_html = ""
+    for p in programs:
+        price_main = f"{p['price_single']} ₽" if p.get("price_single") else _esc(p.get("price_note", "по договорённости"))
+        price_sub = f"10 занятий — {p['price_10']} ₽" if p.get("price_10") else ""
+        prog_html += f"""
+    <div class="landing__tariff">
+      <h3 class="landing__tariff-name">{_esc(p.get('title',''))}</h3>
+      <p class="landing__tariff-desc">{_esc(p.get('description',''))}</p>
+      <p class="landing__tariff-note">{p.get('duration_min', 50)} мин · {price_main}</p>
+      {('<p class="landing__tariff-note">' + _esc(price_sub) + '</p>') if price_sub else ''}
+      <a href="#landing-contact" class="btn btn--coral">{_esc(p.get('cta','Записаться'))}</a>
+    </div>"""
+    if prog_html:
+        parts.append(f"""
+<section class="landing__tariffs landing__section" id="programs">
   <div class="landing__container">
-    <h2 class="landing__section-title">{_esc(gal.get('title','Наш спортивный зал'))}</h2>
-    <p class="landing__section-subtitle">{_esc(gal.get('description',''))}</p>
-    <div class="landing__gallery-grid landing__gallery-grid--2x2">
-      <div class="landing__gallery-grid-item landing__gallery-placeholder"><span class="landing__img-placeholder">Фото зала</span></div>
-      <div class="landing__gallery-grid-item landing__gallery-placeholder"><span class="landing__img-placeholder">Фото зала</span></div>
+    <h2 class="landing__section-title">Программы занятий в спортивном зале</h2>
+    <p class="landing__section-subtitle">50 минут на выбор. Групповые и индивидуальные занятия.</p>
+    <div class="landing__tariffs-grid landing__programs-grid">{prog_html}
     </div>
   </div>
 </section>
@@ -253,7 +279,22 @@ def build_html(d):
 </section>
 """)
 
-    # ── 10. ОТЗЫВЫ (review cards как конференц-зал) ──
+    # ── 10. ГАЛЕРЕЯ (после формы по ТЗ) ───────────────────────────
+    gal = d.get("gallery", {})
+    parts.append(f"""
+<section class="landing__gallery landing__section" id="gallery">
+  <div class="landing__container">
+    <h2 class="landing__section-title">{_esc(gal.get('title','Наш спортивный зал'))}</h2>
+    <p class="landing__section-subtitle">{_esc(gal.get('description',''))}</p>
+    <div class="landing__gallery-grid landing__gallery-grid--2x2">
+      <div class="landing__gallery-grid-item landing__gallery-placeholder"><span class="landing__img-placeholder">Фото зала</span></div>
+      <div class="landing__gallery-grid-item landing__gallery-placeholder"><span class="landing__img-placeholder">Фото зала</span></div>
+    </div>
+  </div>
+</section>
+""")
+
+    # ── 11. ОТЗЫВЫ (review cards как конференц-зал) ──
     testimonials = d.get("testimonials", [])
     t_html = ""
     for i, t in enumerate(testimonials):
@@ -282,7 +323,7 @@ def build_html(d):
 </section>
 """)
 
-    # ── 11. FAQ (accordion как конференц-зал) ──
+    # ── 12. FAQ (accordion как конференц-зал) ──
     faq_items = d.get("faq", [])
     faq_html = ""
     for i, q in enumerate(faq_items):

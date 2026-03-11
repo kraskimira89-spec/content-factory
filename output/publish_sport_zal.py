@@ -230,7 +230,7 @@ def build_html(d):
   <div class="landing__container">
     <h2 class="landing__section-title">Тарифы на занятия</h2>
     <p class="landing__section-subtitle">Выберите формат под свои цели.</p>
-    <div class="landing__tariffs-grid">{price_html}
+    <div class="landing__tariffs-grid landing__tariffs-grid--2col">{price_html}
     </div>
   </div>
 </section>

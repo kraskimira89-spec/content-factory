@@ -389,7 +389,11 @@ def publish_page(d, content_html, wp_url, draft=False, auth=None):
             "_yoast_wpseo_metadesc": d.get("meta_description", ""),
         }
     }
-    existing = find_page_by_slug(slug, auth, wp_url)
+    explicit_id = d.get("meta", {}).get("page_id")
+    if explicit_id:
+        existing = {"id": explicit_id}
+    else:
+        existing = find_page_by_slug(slug, auth, wp_url)
     if existing:
         page_id = existing["id"]
         url = f"{wp_url}/wp-json/wp/v2/pages/{page_id}"

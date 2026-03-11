@@ -64,17 +64,17 @@ def _esc(s):
 def build_html(d):
     parts = []
 
-    # ── 1. HERO ────────────
+    # ── 1. HERO ──────────── (разметка landing-hero + landing-hero__ctas для одной строки кнопок)
     hero = d.get("hero", {})
     parts.append(f"""
-<section class="landing__hero landing__hero--gym" id="landing-hero">
-  <div class="landing__hero-inner">
-    <h1 class="landing__hero-title">{_esc(hero.get('title',''))}</h1>
-    <p class="landing__hero-subtitle">{_esc(hero.get('subtitle',''))}</p>
-    <p class="landing__hero-features">{_esc(hero.get('price_line',''))}</p>
-    <div class="landing__hero-ctas">
-      <a href="#landing-contact" class="btn btn--coral btn--large">{_esc(hero.get('cta_primary','Записаться'))}</a>
-      <a href="#equipment" class="btn btn--outline btn--large">{_esc(hero.get('cta_secondary','Узнать о тренажёрах'))}</a>
+<section class="landing-hero" id="landing-hero">
+  <div class="landing-hero__content">
+    <h1 class="landing-hero__title">{_esc(hero.get('title',''))}</h1>
+    <p class="landing-hero__subtitle">{_esc(hero.get('subtitle',''))}</p>
+    <p class="landing-hero__price-line">{_esc(hero.get('price_line',''))}</p>
+    <div class="landing-hero__ctas">
+      <a class="btn-primary" href="#landing-form">{_esc(hero.get('cta_primary','Записаться на тренировку'))}</a>
+      <a class="btn-outline" href="#equipment">{_esc(hero.get('cta_secondary','Узнать о тренажёрах'))}</a>
     </div>
   </div>
 </section>

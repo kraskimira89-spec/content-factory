@@ -167,6 +167,7 @@ def deploy_theme():
         "template-page-landing-trenazhernyy-zal.php",
         "assets/css/landing-pages.css",
         "assets/css/blog.css",
+        "assets/css/service-pages.css",
         "functions.php",
         "inc/menu-pages.php",
         "inc/menu-config.json",

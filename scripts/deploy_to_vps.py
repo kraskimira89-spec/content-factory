@@ -175,6 +175,7 @@ def deploy_theme():
         "inc/menu-hybrid-builder.php",
         "inc/service-pages-defaults.php",
         "inc/rest-service-data.php",
+        "footer.php",
         "style.css",
     ]
     base_dir = None

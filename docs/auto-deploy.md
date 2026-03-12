@@ -1,6 +1,27 @@
 # Автоматический деплой темы на VPS
 
-Способы автоматически выполнять `python scripts/deploy_to_vps.py --mode theme`.
+Способы автоматически выполнять `python scripts/deploy_to_vps.py --mode theme`, чтобы изменения попадали на сайт без ручного запуска.
+
+---
+
+## Быстрый старт: деплой при каждом коммите (репо темы)
+
+Один раз установите git hook в репозитории темы — после каждого `git commit` в **seo_entuziastov75** тема автоматически отправится на VPS.
+
+**Из корня репо темы:**
+
+```powershell
+cd C:\Users\user\Documents\seo_entuziastov75
+powershell -ExecutionPolicy Bypass -File "scripts\install-deploy-hook.ps1"
+```
+
+**Или из content-factory:**
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\install-deploy-hook-in-vps.ps1"
+```
+
+После установки при каждом коммите в репо темы будет выполняться деплой (`deploy_to_vps.py --mode theme`).
 
 ---
 

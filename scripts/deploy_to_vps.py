@@ -139,10 +139,9 @@ def deploy_ssh():
 
 
 def deploy_theme():
-    """Копирует шаблон страницы лендинга (template-page-landing-konferenc-zal.php) на VPS."""
+    """Копирует все файлы дочерней темы на VPS (автосканирование *.php, *.css, *.json, *.js)."""
     host = os.getenv("VPS_HOST", "").strip()
     if not host:
-        # Fallback: хост из WP_URL (например http://91.229.11.147 → 91.229.11.147)
         wp_url = os.getenv("WP_URL", "").strip()
         if wp_url:
             from urllib.parse import urlparse
@@ -151,7 +150,7 @@ def deploy_theme():
     key_path = os.getenv("VPS_SSH_KEY", "").strip()
 
     if not host:
-        print("❌ VPS_HOST не задан в config/.env, добавьте VPS_HOST=91.229.11.147 или WP_URL")
+        print("ERR: VPS_HOST не задан в config/.env, добавьте VPS_HOST=91.229.11.147 или WP_URL")
         sys.exit(1)
 
     deploy_cfg = SHARED_CONFIG.get("deploy", {})
@@ -159,36 +158,37 @@ def deploy_theme():
     local_paths = deploy_cfg.get("theme_local_paths", [])
 
     if not remote_dir:
-        print("❌ deploy.theme_child_path не задан в shared-config.json")
+        print("ERR: deploy.theme_child_path не задан в shared-config.json")
         sys.exit(1)
 
-    theme_files = [
-        "template-page-landing-konferenc-zal.php",
-        "template-page-landing-trenazhernyy-zal.php",
-        "template-page-service.php",
-        "assets/css/landing-pages.css",
-        "assets/css/blog.css",
-        "assets/css/service-pages.css",
-        "functions.php",
-        "inc/menu-pages.php",
-        "inc/menu-config.json",
-        "inc/menu-hybrid-builder.php",
-        "inc/service-pages-defaults.php",
-        "inc/rest-service-data.php",
-        "footer.php",
-        "style.css",
-    ]
+    # Автосканирование: все *.php, *.css, *.json, *.js в папке темы (рекурсивно).
+    # Исключаем скрытые папки (.git и пр.) и node_modules.
+    EXCLUDE_DIRS = {".git", "node_modules", ".cache", "vendor"}
+    EXTENSIONS   = {".php", ".css", ".json", ".js"}
+
     base_dir = None
     for lp in local_paths:
-        if (Path(lp) / theme_files[0]).exists():
+        if Path(lp).is_dir():
             base_dir = Path(lp)
             break
 
     if not base_dir:
-        print(f"❌ Тема не найдена ни в одной папке:")
+        print("ERR: Тема не найдена ни в одной папке из theme_local_paths:")
         for lp in local_paths:
             print(f"   {lp}")
         sys.exit(1)
+
+    theme_files = []
+    for f in base_dir.rglob("*"):
+        if not f.is_file():
+            continue
+        # Пропускаем файлы из исключённых папок
+        if any(part in EXCLUDE_DIRS for part in f.parts):
+            continue
+        if f.suffix.lower() in EXTENSIONS:
+            theme_files.append(f.relative_to(base_dir).as_posix())
+
+    theme_files.sort()
 
     scp_cmd_base = ["scp"]
     if key_path:
@@ -197,10 +197,7 @@ def deploy_theme():
     ok_count = 0
     for rel_path in theme_files:
         local_file = base_dir / rel_path
-        if not local_file.exists():
-            print(f"[skip] {rel_path} (not found)")
-            continue
-        remote_path = f"{remote_dir.rstrip('/')}/{rel_path.replace(chr(92), '/')}"
+        remote_path = f"{remote_dir.rstrip('/')}/{rel_path}"
         scp_cmd = scp_cmd_base + [str(local_file), f"{user}@{host}:{remote_path}"]
         print(f"[SCP] {rel_path} -> {user}@{host}:{remote_path}")
         result = subprocess.run(scp_cmd, capture_output=True, text=True)

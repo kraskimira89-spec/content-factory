@@ -173,6 +173,7 @@ def deploy_theme():
         "inc/menu-pages.php",
         "inc/menu-config.json",
         "inc/menu-hybrid-builder.php",
+        "inc/service-pages-defaults.php",
         "style.css",
     ]
     base_dir = None

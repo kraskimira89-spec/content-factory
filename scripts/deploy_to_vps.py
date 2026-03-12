@@ -174,6 +174,7 @@ def deploy_theme():
         "inc/menu-config.json",
         "inc/menu-hybrid-builder.php",
         "inc/service-pages-defaults.php",
+        "inc/rest-service-data.php",
         "style.css",
     ]
     base_dir = None

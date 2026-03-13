@@ -75,7 +75,13 @@
 Ответ в виде JSON:
 - "prompts": ["..."]        — список промптов-тегов (английский);
 - "negative_prompt": "..."  — теги-запреты (английский);
-  базовый набор: "blurry, low quality, watermark, text, logo, extra fingers, bad anatomy, deformed face, nudity, blood, injury"
+  базовый пресет для портретов (использовать всегда):
+  "lowres, blurry, bad anatomy, bad proportions, deformed, disfigured, distorted,
+   cloned face, asymmetrical face, ugly, bad hands, bad face,
+   extra limbs, extra arms, extra legs, extra fingers, missing fingers, mutated hands,
+   out of frame, cropped, busy background, grainy, noise,
+   watermark, signature, logo, text, jpeg artifacts, nsfw, nudity"
+  При необходимости усиливай проблемные теги весом: (deformed, distorted:1.2), (bad anatomy:1.1)
 - "style"                   — общий стиль («realistic photo», «flat illustration»);
 - "safety_notes"            — темы для избегания;
 - "suggested_alt_texts": ["..."] — alt-текст для сайта (русский).

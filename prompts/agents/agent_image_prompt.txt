@@ -78,7 +78,16 @@ clean modern design, wide shot, photorealistic, highly detailed
 - purpose          — роль на странице (hero, иллюстрация шага, декоративный фон)
 - prompt           — теги через запятую (английский, 10–20 тегов, 4 слоя)
 - negative_prompt  — теги-запреты (английский);
-  базовый: "blurry, low quality, watermark, text on image, logo, extra fingers, bad anatomy, deformed face, nudity, blood, injury, ugly"
+  базовый пресет для портретов (использовать всегда):
+  "lowres, blurry, bad anatomy, bad proportions, deformed, disfigured, distorted,
+   cloned face, asymmetrical face, ugly, bad hands, bad face,
+   extra limbs, extra arms, extra legs, extra fingers, missing fingers, mutated hands,
+   out of frame, cropped, busy background, grainy, noise,
+   watermark, signature, logo, text, jpeg artifacts, nsfw, nudity"
+  Для портретов добавляй к базовому:
+  "distorted facial features, poorly drawn face, unrealistic expressions, lack of detail in eyes, flat lighting"
+  При необходимости усиливай весом: (deformed, distorted:1.2), (bad anatomy:1.1), (mutated hands and fingers:1.3)
+  Если нужен кроп только лица (без тела) — добавь в негатив: full body
 - style            — краткое описание стиля («realistic photo, warm tones», «flat illustration»)
 - aspect_ratio     — пропорции («16:9», «4:5», «1:1»)
 - safety_tags      — список флагов запрета для генератора

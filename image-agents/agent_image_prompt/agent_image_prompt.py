@@ -12,7 +12,8 @@ from pathlib import Path
 _CURRENT = Path(__file__).resolve().parent
 _IMAGE_AGENTS_DIR = _CURRENT.parent
 PROJECT_ROOT = _IMAGE_AGENTS_DIR.parent
-PROMPT_FILE = PROJECT_ROOT / "prompts" / "agents" / "agent_image_prompt.txt"
+PROMPT_FILE    = PROJECT_ROOT / "prompts" / "agents" / "agent_image_prompt.txt"
+PRESETS_FILE   = PROJECT_ROOT / "prompts" / "image_presets.json"
 OUTPUT_JOBS_DIR = PROJECT_ROOT / "output" / "image_jobs"
 
 # Подключаем seo-agents/shared (api_client, logger)
@@ -31,6 +32,27 @@ def load_system_prompt() -> str:
         return f.read()
 
 
+def load_presets() -> dict:
+    """Загружает image_presets.json. При отсутствии возвращает пустой dict."""
+    if not PRESETS_FILE.exists():
+        return {}
+    with open(PRESETS_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def get_preset_for_service(service_slug: str) -> dict | None:
+    """Возвращает пресет по слагу услуги или None."""
+    data = load_presets()
+    mapping = data.get("service_to_preset", {})
+    preset_type = mapping.get(service_slug)
+    if not preset_type:
+        return None
+    for p in data.get("presets", []):
+        if p.get("preset_type") == preset_type:
+            return p
+    return None
+
+
 def build_user_message(post_struct: dict) -> str:
     """Формирует user-сообщение из структуры поста для LLM."""
     parts = [
@@ -47,6 +69,20 @@ def build_user_message(post_struct: dict) -> str:
         parts.append(f"Целевая аудитория: {post_struct['audience']}")
     if post_struct.get("tone"):
         parts.append(f"Тон: {post_struct['tone']}")
+
+    # Подключаем готовый пресет по слагу услуги
+    slug = post_struct.get("service_slug", "")
+    preset = get_preset_for_service(slug)
+    if preset:
+        parts.append("\n--- ПРЕСЕТЫ ---")
+        parts.append(f"Рекомендуемый пресет: {preset['preset_type']} ({preset['name']})")
+        parts.append(f"Базовый prompt: {preset['prompt']}")
+        parts.append(f"Базовый negative_prompt: {preset['negative_prompt']}")
+        parts.append(f"Параметры для подстановки (JSON): {json.dumps(preset.get('params', {}), ensure_ascii=False)}")
+        parts.append("Адаптируй пресет под услугу и структуру поста.")
+    else:
+        parts.append("\n(Готового пресета для этого слага нет — составь промпт с нуля по правилам.)")
+
     return "\n".join(parts)
 
 
@@ -62,7 +98,7 @@ def generate_image_spec(post_struct: dict) -> dict:
         {"role": "system", "content": system},
         {"role": "user", "content": user},
     ]
-    raw = ask_ai(messages, max_tokens=1500)
+    raw = ask_ai(messages, max_tokens=2000)
     # Вырезаем возможный markdown-блок кода
     text = raw.strip()
     if text.startswith("```"):

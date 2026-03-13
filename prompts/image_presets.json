@@ -1,0 +1,101 @@
+{
+  "version": "1.1",
+  "_comment": "Готовые SD-пресеты под услуги центра Энтузиаст. Агент выбирает пресет по preset_type, подставляет params.",
+
+  "service_to_preset": {
+    "massazh":            "relax_massage",
+    "relaks-massazh":     "relax_massage",
+    "tajskij-massazh":    "relax_massage",
+    "pressotera piya":    "device_procedure",
+    "pressoterapiya":     "device_procedure",
+    "liftingovyj-massazh":"device_procedure",
+    "rf-lifting":         "device_procedure",
+    "kavitatciya":        "device_procedure",
+    "solyanaya-komnata":  "happy_client",
+    "infrasnaya-sauna":   "happy_client",
+    "korrektciya-figury": "before_after",
+    "pohudenie":          "before_after"
+  },
+
+  "presets": [
+    {
+      "preset_type": "relax_massage",
+      "name": "Релакс-массаж",
+      "description": "Женский портрет по пояс, расслабление, атмосфера спа",
+      "aspect_ratio": "16:9",
+      "style": "realistic photo, warm tones, cozy spa atmosphere",
+      "prompt": "{gender}, lying on massage table, spa center, eyes closed, relaxed expression, soft warm lighting, candles, aroma diffuser, white towels, smooth skin, {angle}, cozy atmosphere, photorealistic, highly detailed, 8k, sharp focus",
+      "negative_prompt": "lowres, blurry, grainy, noise, bad anatomy, bad proportions, deformed, disfigured, distorted face, cloned face, asymmetrical face, bad hands, extra fingers, missing fingers, extra limbs, multiple limbs, fused fingers, mutated hands, watermark, signature, logo, text, caption, nudity, exposed breasts, underwear, blood, bruises, medical equipment, hospital",
+      "params": {
+        "gender":    { "default": "1 woman", "options": ["1 woman", "1 man"] },
+        "angle":     { "default": "upper body, side view", "options": ["upper body, side view", "portrait, three-quarter view", "close-up, from above"] },
+        "age":       { "default": "", "options": ["", "young woman", "middle-aged woman", "elderly woman, silver_hair"] },
+        "ethnicity": { "default": "", "options": ["", "asian", "caucasian"] },
+        "clothing":  { "default": "spa robe", "options": ["spa robe", "white towel draped", "robe slightly open at shoulder"] }
+      }
+    },
+
+    {
+      "preset_type": "device_procedure",
+      "name": "Аппаратная процедура",
+      "description": "Аппарат, насадка, лицо в профиль, специалист в белом",
+      "aspect_ratio": "16:9",
+      "style": "realistic photo, clinical clean, soft professional lighting",
+      "prompt": "{gender}, cosmetic procedure, beauty device, handheld applicator on {zone}, spa treatment room, patient lying on couch, eyes closed, relaxed, therapist in white uniform, soft clinical lighting, clean modern equipment, {angle}, photorealistic, highly detailed, sharp focus",
+      "negative_prompt": "lowres, blurry, bad anatomy, deformed face, distorted facial features, overexposed skin, red irritated skin, bruises, scars, acne, medical horror, syringes, blood, surgery, open wounds, extra limbs, extra fingers, mutated hands, watermark, signature, logo, text, gore, nudity",
+      "params": {
+        "gender":    { "default": "1 woman", "options": ["1 woman", "1 man"] },
+        "zone":      { "default": "cheek", "options": ["cheek", "neck", "shoulder", "back", "abdomen"] },
+        "angle":     { "default": "side view", "options": ["side view", "portrait, three-quarter view", "close-up on treatment area"] },
+        "age":       { "default": "", "options": ["", "young woman", "middle-aged woman"] },
+        "clothing":  { "default": "spa robe", "options": ["spa robe", "white towel", "medical gown"] }
+      }
+    },
+
+    {
+      "preset_type": "body_zone",
+      "name": "Зона тела (без лица)",
+      "description": "Антицеллюлитный / массаж зоны, акцент на руках специалиста и коже",
+      "aspect_ratio": "16:9",
+      "style": "realistic photo, warm neutral tones, professional spa",
+      "prompt": "1 woman, lying on massage table, anti cellulite massage, therapist hands working on {zone}, focus on {zone}, professional spa room, warm lighting, clean white towels, smooth skin, close-up on treatment area, no face visible, photorealistic, highly detailed",
+      "negative_prompt": "lowres, blurry, bad anatomy, deformed body, distorted legs, extra limbs, extra fingers, cellulite exaggerated, bruises, scars, veins, wrinkles, fat folds, watermark, signature, logo, text, nudity, visible genitals, thong, underwear focus, blood, medical syringes, multiple limbs, fused fingers",
+      "params": {
+        "zone":      { "default": "thighs", "options": ["thighs", "back", "shoulders", "calves", "abdomen"] },
+        "angle":     { "default": "close-up on treatment area", "options": ["close-up on treatment area", "medium shot", "overhead view"] },
+        "lighting":  { "default": "warm lighting", "options": ["warm lighting", "soft neutral lighting", "bright clinical lighting"] }
+      }
+    },
+
+    {
+      "preset_type": "before_after",
+      "name": "До/После (фигура)",
+      "description": "Сравнение тела от шеи до колен, нейтральный фон, без головы",
+      "aspect_ratio": "16:9",
+      "style": "realistic photo, neutral studio background, even lighting",
+      "prompt": "before and after, 2 images, same {gender_noun}, front view body from neck to knees, weight loss result, slimmer waist, smoother skin, neutral studio background, even lighting, realistic body proportions, photorealistic, highly detailed, comparison layout",
+      "negative_prompt": "lowres, blurry, bad anatomy, distorted body, warped waist, extremely thin, anorexic, body horror, extra limbs, extra arms, extra legs, missing limbs, heavy cellulite, deep wrinkles, skin folds exaggerated, watermark, signature, logo, text, measurements overlay, underwear focus, nudity, visible nipples, thong, see-through clothes, blood, multiple limbs, fused fingers",
+      "params": {
+        "gender_noun": { "default": "woman", "options": ["woman", "man"] },
+        "result_area": { "default": "slimmer waist", "options": ["slimmer waist", "toned arms", "smoother thighs", "flatter abdomen"] },
+        "clothing":    { "default": "form-fitting sportswear", "options": ["form-fitting sportswear", "light athletic shorts and top"] }
+      }
+    },
+
+    {
+      "preset_type": "happy_client",
+      "name": "Эмоциональный портрет после процедуры",
+      "description": "Крупный план, взгляд в камеру, сияющая кожа, лёгкая улыбка",
+      "aspect_ratio": "4:3",
+      "style": "realistic photo, soft studio light, healthy glow",
+      "prompt": "{gender}, portrait, close-up, looking at viewer, gentle smile, fresh skin, light natural makeup, soft studio lighting, spa background blurred, shallow depth of field, bokeh, healthy glow, {age}, photorealistic, highly detailed, 8k, sharp eyes",
+      "negative_prompt": "lowres, blurry, out of focus, bad anatomy, deformed face, distorted eyes, lazy eye, asymmetrical face, wrinkles exaggerated, acne, scars, dark eye circles, red eyes, oily skin shine, harsh shadows, watermark, signature, logo, text, heavy makeup, gothic style, horror, gore, nudity, extra fingers, mutated hands, fused fingers, multiple limbs",
+      "params": {
+        "gender":    { "default": "1 woman", "options": ["1 woman", "1 man", "1 girl", "1 boy"] },
+        "age":       { "default": "", "options": ["", "young woman", "middle-aged woman", "elderly woman, silver_hair, kind expression"] },
+        "hair":      { "default": "brown_hair, long_hair", "options": ["brown_hair, long_hair", "black_hair, short_hair", "blonde_hair, medium_hair", "silver_hair, short_hair"] },
+        "ethnicity": { "default": "", "options": ["", "asian", "caucasian"] }
+      }
+    }
+  ]
+}

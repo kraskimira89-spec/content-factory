@@ -16,7 +16,8 @@
 1. КТО/ЧТО    — «1woman», «1girl», «1man», «spa room», «herbal bottle»
 2. КАДР       — «portrait», «close-up», «upper body», «wide shot», «overhead view»
 3. СРЕДА/СВЕТ — «spa_interior», «clinic_interior», «soft warm lighting», «blurry_background»
-4. КАЧЕСТВО   — не более 2: «photorealistic, highly detailed» или «masterpiece, 4k»
+4. КАЧЕСТВО   — 3–5 тегов из набора: photorealistic, 8k, ultra detailed, highres, sharp focus,
+               highly detailed, masterpiece. Не перегружай — выбирай 3–4, не все сразу.
 
 Запрещено: полные предложения, местоимения (she/her/his/it), союзы (and/with/who).
 
@@ -81,12 +82,13 @@ clean modern design, wide shot, photorealistic, highly detailed
   базовый пресет для портретов (использовать всегда):
   "lowres, blurry, bad anatomy, bad proportions, deformed, disfigured, distorted,
    cloned face, asymmetrical face, ugly, bad hands, bad face,
-   extra limbs, extra arms, extra legs, extra fingers, missing fingers, mutated hands,
+   extra limbs, extra arms, extra legs, extra fingers, missing fingers,
+   multiple limbs, fused fingers, extra hands, mutated hands,
    out of frame, cropped, busy background, grainy, noise,
    watermark, signature, logo, text, jpeg artifacts, nsfw, nudity"
   Для портретов добавляй к базовому:
   "distorted facial features, poorly drawn face, unrealistic expressions, lack of detail in eyes, flat lighting"
-  При необходимости усиливай весом: (deformed, distorted:1.2), (bad anatomy:1.1), (mutated hands and fingers:1.3)
+  При необходимости усиливай весом: (deformed, distorted:1.2), (bad anatomy:1.1), (mutated hands:1.3)
   Если нужен кроп только лица (без тела) — добавь в негатив: full body
 - style            — краткое описание стиля («realistic photo, warm tones», «flat illustration»)
 - aspect_ratio     — пропорции («16:9», «4:5», «1:1»)

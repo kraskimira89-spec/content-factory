@@ -42,7 +42,14 @@ def build_user_message(post_text: str, metadata: dict) -> str:
 
 {meta_str}
 
-Сгенерируй промпты для изображений в формате JSON: поле "images" — массив объектов с полями "prompt", "style", "alt" (от {min_count} до {max_count} штук). Дополнительно можно указать общие "style", "safety_notes"."""
+Сгенерируй промпты для Stable Diffusion в формате JSON.
+Поле "images" — массив от {min_count} до {max_count} объектов с полями:
+  "prompt"          — теги через запятую (английский, 10–20 тегов: объект → кадр → среда → качество),
+  "negative_prompt" — теги-запреты (английский),
+  "style"           — краткое описание стиля,
+  "alt"             — alt-текст для сайта (русский).
+Дополнительно на верхнем уровне: "style", "safety_notes".
+ВАЖНО: поле prompt — только теги через запятую, НЕ предложения."""
 
 
 def run(post_text: str, metadata: dict) -> dict:

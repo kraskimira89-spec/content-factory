@@ -34,14 +34,26 @@ GENERATOR_URL = os.getenv("IMAGE_GENERATOR_URL", "").strip() or _IMG.get("image_
 TIMEOUT = _IMG.get("image_generator_timeout_sec", 120)
 
 
-def _fetch_image(prompt: str, style: str = "") -> bytes:
+def _fetch_image(
+    prompt: str,
+    negative_prompt: str = "",
+    style: str = "",
+    sd_params: dict | None = None,
+) -> bytes:
     """
-    Отправляет промпт в локальный генератор. Ожидает ответ — бинарное изображение (image/png или image/jpeg).
-    Если API возвращает JSON с base64 — можно расширить.
+    Отправляет промпт в локальный генератор (Flask proxy → SD WebUI).
+    sd_params: { steps, cfg_scale, sampler_name, width, height } — из пресета.
     """
-    payload = {"prompt": prompt}
+    payload: dict = {"prompt": prompt}
+    if negative_prompt:
+        payload["negative_prompt"] = negative_prompt
     if style:
         payload["style"] = style
+    # Параметры генерации из пресета (если переданы)
+    if sd_params:
+        for key in ("steps", "cfg_scale", "sampler_name", "width", "height", "seed"):
+            if key in sd_params:
+                payload[key] = sd_params[key]
     resp = requests.post(GENERATOR_URL, json=payload, timeout=TIMEOUT)
     if resp.status_code != 200:
         raise RuntimeError(f"Генератор вернул {resp.status_code}: {resp.text[:500]}")
@@ -62,12 +74,14 @@ def run(
     alt: str = "",
     style: str = "",
     index: int = 1,
+    negative_prompt: str = "",
+    sd_params: dict | None = None,
 ) -> dict:
     """
     Генерирует одну картинку, сохраняет в storage_root по relative_path_pattern.
     Возвращает { "image_path": "images/2026/03/slug-1.jpg", "alt": "..." } (относительно storage_root).
     """
-    image_bytes = _fetch_image(prompt, style)
+    image_bytes = _fetch_image(prompt, negative_prompt=negative_prompt, style=style, sd_params=sd_params)
     storage_root = get_image_storage_root()
     relative_path = build_image_relative_path(slug, index)
     full_path = (storage_root / relative_path).resolve()
@@ -81,8 +95,14 @@ if __name__ == "__main__":
     parser.add_argument("prompt", nargs="?", default="Cozy wellness room, soft light, modern interior", help="Промпт для генератора")
     parser.add_argument("--slug", default="img", help="Префикс имени файла")
     parser.add_argument("--alt", default="", help="Alt-текст для изображения")
-    parser.add_argument("--style", default="", help="Стиль (передаётся в генератор)")
-    parser.add_argument("--index", type=int, default=1, help="Индекс картинки для шаблона пути (relative_path_pattern)")
+    parser.add_argument("--style",    default="",   help="Стиль (передаётся в генератор)")
+    parser.add_argument("--index",    type=int, default=1, help="Индекс картинки")
+    parser.add_argument("--negative", default="",   help="Negative prompt")
+    parser.add_argument("--sd-params",default="{}",  help="JSON SD-параметров из пресета")
     args = parser.parse_args()
-    result = run(args.prompt, slug=args.slug, alt=args.alt, style=args.style, index=args.index)
+    sd_params = json.loads(args.sd_params)
+    result = run(
+        args.prompt, slug=args.slug, alt=args.alt, style=args.style,
+        index=args.index, negative_prompt=args.negative, sd_params=sd_params or None,
+    )
     print(json.dumps(result, ensure_ascii=False))

@@ -33,18 +33,32 @@ SD_WEBUI_URL = os.getenv("SD_WEBUI_URL", "http://127.0.0.1:7860").rstrip("/")
 PORT = int(os.getenv("IMAGE_API_PORT", "8000"))
 
 
-def generate_image(prompt: str, width: int, height: int) -> bytes:
+DEFAULT_NEGATIVE = "lowres, blurry, bad anatomy, bad proportions, deformed, watermark, text, logo, nudity"
+
+
+def generate_image(
+    prompt: str,
+    width: int = 832,
+    height: int = 512,
+    negative_prompt: str = "",
+    steps: int = 28,
+    cfg_scale: float = 7.0,
+    sampler_name: str = "DPM++ 2M Karras",
+    seed: int = -1,
+) -> bytes:
     """Вызов SD WebUI txt2img, возвращает сырые байты PNG."""
     import requests
     payload = {
         "prompt": prompt,
-        "negative_prompt": "blurry, low quality, distorted, text, watermark, logo",
+        "negative_prompt": negative_prompt or DEFAULT_NEGATIVE,
         "width": min(max(width, 512), 1536),
         "height": min(max(height, 512), 1536),
-        "steps": 25,
-        "sampler_name": "DPM++ 2M Karras",
-        "cfg_scale": 7,
-        "seed": -1,
+        "steps": steps,
+        "sampler_name": sampler_name,
+        "cfg_scale": cfg_scale,
+        "seed": seed,
+        "batch_size": 1,
+        "n_iter": 1,
     }
     resp = requests.post(
         f"{SD_WEBUI_URL}/sdapi/v1/txt2img",
@@ -73,11 +87,18 @@ def main():
         try:
             data = request.get_json() or {}
             prompt = data.get("prompt", "")
-            width = int(data.get("width", 1280))
-            height = int(data.get("height", 720))
             if not prompt:
                 return {"error": "prompt required"}, 400
-            img_bytes = generate_image(prompt, width, height)
+            img_bytes = generate_image(
+                prompt=prompt,
+                width=int(data.get("width", 832)),
+                height=int(data.get("height", 512)),
+                negative_prompt=data.get("negative_prompt", ""),
+                steps=int(data.get("steps", 28)),
+                cfg_scale=float(data.get("cfg_scale", 7.0)),
+                sampler_name=data.get("sampler_name", "DPM++ 2M Karras"),
+                seed=int(data.get("seed", -1)),
+            )
             return Response(img_bytes, mimetype="image/png")
         except Exception as e:
             return {"error": str(e)}, 500

@@ -42,18 +42,21 @@ def _fetch_image(
 ) -> bytes:
     """
     Отправляет промпт в локальный генератор (Flask proxy → SD WebUI).
-    sd_params: { steps, cfg_scale, sampler_name, width, height } — из пресета.
+    sd_params: { steps, cfg_scale, sampler | sampler_name, width, height, seed } — из пресета.
     """
     payload: dict = {"prompt": prompt}
     if negative_prompt:
         payload["negative_prompt"] = negative_prompt
     if style:
         payload["style"] = style
-    # Параметры генерации из пресета (если переданы)
+    # Параметры генерации из пресета (если переданы). В пресетах ключ "sampler", API ждёт "sampler_name".
     if sd_params:
-        for key in ("steps", "cfg_scale", "sampler_name", "width", "height", "seed"):
+        for key in ("steps", "cfg_scale", "width", "height", "seed"):
             if key in sd_params:
                 payload[key] = sd_params[key]
+        sampler = sd_params.get("sampler_name") or sd_params.get("sampler")
+        if sampler is not None:
+            payload["sampler_name"] = sampler
     resp = requests.post(GENERATOR_URL, json=payload, timeout=TIMEOUT)
     if resp.status_code != 200:
         raise RuntimeError(f"Генератор вернул {resp.status_code}: {resp.text[:500]}")

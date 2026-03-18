@@ -1,5 +1,10 @@
 # Паспорт беседы: локальный ИИ‑стек (RTX 3060, SD + Ollama)
 
+**Ссылки для старта нового чата с контекстом:**  
+→ [Паспорт проекта](../Pasport_proekta/passport-project.md) | [Паспорт беседы](../Pasport_besedy/passport-conversation.md) (этот файл)
+
+---
+
 ## 1. Участники
 
 - Клиент: (ФИО/ник) __________________
@@ -113,3 +118,25 @@ python scripts/faq_parser.py materials/pages_manual/pressoterapiya.md
 - agent9 генерирует картинки для страниц услуг через SD WebUI (порт 7860)
 - Конфиг: `shared-config.json` → `sd_webui` (base_url, checkpoint, размеры, negative_prompt)
 - Альтернатива: ComfyUI на порту 8188
+
+---
+
+## 9. Беседа: страницы услуг, зелёные CTA, деплой (март 2026)
+
+### Цели
+
+- В зелёных CTA-блоках на страницах услуг: **крупнее текст**, **кнопки по центру**.
+- Устранить визуальное «невыравнивание»: вторая кнопка («Получить консультацию») была зелёной на зелёном фоне — сделана контрастной (белый текст и светлая рамка).
+
+### Что сделано
+
+| Где | Изменения |
+|-----|-----------|
+| **service-pages.css** | `.service-page__cta-text`: font-size 22px, line-height 1.4; `.service-page__cta-buttons`: `justify-content: center`; `.service-page__cta .btn--secondary-light`: цвет #fff, border rgba(255,255,255,.85), hover — полупрозрачный белый фон. |
+| **style.css** | `.service-page__cta-text`: 22px, line-height 1.4; добавлен `.service-page__cta-buttons { justify-content: center }`; `.results-cta`: `justify-content: center`, `.results-cta .btn`: `flex: 0 0 auto` (кнопка «Записаться на курс» по центру). |
+| **Деплой** | Тема выложена на VPS: `python scripts/deploy_to_vps.py --mode theme`. После деплоя — жёсткое обновление (Ctrl+F5) или инкогнито. |
+
+### Проверка
+
+- **URL страницы услуги:** http://91.229.11.147/uslugi/massazh/
+- На сервере версия CSS с `filemtime` (например `?ver=1773846828`) — после деплоя подхватывается автоматически.

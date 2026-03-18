@@ -95,7 +95,7 @@ def test_generate() -> tuple[bool, str]:
                 "cfg_scale": 7,
                 "sampler_name": "DPM++ 2M Karras",
             },
-            timeout=120,
+            timeout=300,
         )
         if r.status_code == 200 and r.headers.get("Content-Type", "").startswith("image"):
             out_path = PROJECT_ROOT / "output" / "images" / "_connection_test.png"

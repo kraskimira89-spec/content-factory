@@ -145,3 +145,20 @@ agent1_keywords → agent_planner → agent2_brief → agent3_content → agent_
 - **agent9** — отправляет запросы в SD WebUI (127.0.0.1:7860) или ComfyUI (8188)
 - Конфиг: `shared-config.json` → `sd_webui` (checkpoint v1.5, 1280×720, negative_prompt)
 - Хранение: `media/images/`, индекс в `db/image_index.json`
+
+### Тема VPS (entuziastov75-child)
+
+- **Репозиторий:** entuziastov75-vps (`C:\Users\user\Documents\seo_entuziastov75`), дочерняя тема в `wp-content/themes/entuziastov75-child/`.
+- **Страницы услуг:** шаблон `template-page-service.php`, стили — `assets/css/service-pages.css` и `style.css`.
+- **Зелёные CTA-блоки:** `.service-page__cta`, `.service-page__cta-text` (22px), `.service-page__cta-buttons` (flex, `justify-content: center`), вторая кнопка — контрастная (белый текст/рамка). Блок «Результаты курса» — `.results-cta` (кнопка по центру).
+- **Деплой темы на VPS:** `python scripts/deploy_to_vps.py --mode theme` из content-factory (SCP в `/root/sites/entuziastov75VPS/www/entuziastov75.ru/wp-content/themes/entuziastov75-child/`).
+- **Живой сайт (пример):** http://91.229.11.147/uslugi/massazh/
+
+---
+
+## 9. Ссылки для нового чата (сохранение контекста)
+
+При старте нового чата подставь в первое сообщение ссылки на паспорта:
+
+- **Паспорт проекта:** [Pasport_proekta/passport-project.md](Pasport_proekta/passport-project.md) — архитектура, polyrepo, агенты, контракт, тема VPS, SD.
+- **Паспорт бесед:** [Pasport_besedy/passport-conversation.md](Pasport_besedy/passport-conversation.md) — история решений, команды, контекст Content Factory и последних бесед.

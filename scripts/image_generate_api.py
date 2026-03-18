@@ -63,7 +63,7 @@ def generate_image(
     resp = requests.post(
         f"{SD_WEBUI_URL}/sdapi/v1/txt2img",
         json=payload,
-        timeout=180,
+        timeout=300,
     )
     resp.raise_for_status()
     data = resp.json()

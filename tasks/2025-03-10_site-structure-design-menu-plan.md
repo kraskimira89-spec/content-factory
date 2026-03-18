@@ -86,11 +86,14 @@
 - [x] П1: Контакты в front-page.php — ул. Энтузиастов, 75; +7 (904) 475-91-01
 - [x] П1: Контакты в template-page-landing-konferenc-zal.php
 - [x] П1: CTA в materials/brand_voice — 475-91-01 (проверено, ошибок нет)
+- [x] П1: Проверка materials/pages_manual и prompts — 475-01-01 не найдено; «Ленина» только как конкурент в solyanaya-komnata
 - [x] П2: Меню — limfodrenazh-nog, sukhaya-uglekislaya-vanna добавлены в menu-pages.php
 - [x] П2: Slug — skrabirovanie, obertyvanie (вместо skrab, obert)
+- [x] П2: При расхождении меню на сайте — Внешний вид → Меню → «Запустить автосборку» (дефолт в inc/menu-pages.php)
 - [ ] П3: Hero-фото услуг — загрузить в WP вручную
+- [ ] П3.1: Featured image конференц-зала: WP → Страницы → Конференц-зал → Миниатюра записи → загрузить изображение (рекоменд. 1200×630)
 - [ ] П3: Карточки главной (placeholder images) — загрузить в Настройки темы
-- [ ] П4: Специальное предложение на страницах — контент вручную
+- [x] П4: Специальное предложение — дефолты в теме для СУВ, ВЛОК, Гидромассаж (inc/service-lead-magnet.php + template-page-service.php)
 - [ ] П4: Порядок флагманов на главной — проверить вручную
 - [x] П5: site-pages-tree.md — обновлён
 
@@ -100,6 +103,7 @@
 
 - entuziastov75-vps: `front-page.php`, `template-page-landing-konferenc-zal.php`
 - entuziastov75-vps: `inc/menu-pages.php`
+- entuziastov75-vps: `inc/service-lead-magnet.php`, `template-page-service.php` (дефолты блока 6b по slug)
 
 ## Деплой на VPS (выполнено)
 

@@ -144,12 +144,14 @@ class VisionAgent:
         backend: str = "openai",
         model: str = "gpt-4o",
         api_key: str | None = None,
+        base_url: str | None = None,
         ollama_url: str = "http://localhost:11434",
         max_concurrent: int = 3,
     ):
         self.backend = backend
         self.model = model
         self.api_key = api_key
+        self.base_url = base_url
         self.ollama_url = ollama_url
         self._semaphore = asyncio.Semaphore(max_concurrent)
 
@@ -180,7 +182,10 @@ class VisionAgent:
 
     async def _call_openai(self, b64: str) -> str:
         from openai import AsyncOpenAI
-        client = AsyncOpenAI(api_key=self.api_key)
+        kwargs: dict = {"api_key": self.api_key}
+        if self.base_url:
+            kwargs["base_url"] = self.base_url
+        client = AsyncOpenAI(**kwargs)
         response = await client.chat.completions.create(
             model=self.model,
             max_tokens=512,
@@ -276,9 +281,57 @@ class VisionAgent:
 
 # ── Синхронная обёртка для текущего пайплайна ──────────────────────────────────
 
+def _load_karusel_env() -> None:
+    """Подхватывает config/.env из content-factory (как run_bot.py)."""
+    try:
+        from dotenv import load_dotenv
+        project_root = Path(__file__).resolve().parent.parent.parent
+        load_dotenv(project_root / "config" / ".env")
+    except Exception:
+        pass
+
+
 def analyze_photos(photo_paths: list[str], backend: str = "openai", model: str = "gpt-4o") -> list[VisionResult]:
-    """Синхронный вызов: анализирует фото и возвращает список VisionResult."""
+    """
+    Синхронный вызов: анализирует фото и возвращает список VisionResult.
+
+    Переменные окружения (после load config/.env):
+      VISION_BACKEND=openai|ollama — при ollama без OpenAI API (локально).
+      OLLAMA_URL — по умолчанию http://localhost:11434
+      OLLAMA_VISION_MODEL — например llava, llava:13b (если не задано и model=gpt-4o → llava)
+      OPENAI_* — как раньше для openai.
+    """
     import os
+    _load_karusel_env()
+    env_backend = os.environ.get("VISION_BACKEND", "").strip().lower()
+    if env_backend in ("openai", "ollama"):
+        backend = env_backend
+
+    if backend == "ollama":
+        ollama_url = os.environ.get("OLLAMA_URL", "http://localhost:11434").strip() or "http://localhost:11434"
+        env_ollama_model = os.environ.get("OLLAMA_VISION_MODEL", "").strip()
+        if env_ollama_model:
+            model = env_ollama_model
+        elif model == "gpt-4o":
+            model = "llava"
+        agent = VisionAgent(
+            backend="ollama",
+            model=model,
+            api_key=None,
+            base_url=None,
+            ollama_url=ollama_url,
+        )
+        return asyncio.run(agent.analyze(photo_paths))
+
     api_key = os.environ.get("OPENAI_API_KEY", "").strip() or None
-    agent = VisionAgent(backend=backend, model=model, api_key=api_key)
+    base_url = os.environ.get("OPENAI_BASE_URL", "").strip() or None
+    env_model = os.environ.get("OPENAI_MODEL", "").strip()
+    if env_model:
+        model = env_model
+    agent = VisionAgent(
+        backend="openai",
+        model=model,
+        api_key=api_key,
+        base_url=base_url,
+    )
     return asyncio.run(agent.analyze(photo_paths))

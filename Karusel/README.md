@@ -17,9 +17,26 @@
 
 После установки выполнить: `playwright install chromium`.
 
+### rembg и CUDA (ошибка `cublasLt64_12.dll` / onnxruntime_providers_cuda)
+
+Если в логах **onnxruntime** пишет про отсутствие **CUDA** или **cublasLt64_12.dll** — у вас стоит GPU-сборка без полного CUDA Toolkit 12. Варианты:
+
+1. **Проще — только CPU** (рекомендуется без видеокарты NVIDIA / без CUDA):
+   ```powershell
+   pip uninstall onnxruntime onnxruntime-gpu -y
+   pip install onnxruntime
+   pip install -r requirements.txt
+   ```
+   В `requirements.txt` указан обычный `rembg` (без `[gpu]`).
+
+2. **GPU** — установите [CUDA 12](https://developer.nvidia.com/cuda-downloads) и совместимый `onnxruntime-gpu`, затем при необходимости снова `pip install "rembg[gpu]"` (см. документацию rembg).
+
 ## Конфиг
 
-- `config/.env` (корень content-factory): `TELEGRAM_BOT_TOKEN`, при использовании Vision — `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `OPENAI_MODEL` (например gpt-4o для vision).
+- `config/.env` (корень content-factory): `TELEGRAM_BOT_TOKEN`.
+- **Vision (анализ фото):**
+  - **OpenAI / прокси:** `OPENAI_API_KEY`, опционально `OPENAI_BASE_URL`, `OPENAI_MODEL` (например `gpt-4o`).
+  - **Локальный Ollama:** `VISION_BACKEND=ollama`, `OLLAMA_URL=http://localhost:11434`, `OLLAMA_VISION_MODEL=llava` или `llava:13b` (модель с vision: `ollama pull llava`).
 - Цвета и дизайн-токены: `Karusel/config/brand_colors.json` и `Karusel/assets/carousel/brand/colors.json`.
 - Явная связь Figma frame -> HTML template: `Karusel/config/figma_template_map.json`.
 - **Presets** (размер, safe area, character_box): `Karusel/config/presets/` — `telegram_portrait.json`, `instagram_square.json`, `story_9x16.json`. Используются при передаче `preset_path` в пайплайн/билдер.

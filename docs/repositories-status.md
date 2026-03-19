@@ -43,6 +43,8 @@ Workspace: `d:\content-and-vps\content-factory.code-workspace`
 
 Оба репо в одной панели — правки и push из одного окна Cursor.
 
+**Автоматизация с GitHub (Actions + Планировщик):** см. **`docs/github-automation.md`**.
+
 ---
 
 ## 3. Синхронизация из единого workspace

@@ -1,0 +1,47 @@
+{
+  "cover": {
+    "frame_name": "Cover",
+    "template": "cover.html",
+    "content_side": "right",
+    "character_side": "left"
+  },
+  "benefits": {
+    "frame_name": "Benefits",
+    "template": "benefits.html",
+    "content_side": "left",
+    "character_side": "right"
+  },
+  "indications": {
+    "frame_name": "Indications",
+    "template": "indications.html",
+    "content_side": "right",
+    "character_side": "left"
+  },
+  "howworks": {
+    "frame_name": "HowWorks",
+    "template": "howworks.html",
+    "content_side": "left",
+    "character_side": "right"
+  },
+  "target": {
+    "frame_name": "TargetAudience",
+    "template": "target_audience.html",
+    "content_side": "left",
+    "character_side": "right"
+  },
+  "results": {
+    "frame_name": "Results",
+    "template": "results.html",
+    "content_side": "left",
+    "character_side": "right"
+  },
+  "photo_raw": {
+    "frame_name": "PhotoRaw",
+    "template": "photo_raw.html"
+  },
+  "cta": {
+    "frame_name": "CTA",
+    "template": "cta.html",
+    "content_side": "left"
+  }
+}

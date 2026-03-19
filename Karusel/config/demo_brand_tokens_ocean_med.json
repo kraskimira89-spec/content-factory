@@ -1,0 +1,115 @@
+{
+  "figma": {
+    "file_name": "Ocean Med Carousel",
+    "note": "Демо-бренд для проверки смены визуала без правки HTML."
+  },
+  "primary": "#39D0D8",
+  "black": "#0E2233",
+  "white": "#FFFFFF",
+  "slide_width": 1080,
+  "slide_height": 1350,
+  "frame_size": {
+    "width": 1080,
+    "height": 1350
+  },
+  "colors": {
+    "primary": "#39D0D8",
+    "yellow_light": "#DDFBFD",
+    "yellow_dark": "#1BAEB6",
+    "black": "#0E2233",
+    "white": "#FFFFFF",
+    "gray": "#48606F",
+    "gray_light": "#F2F8FB"
+  },
+  "radii": {
+    "card": "24px",
+    "small": "14px"
+  },
+  "spacing": {
+    "content_top": "72px",
+    "container_offset": "48px",
+    "column_gap": "24px",
+    "card_padding": "32px 36px",
+    "content_width": "560px"
+  },
+  "typography": {
+    "font_family": "'Inter', sans-serif",
+    "title_size": "64px",
+    "subtitle_size": "30px",
+    "body_size": "28px",
+    "phone_note_size": "22px"
+  },
+  "shadows": {
+    "card": "0 12px 36px rgba(14,34,51,0.10)",
+    "heavy": "0 18px 44px rgba(14,34,51,0.16)"
+  },
+  "layout": {
+    "character_height": "930px",
+    "character_bottom": "0px",
+    "character_edge_offset": "-10px",
+    "overlay_opacity": "0.70",
+    "phone_note": "Запись в Telegram",
+    "cta_phone_size": "40px",
+    "cta_phone_padding": "28px 30px",
+    "icon_size": "60px",
+    "icon_gap": "14px"
+  },
+  "template_layouts": {
+    "cover": {
+      "content_side": "right",
+      "character_side": "left",
+      "content_width": "540px"
+    },
+    "benefits": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "indications": {
+      "content_side": "right",
+      "character_side": "left"
+    },
+    "howworks": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "target": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "results": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "photo_raw": {
+      "content_side": "right"
+    },
+    "cta": {
+      "content_side": "left",
+      "content_width": "720px"
+    }
+  },
+  "frame_overrides": {
+    "Cover": {
+      "overlay_opacity": "0.62",
+      "character_height": "980px",
+      "content_top": "64px"
+    },
+    "TargetAudience": {
+      "icon_size": "72px",
+      "icon_gap": "18px",
+      "content_width": "600px"
+    },
+    "CTA": {
+      "content_top": "120px",
+      "cta_phone_size": "48px",
+      "cta_phone_padding": "32px 36px"
+    },
+    "PhotoRaw": {
+      "frame_width": "1080px",
+      "frame_height": "1350px"
+    }
+  },
+  "assets": {
+    "logo": "assets/carousel/brand/logo.png"
+  }
+}

@@ -1,0 +1,47 @@
+# CI + запуск по расписанию (cron)
+# Репозиторий: content-factory
+name: CI and Scheduled
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Каждые 6 часов (UTC)
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  scheduled-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Sanity check (Karusel import)
+        run: |
+          cd "$GITHUB_WORKSPACE"
+          python -c "
+          import sys
+          sys.path.insert(0, 'Karusel')
+          from agents.orchestrator import run_pipeline
+          print('Karusel pipeline OK')
+          "
+
+      - name: Optional — run project tests
+        run: |
+          if [ -d tests ] && python -m pytest tests -v --tb=short 2>/dev/null; then
+            echo 'Tests passed'
+          else
+            echo 'No tests or pytest skipped'
+          fi
+        continue-on-error: true

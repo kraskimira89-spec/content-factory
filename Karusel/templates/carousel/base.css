@@ -1,0 +1,251 @@
+/* templates/carousel/base.css — фирменный стиль карусели (viewport из preset/токенов) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --yellow:       #FFE033;
+  --yellow-light: #FFF3A0;
+  --yellow-dark:  #E6C800;
+  --black:        #000000;
+  --white:        #FFFFFF;
+  --gray:         #444444;
+  --gray-light:   #F5F5F5;
+  --radius:       16px;
+  --radius-sm:    10px;
+  --shadow:       0 4px 20px rgba(0,0,0,0.10);
+  --shadow-heavy: 0 8px 32px rgba(0,0,0,0.18);
+}
+
+body {
+  width: var(--slide-width);
+  height: var(--slide-height);
+  font-family: var(--font-family-base, 'Inter', sans-serif);
+  background: var(--yellow);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Плашки */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  box-shadow: var(--shadow);
+}
+
+.card-yellow {
+  background: var(--yellow);
+  border-radius: var(--radius);
+  padding: 28px 32px;
+  border: 2.5px solid var(--black);
+}
+
+.card-light {
+  background: var(--yellow-light);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+}
+
+.card-dark {
+  background: var(--black);
+  border-radius: var(--radius);
+  padding: 24px 32px;
+}
+
+/* Типографика */
+.title {
+  font-size: var(--title-size, 68px);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--black);
+  letter-spacing: -1px;
+}
+
+.title-md {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--black);
+}
+
+.subtitle {
+  font-size: var(--subtitle-size, 32px);
+  font-weight: 400;
+  line-height: 1.3;
+  color: var(--gray);
+  margin-top: 10px;
+}
+
+.closing {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--black);
+}
+
+.phone {
+  font-size: 38px;
+  font-weight: 700;
+  color: var(--yellow);
+  letter-spacing: 0.5px;
+}
+
+/* Буллеты */
+.bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bullet-item {
+  font-size: var(--body-size, 30px);
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--black);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.bullet-item::before {
+  content: "•";
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--black);
+  line-height: 1.1;
+  flex-shrink: 0;
+}
+
+.bullets-box {
+  background: var(--yellow);
+  border: 2.5px solid var(--black);
+  border-radius: var(--radius);
+  padding: 25px 32px;
+}
+
+.bullet {
+  font-size: 28px;
+  margin-bottom: 12px;
+  color: var(--black);
+}
+
+.bullet:last-child { margin-bottom: 0; }
+
+/* Персонаж (высота из preset/токенов) */
+.character {
+  position: absolute;
+  bottom: 0;
+  height: var(--character-height, 980px);
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+}
+
+.character-left { left: -20px; }
+.character-right { right: -20px; }
+.character.left { left: 0; }
+.character.right { right: 0; }
+
+/* Контентная колонка (позиции из preset/токенов) */
+.content-col {
+  position: absolute;
+  top: var(--content-top, 60px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content-left { left: var(--content-offset, 40px); width: var(--content-width, 580px); }
+.content-right { right: var(--content-offset, 40px); width: var(--content-width, 580px); }
+
+.content-block {
+  position: absolute;
+  top: var(--content-top, 60px);
+  width: var(--content-width, 580px);
+  max-width: calc(100% - 2 * var(--content-offset, 40px));
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content-block.left { left: var(--content-offset, 40px); }
+.content-block.right { right: var(--content-offset, 40px); }
+
+/* Телефон / CTA */
+.phone-box {
+  background: var(--black);
+  border-radius: var(--radius);
+  padding: 22px 28px;
+  margin-top: 8px;
+  color: var(--yellow);
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.closing-line {
+  font-size: 24px;
+  color: #333;
+  margin-top: 16px;
+  font-weight: 600;
+}
+
+/* Декоративные элементы */
+.decor-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--yellow-dark);
+  position: absolute;
+}
+
+.decor-square {
+  width: 22px;
+  height: 22px;
+  background: var(--yellow-dark);
+  position: absolute;
+  transform: rotate(15deg);
+}
+
+.decor-line {
+  height: 5px;
+  background: var(--yellow-dark);
+  border-radius: 3px;
+  position: absolute;
+}
+
+.logo {
+  position: absolute;
+  bottom: 30px;
+  left: var(--content-offset, 40px);
+  height: 48px;
+  width: auto;
+  opacity: 0.7;
+}
+
+/* Иконки для target_audience */
+.icon-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.icon-img {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.title-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 30px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}

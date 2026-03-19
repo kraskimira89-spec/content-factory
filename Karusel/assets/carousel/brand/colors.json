@@ -1,0 +1,92 @@
+{
+  "figma": {
+    "file_name": "Karusel Master",
+    "note": "Зеркало бренд-токенов для ассетов, экспортируемых из Figma."
+  },
+  "primary": "#FFE033",
+  "black": "#000000",
+  "white": "#FFFFFF",
+  "slide_width": 1080,
+  "slide_height": 1350,
+  "frame_size": {
+    "width": 1080,
+    "height": 1350
+  },
+  "colors": {
+    "primary": "#FFE033",
+    "yellow_light": "#FFF3A0",
+    "yellow_dark": "#E6C800",
+    "black": "#000000",
+    "white": "#FFFFFF",
+    "gray": "#444444",
+    "gray_light": "#F5F5F5"
+  },
+  "radii": {
+    "card": "16px",
+    "small": "10px"
+  },
+  "spacing": {
+    "content_top": "60px",
+    "container_offset": "40px",
+    "column_gap": "20px",
+    "card_padding": "28px 32px",
+    "content_width": "580px"
+  },
+  "typography": {
+    "font_family": "'Inter', sans-serif",
+    "title_size": "68px",
+    "subtitle_size": "32px",
+    "body_size": "30px"
+  },
+  "shadows": {
+    "card": "0 4px 20px rgba(0,0,0,0.10)",
+    "heavy": "0 8px 32px rgba(0,0,0,0.18)"
+  },
+  "layout": {
+    "character_height": "980px",
+    "character_bottom": "0px",
+    "character_edge_offset": "-20px",
+    "overlay_opacity": "0.82",
+    "phone_note": "Напиши в директ",
+    "cta_phone_size": "42px",
+    "cta_phone_padding": "30px",
+    "icon_size": "64px",
+    "icon_gap": "16px"
+  },
+  "template_layouts": {
+    "cover": {
+      "content_side": "right",
+      "character_side": "left"
+    },
+    "benefits": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "indications": {
+      "content_side": "right",
+      "character_side": "left"
+    },
+    "howworks": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "target": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "results": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "photo_raw": {
+      "content_side": "right"
+    },
+    "cta": {
+      "content_side": "left",
+      "content_width": "680px"
+    }
+  },
+  "assets": {
+    "logo": "assets/carousel/brand/logo.png"
+  }
+}

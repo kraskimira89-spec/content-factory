@@ -1,0 +1,9 @@
+{
+  "id": "telegram_portrait",
+  "name": "Telegram (портрет)",
+  "viewport": { "width": 1080, "height": 1350 },
+  "safe_area": { "top": 0, "right": 0, "bottom": 0, "left": 0 },
+  "content": { "max_width": "580px" },
+  "character_box": { "width": 540, "height": 1350 },
+  "export": { "format": "jpeg", "quality": 92 }
+}

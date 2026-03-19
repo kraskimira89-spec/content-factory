@@ -1,0 +1,117 @@
+{
+  "figma": {
+    "file_name": "Premium Gold Carousel",
+    "note": "Демо-бренд в более премиальном стиле для сравнения визуальных направлений."
+  },
+  "primary": "#C8A75B",
+  "black": "#181512",
+  "white": "#FAF8F3",
+  "slide_width": 1080,
+  "slide_height": 1350,
+  "frame_size": {
+    "width": 1080,
+    "height": 1350
+  },
+  "colors": {
+    "primary": "#C8A75B",
+    "yellow_light": "#F3E6C5",
+    "yellow_dark": "#9B7B37",
+    "black": "#181512",
+    "white": "#FAF8F3",
+    "gray": "#5E554A",
+    "gray_light": "#F3F0EA"
+  },
+  "radii": {
+    "card": "28px",
+    "small": "18px"
+  },
+  "spacing": {
+    "content_top": "78px",
+    "container_offset": "54px",
+    "column_gap": "26px",
+    "card_padding": "34px 38px",
+    "content_width": "560px"
+  },
+  "typography": {
+    "font_family": "'Inter', sans-serif",
+    "title_size": "62px",
+    "subtitle_size": "28px",
+    "body_size": "27px",
+    "phone_note_size": "21px"
+  },
+  "shadows": {
+    "card": "0 14px 44px rgba(24,21,18,0.10)",
+    "heavy": "0 22px 52px rgba(24,21,18,0.16)"
+  },
+  "layout": {
+    "character_height": "900px",
+    "character_bottom": "0px",
+    "character_edge_offset": "-4px",
+    "overlay_opacity": "0.55",
+    "phone_note": "Персональная запись",
+    "cta_phone_size": "46px",
+    "cta_phone_padding": "30px 34px",
+    "icon_size": "58px",
+    "icon_gap": "16px"
+  },
+  "template_layouts": {
+    "cover": {
+      "content_side": "right",
+      "character_side": "left",
+      "content_width": "520px"
+    },
+    "benefits": {
+      "content_side": "left",
+      "character_side": "right",
+      "content_width": "545px"
+    },
+    "indications": {
+      "content_side": "right",
+      "character_side": "left",
+      "content_width": "545px"
+    },
+    "howworks": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "target": {
+      "content_side": "left",
+      "character_side": "right",
+      "content_width": "585px"
+    },
+    "results": {
+      "content_side": "left",
+      "character_side": "right"
+    },
+    "photo_raw": {
+      "content_side": "right"
+    },
+    "cta": {
+      "content_side": "left",
+      "content_width": "760px",
+      "content_top": "130px"
+    }
+  },
+  "frame_overrides": {
+    "Cover": {
+      "overlay_opacity": "0.48",
+      "character_height": "960px",
+      "content_top": "70px"
+    },
+    "Benefits": {
+      "content_width": "570px"
+    },
+    "TargetAudience": {
+      "icon_size": "64px",
+      "icon_gap": "20px"
+    },
+    "CTA": {
+      "content_top": "148px",
+      "cta_phone_size": "52px",
+      "cta_phone_padding": "34px 38px"
+    }
+  },
+  "assets": {
+    "logo": "assets/carousel/brand/logo.png"
+  }
+}

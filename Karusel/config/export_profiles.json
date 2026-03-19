@@ -1,0 +1,27 @@
+{
+  "telegram_album": {
+    "preset": "telegram_portrait",
+    "platform": "telegram",
+    "description": "Альбом Telegram, портрет 1080×1350"
+  },
+  "instagram_feed_portrait": {
+    "preset": "telegram_portrait",
+    "platform": "instagram",
+    "description": "Лента Instagram, портрет 1080×1350"
+  },
+  "instagram_feed_square": {
+    "preset": "instagram_square",
+    "platform": "instagram",
+    "description": "Лента Instagram, квадрат 1080×1080"
+  },
+  "stories_9x16": {
+    "preset": "story_9x16",
+    "platform": "instagram",
+    "description": "Stories 9:16, 1080×1920"
+  },
+  "vk_feed": {
+    "preset": "telegram_portrait",
+    "platform": "vk",
+    "description": "Лента VK, портрет 1080×1350"
+  }
+}

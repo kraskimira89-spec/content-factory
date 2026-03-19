@@ -1,0 +1,9 @@
+{
+  "id": "instagram_square",
+  "name": "Instagram (квадрат)",
+  "viewport": { "width": 1080, "height": 1080 },
+  "safe_area": { "top": 0, "right": 0, "bottom": 0, "left": 0 },
+  "content": { "max_width": "520px" },
+  "character_box": { "width": 540, "height": 1080 },
+  "export": { "format": "jpeg", "quality": 92 }
+}

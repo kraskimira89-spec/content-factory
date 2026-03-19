@@ -1,0 +1,9 @@
+{
+  "id": "story_9x16",
+  "name": "Stories 9:16",
+  "viewport": { "width": 1080, "height": 1920 },
+  "safe_area": { "top": 120, "right": 0, "bottom": 120, "left": 0 },
+  "content": { "max_width": "580px" },
+  "character_box": { "width": 540, "height": 1920 },
+  "export": { "format": "jpeg", "quality": 92 }
+}

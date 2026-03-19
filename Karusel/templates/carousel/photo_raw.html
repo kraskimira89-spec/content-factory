@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Фото</title>
+  <style>{{ base_css }}</style>
+  <style>
+    .photo-full { width: {{ layout.frame_width }}; height: {{ layout.frame_height }}; object-fit: cover; display: block; }
+  </style>
+</head>
+<body data-figma-frame="{{ figma_frame_name }}">
+  {% if photo_path %}
+  <img class="photo-full" src="{{ photo_path }}" alt="" />
+  {% endif %}
+</body>
+</html>

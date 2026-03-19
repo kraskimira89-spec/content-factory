@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Записаться</title>
+  <style>{{ base_css }}</style>
+</head>
+<body data-figma-frame="{{ figma_frame_name }}">
+  <div class="content-block {{ layout.content_side }}"
+       style="top: {{ layout.content_top }}; {{ layout.content_side }}: {{ layout.content_offset }}; width: {{ layout.content_width }}; right: auto;">
+    <div class="title-box">
+      <div class="title">{{ title }}</div>
+      {% if subtitle %}<div class="subtitle">{{ subtitle }}</div>{% endif %}
+    </div>
+    {% if closing_line %}<div class="closing-line">{{ closing_line }}</div>{% endif %}
+    {% if phone %}
+    <div class="phone-box" style="font-size: {{ layout.cta_phone_size }}; padding: {{ layout.cta_phone_padding }};">📞 {{ phone }}</div>
+    {% endif %}
+    {% if logo_path %}
+    <img class="logo" src="{{ logo_path }}" alt="" style="position: static; height: 56px; opacity: 1;" />
+    {% endif %}
+  </div>
+</body>
+</html>

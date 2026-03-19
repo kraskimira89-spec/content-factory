@@ -62,6 +62,10 @@ output/image_queue/
 media/images/*
 !media/images/.gitkeep
 
+# Экспорты чатов (Telegram и др.) — ПИИ, не коммитить
+ChatExport*/
+**/ChatExport*/
+
 # Отладочные файлы
 debug-*.log
 

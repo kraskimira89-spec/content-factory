@@ -1,0 +1,60 @@
+<!-- templates/carousel/cover.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Обложка</title>
+  <style>{{ base_css }}</style>
+  <style>
+    body {
+      {% if photo_path %}
+      background: linear-gradient(rgba(255,224,51,{{ layout.overlay_opacity }}), rgba(255,224,51,{{ layout.overlay_opacity }})), url('{{ photo_path }}') center/cover no-repeat;
+      {% else %}
+      background: var(--yellow);
+      {% endif %}
+    }
+    .phone-box { margin-top: 8px; }
+  </style>
+</head>
+<body data-figma-frame="{{ figma_frame_name }}">
+
+  {% if character_path %}
+  <img class="character character-{{ character_position }}" src="{{ character_path }}" alt=""
+       style="height: {{ layout.character_height }}; bottom: {{ layout.character_bottom }}; {{ character_position }}: {{ layout.character_edge_offset }};" />
+  {% endif %}
+
+  <div class="content-col content-{{ layout.content_side }}"
+       style="top: {{ layout.content_top }}; {{ layout.content_side }}: {{ layout.content_offset }}; width: {{ layout.content_width }}; gap: {{ layout.column_gap }};">
+    <div class="card">
+      <div class="title">{{ title }}</div>
+      {% if subtitle %}<div class="subtitle">{{ subtitle }}</div>{% endif %}
+    </div>
+
+    <div class="card-yellow">
+      <ul class="bullets">
+        {% for b in bullets %}
+        <li class="bullet-item">{{ b }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% if phone %}
+    <div class="phone-box">
+      <div class="phone">📞 {{ phone }}</div>
+      <div style="color:#FFE033; font-size:{{ layout.phone_note_size }}; margin-top:6px; font-weight:500;">{{ layout.phone_note }}</div>
+    </div>
+    {% endif %}
+
+    {% if closing_line %}<div class="closing-line">{{ closing_line }}</div>{% endif %}
+  </div>
+
+  <div class="decor-square" style="top:80px; left:60px; opacity:0.4;"></div>
+  <div class="decor-dot" style="top:200px; left:120px; opacity:0.3;"></div>
+  <div class="decor-line" style="bottom:180px; right:40px; width:80px; opacity:0.4;"></div>
+
+  {% if logo_path %}
+  <img class="logo" src="{{ logo_path }}" alt="" />
+  {% endif %}
+
+</body>
+</html>

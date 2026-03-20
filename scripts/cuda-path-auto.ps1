@@ -1,6 +1,7 @@
 # Автонастройка PATH для CUDA и опциональная регистрация ежедневной задачи.
 #
-# Важно для onnxruntime-gpu / rembg: нужны DLL CUDA 12 (например cublasLt64_12.dll).
+# Важно для onnxruntime-gpu / rembg: нужны DLL CUDA 12 (например cublasLt64_12.dll)
+# и cuDNN 9 (cudnn64_9.dll) — обычно: pip install nvidia-cudnn-cu12 в venv проекта.
 # Если установлены и v12.x и v13.x — по умолчанию выбирается ПОСЛЕДНЯЯ v12.x, а не v13.x.
 #
 # Примеры:
@@ -13,7 +14,9 @@ param(
     [switch]$RegisterTask,
     [string]$TaskTime = "09:10",
     # $true = сначала последняя CUDA 12.x (рекомендуется для rembg); $false = самая новая среди v12|v13
-    [bool]$PreferCuda12 = $true
+    [bool]$PreferCuda12 = $true,
+    # Корень venv с установленным nvidia-cudnn-cu12; пусто = авто: <репозиторий>\venv относительно scripts\
+    [string]$VenvRoot = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -46,7 +49,8 @@ function Set-CudaPathPriority {
     param(
         [string]$CudaRoot,
         [ValidateSet("User", "Machine")]
-        [string]$Target
+        [string]$Target,
+        [string]$CudnnBin = ""
     )
 
     $cudaBin = Join-Path $CudaRoot "bin"
@@ -61,22 +65,31 @@ function Set-CudaPathPriority {
         $parts = $current.Split(";") | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
     }
 
-    # Убрать записи ...\CUDA\vX.Y\bin и ...\CUDA\vX.Y\libnvvp (любая версия)
+    # Убрать записи CUDA bin/libnvvp и старые пути pip cuDNN (.../site-packages/nvidia/cudnn/bin)
     $filtered = $parts | Where-Object {
         $p = $_
         $isCudaBin = $p -match '\\NVIDIA GPU Computing Toolkit\\CUDA\\v[\d.]+\\bin$'
         $isCudaLib = $p -match '\\NVIDIA GPU Computing Toolkit\\CUDA\\v[\d.]+\\libnvvp$'
-        -not ($isCudaBin -or $isCudaLib)
+        $isCudnnPip = $p -match '\\site-packages\\nvidia\\cudnn\\bin$'
+        -not ($isCudaBin -or $isCudaLib -or $isCudnnPip)
     }
 
     $prepend = @($cudaBin)
     if (Test-Path $cudaLibNvvp) { $prepend += $cudaLibNvvp }
+    if (-not [string]::IsNullOrWhiteSpace($CudnnBin) -and (Test-Path $CudnnBin)) {
+        $prepend += $CudnnBin
+    }
 
     $newPath = ($prepend + $filtered) -join ";"
     [Environment]::SetEnvironmentVariable("Path", $newPath, $Target)
     [Environment]::SetEnvironmentVariable("CUDA_PATH", $CudaRoot, $Target)
 
-    return @{ Bin = $cudaBin; LibNvvp = $cudaLibNvvp; RemovedCount = ($parts.Count - $filtered.Count) }
+    return @{
+        Bin = $cudaBin
+        LibNvvp = $cudaLibNvvp
+        CudnnBin = $CudnnBin
+        RemovedCount = ($parts.Count - $filtered.Count)
+    }
 }
 
 function Register-CudaPathTask {
@@ -105,13 +118,28 @@ try {
         exit 1
     }
 
-    $info = Set-CudaPathPriority -CudaRoot $cudaRoot -Target $Scope
+    $venvForCudnn = $VenvRoot
+    if ([string]::IsNullOrWhiteSpace($venvForCudnn)) {
+        $venvForCudnn = Join-Path (Split-Path $PSScriptRoot -Parent) "venv"
+    }
+    $cudnnBinPath = $null
+    if (-not [string]::IsNullOrWhiteSpace($venvForCudnn)) {
+        $cb = Join-Path $venvForCudnn "Lib\site-packages\nvidia\cudnn\bin"
+        if (Test-Path $cb) { $cudnnBinPath = $cb }
+    }
+
+    $info = Set-CudaPathPriority -CudaRoot $cudaRoot -Target $Scope -CudnnBin $cudnnBinPath
 
     Write-Host "CUDA root (selected): $cudaRoot" -ForegroundColor Cyan
     Write-Host "Scope: $Scope | PreferCuda12: $PreferCuda12" -ForegroundColor Cyan
     Write-Host "Prepended: $($info.Bin)" -ForegroundColor Green
     if (Test-Path $info.LibNvvp) { Write-Host "Prepended: $($info.LibNvvp)" -ForegroundColor Green }
-    Write-Host "Removed old CUDA PATH entries: $($info.RemovedCount)" -ForegroundColor DarkGray
+    if ($cudnnBinPath) {
+        Write-Host "Prepended (cuDNN pip): $cudnnBinPath" -ForegroundColor Green
+    } else {
+        Write-Host "cuDNN pip not found (onnxruntime-gpu needs cudnn64_9.dll): pip install nvidia-cudnn-cu12" -ForegroundColor Yellow
+    }
+    Write-Host "Removed old CUDA/cuDNN PATH entries: $($info.RemovedCount)" -ForegroundColor DarkGray
 
     $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
     $env:CUDA_PATH = $cudaRoot

@@ -51,6 +51,39 @@ nvcc --version
 
 ---
 
+## Шаг 2.5. cuDNN 9 (обязательно для `onnxruntime-gpu`)
+
+Сборка **onnxruntime-gpu** для CUDA 12 подгружает **`cudnn64_9.dll`**. Она **не входит** в типичную установку только Toolkit — нужен **cuDNN**.
+
+### Вариант A — pip в venv проекта (рекомендуется)
+
+```powershell
+cd D:\content-factory
+.\venv\Scripts\activate
+pip install nvidia-cudnn-cu12
+```
+
+Затем снова выполните **`cuda-path-auto.ps1`** (он подхватит `...\venv\Lib\site-packages\nvidia\cudnn\bin` и добавит в User PATH):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\cuda-path-auto.ps1" -Scope User
+```
+
+Другой venv: `-VenvRoot "D:\путь\к\venv"`.
+
+Проверка, что DLL на месте:
+
+```powershell
+Get-ChildItem "D:\content-factory\venv\Lib\site-packages\nvidia\cudnn\bin\cudnn*.dll"
+```
+
+### Вариант B — архив с developer.nvidia.com
+
+Скачайте **cuDNN** для **CUDA 12.x** (Windows), распакуйте и скопируйте **`bin\*.dll`** в  
+`C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.x\bin` (нужны права администратора).
+
+---
+
 ## Шаг 3. Версия onnxruntime-gpu под вашу CUDA
 
 Смотрите таблицу совместимости: [onnxruntime releases](https://github.com/microsoft/onnxruntime/releases) → раздел **CUDA / cuDNN**.
@@ -121,6 +154,7 @@ python tests\test_agents_2_3.py
 | Симптом | Что сделать |
 |--------|-------------|
 | `cublasLt64_12.dll` missing | Установлен **CUDA Toolkit 12**, не только драйвер; перезагрузка; PATH к `CUDA\v12.x\bin`. |
+| `cudnn64_9.dll` missing | Установите **cuDNN 9**: `pip install nvidia-cudnn-cu12` и снова **`cuda-path-auto.ps1`**, либо скопируйте DLL из архива NVIDIA в `CUDA\v12.x\bin`. |
 | Только CPU в ORT | `pip uninstall onnxruntime onnxruntime-gpu` → один раз `pip install onnxruntime-gpu`. |
 | Две версии CUDA | См. блок **PATH при CUDA 12.x и 13.x** ниже или оставьте одну актуальную 12.x. |
 
@@ -142,7 +176,7 @@ powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\cuda-path-a
 
 После запуска **закройте и откройте терминал** (или Cursor), затем: `where.exe nvcc`, `nvcc --version` — должна быть **12.x**.
 
-Ежедневная задача Планировщика: `-RegisterTask` (в скрипте передаётся `-PreferCuda12:$true`, чтобы не откатывать PATH на v13).
+Ежедневная задача Планировщика: `-RegisterTask` (в скрипте передаётся `-PreferCuda12:$true`, чтобы не откатывать PATH на v13). Если установлен **`nvidia-cudnn-cu12`** в `D:\content-factory\venv`, скрипт **автоматически** добавляет папку `nvidia\cudnn\bin` в PATH (путь к репозиторию вычисляется от расположения `scripts\`).
 
 ---
 
@@ -150,7 +184,8 @@ powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\cuda-path-a
 
 1. `nvidia-smi` — OK  
 2. Установлен **CUDA Toolkit 12.x**, `nvcc --version` — OK  
-3. `pip install onnxruntime-gpu`, провайдеры — есть **CUDA**  
-4. `rembg` / тест Karusel — без ошибки про CUDA DLL  
+3. **`pip install nvidia-cudnn-cu12`** в venv и **`cuda-path-auto.ps1`** (или DLL cuDNN в `CUDA\bin`)  
+4. `pip install onnxruntime-gpu`, провайдеры — есть **CUDA**  
+5. `rembg` / тест Karusel — без ошибки про CUDA/cuDNN DLL  
 
 После этого можно считать **GPU для rembg** настроенным.

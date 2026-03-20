@@ -14,7 +14,7 @@ pymupdf>=1.24.0
 psycopg2-binary>=2.9.0
 Pillow>=10.0.0
 # Karusel: карусели для TG/соцсетей
-# rembg без [gpu] — CPU, работает без CUDA. Для GPU: pip install "onnxruntime-gpu" + CUDA 12 (см. Karusel/README.md)
+# rembg без [gpu] — CPU. Для GPU: pip install onnxruntime-gpu + CUDA 12 + nvidia-cudnn-cu12, затем scripts/cuda-path-auto.ps1 (см. Karusel/docs/cuda12-rembg-gpu-windows.md)
 rembg>=2.0.0
 playwright>=1.40.0
 jinja2>=3.1.0

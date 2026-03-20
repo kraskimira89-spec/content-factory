@@ -139,6 +139,24 @@ cd D:\content-factory\Karusel
 python tests\test_agents_2_3.py
 ```
 
+Если терминал Cursor не подхватил обновлённый `PATH`, используйте launcher, который сам добавляет `cuDNN` из `venv` и запускает тест через правильный Python:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-test-agents-2-3-gpu.ps1"
+```
+
+Для произвольного Python-скрипта есть универсальный launcher:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-gpu.ps1" -ScriptPath "D:\content-factory\Karusel\tests\test_agents_2_3.py"
+```
+
+Пример с аргументом-файлом:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-gpu.ps1" -ScriptPath "D:\content-factory\Karusel\some_script.py" -- "D:\input\photo.png"
+```
+
 ---
 
 ## Шаг 6. Ollama и GPU

@@ -154,7 +154,13 @@ powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-
 Пример с аргументом-файлом:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-gpu.ps1" -ScriptPath "D:\content-factory\Karusel\some_script.py" -ScriptArgs "D:\input\photo.png"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-gpu.ps1" -ScriptPath "D:\content-factory\Karusel\tests\test_agents_2_3.py" -ScriptArgs "D:\input\photo.png"
+```
+
+(Второй аргумент — пример: ваш скрипт может игнорировать лишние argv; для `test_agents_2_3.py` путь к фото не обязателен, фото берутся из `Karusel/temp/test/`. Для своего скрипта подставьте реальный `-ScriptPath`.)
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-gpu.ps1" -ScriptPath "D:\content-factory\Karusel\run_pipeline_cli.py" -WorkingDirectory "D:\content-factory" -ScriptArgs "--photos" "D:\path\photo.jpg" "--brief" "ТЗ" "--output" "Karusel\out_gpu"
 ```
 
 ---

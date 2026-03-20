@@ -8,8 +8,9 @@
 - **templates/carousel/** — HTML-шаблоны слайдов (Jinja2) + base.css
 - **models/** — Pydantic: CarouselData, SlideData, Brand
 - **handlers/** — TG-хэндлер (car:enter → ожидание фото + ТЗ)
-- **assets/carousel/** — brand/colors.json, icons/ (office.png, sport.png, vakht.png, elderly.png и т.д.), decorations/
-- **prompts/** — agent1_parser.txt (системный промпт для Parser)
+- **assets/carousel/** — `brand/colors.json`; опционально `brand/logo.png`, `icons/`, `decorations/` (см. `Karusel/assets/carousel/README.md`)
+- **prompts/** — только Agent 1: `agent1_parser.txt` (см. `Karusel/prompts/README.md`)
+- **demo_photos/** — положите сюда jpg/png для примеров с `--photos-dir` (см. `Karusel/demo_photos/README.md`); **demo_brief.txt** — пример ТЗ в корне `Karusel/`
 
 ## Зависимости
 
@@ -115,6 +116,8 @@ python Karusel/render_compare_variants.py --photos-dir Karusel/demo_photos --bri
 ```
 
 После рендера рядом создается `index.html` со ссылками на папки результатов, кратким summary и мини-лентой из первых 2–3 слайдов каждого варианта.
+
+Команды с `demo_photos` / `demo_brief.txt` требуют локальных фото в `Karusel/demo_photos/` (файлы по умолчанию не в git — см. `demo_photos/README.md`) и при необходимости правки `Karusel/demo_brief.txt`.
 
 **TG-бот:**
 ```bash

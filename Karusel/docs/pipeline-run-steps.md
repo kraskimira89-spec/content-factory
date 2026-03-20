@@ -1,6 +1,6 @@
 # Прогон карусели Karusel по шагам
 
-Пайплайн в коде: `agents/orchestrator.py` (`run_pipeline` / async `run`).
+Пайплайн в коде: [`Karusel/agents/orchestrator.py`](../agents/orchestrator.py) (`run_pipeline` / async `run`). Все пути ниже — от корня репозитория `content-factory`, если не указано иное.
 
 ## Шаг 0. Подготовка (один раз)
 
@@ -8,14 +8,14 @@
 2. Зависимости: из корня `pip install -r requirements.txt`.
 3. Playwright: `playwright install chromium`.
 4. Конфиг: в `config/.env` (корень content-factory) при необходимости ключи для **Parser** (LLM) и **Vision**, если включите его (см. ниже).
-5. GPU для rembg (опционально): см. `docs/cuda12-rembg-gpu-windows.md`; для терминала Cursor удобно: `run-python-gpu.ps1` или `run-test-agents-2-3-gpu.ps1`.
+5. GPU для rembg (опционально): см. [`Karusel/docs/cuda12-rembg-gpu-windows.md`](cuda12-rembg-gpu-windows.md); для терминала Cursor удобно: [`Karusel/run-python-gpu.ps1`](../run-python-gpu.ps1) или [`Karusel/run-test-agents-2-3-gpu.ps1`](../run-test-agents-2-3-gpu.ps1). Проверка Vision/Rembg вручную: [`Karusel/tests/README.md`](../tests/README.md).
 
 ## Логика агентов (что происходит по порядку)
 
 | № | Агент | Что делает |
 |---|--------|------------|
 | 1 | **Agent 1 (Parser)** | Текст ТЗ → структура `CarouselData` (слайды, бренд, тексты). |
-| 2 | **Agent 2 (Vision)** | Анализ фото (лучший кадр персонажа и т.д.). **В CLI по умолчанию выключен** (`run_pipeline_cli.py` передаёт `run_vision=False`). В боте включается флагом `run_vision`. |
+| 2 | **Agent 2 (Vision)** | Анализ фото (лучший кадр персонажа и т.д.). **В CLI по умолчанию выключен** ([`Karusel/run_pipeline_cli.py`](../run_pipeline_cli.py) передаёт `run_vision=False`). В боте включается флагом `run_vision`. |
 | 3 | **Agent 3 (Rembg)** | Вырезка персонажа (PNG) для слайдов с `use_character`. |
 | 4 | **Agent 4 (Composer)** | Сборка данных для каждого слайда (Jinja-контекст). |
 | 5 | **Agent 5 (Builder)** | Рендер HTML → JPG через Playwright (Chromium). |
@@ -65,7 +65,7 @@ python Karusel\run_pipeline_cli.py --photos-dir "D:\путь\к\папке_с_ф
 
 ## Шаг 5. (Опционально) Сравнение пресетов / вариантов
 
-Скрипты `render_compare_variants.cmd`, `render_compare_variants_4.cmd` или `render_compare_variants.py` — см. `README.md`.
+Скрипты [`Karusel/render_compare_variants.cmd`](../render_compare_variants.cmd), [`Karusel/render_compare_variants_4.cmd`](../render_compare_variants_4.cmd) или [`Karusel/render_compare_variants.py`](../render_compare_variants.py) — см. [`Karusel/README.md`](../README.md) (нужны локальные `Karusel/demo_photos` и `Karusel/demo_brief.txt`, см. их README).
 
 ## Шаг 6. Запуск через бота (полный сценарий с Vision + отправкой)
 
@@ -75,7 +75,7 @@ cd D:\content-factory
 python Karusel\run_bot.py
 ```
 
-Нужен `TELEGRAM_BOT_TOKEN` в `config/.env`. В хэндлере включается сценарий с фото + ТЗ в чате (см. `handlers/carousel_handler.py`).
+Нужен `TELEGRAM_BOT_TOKEN` в `config/.env`. В хэндлере включается сценарий с фото + ТЗ в чате (см. [`Karusel/handlers/carousel_handler.py`](../handlers/carousel_handler.py)).
 
 ## Если rembg ругается на CUDA/cuDNN в терминале Cursor
 
@@ -97,4 +97,4 @@ $env:Path = "D:\content-factory\venv\Lib\site-packages\nvidia\cudnn\bin;" + $env
 python Karusel\run_pipeline_cli.py --photos-dir "D:\путь\к\фото" --brief-file "D:\путь\к\tz.txt" --output Karusel\out_demo
 ```
 
-**Вариант B** — обёртка `run-python-gpu.ps1` (см. `docs/cuda12-rembg-gpu-windows.md`): укажите `-ScriptPath` на `run_pipeline_cli.py`, `-WorkingDirectory` на `D:\content-factory`, остальное передайте как аргументы Python **без** `--` в PowerShell.
+**Вариант B** — обёртка [`Karusel/run-python-gpu.ps1`](../run-python-gpu.ps1) (см. [`Karusel/docs/cuda12-rembg-gpu-windows.md`](cuda12-rembg-gpu-windows.md)): укажите `-ScriptPath` на `Karusel\run_pipeline_cli.py`, `-WorkingDirectory` на `D:\content-factory`, остальное передайте как аргументы Python **без** `--` в PowerShell.

@@ -1,5 +1,9 @@
 """
 Быстрый тест Agent 2 (Vision) и Agent 3 (Rembg).
+
+Это ручной скрипт (не pytest): функций test_* нет — запускайте файл через python.
+Подробнее: Karusel/tests/README.md
+
 Запуск:
   cd D:\\content-factory\\Karusel
   python tests/test_agents_2_3.py

@@ -56,9 +56,13 @@ Builder автоматически читает эти файлы и превр�
 
 ### Ассеты
 
+Ожидаемые пути (создайте при экспорте из Figma; в репозитории могут отсутствовать до первого экспорта):
+
 - логотип: `Karusel/assets/carousel/brand/logo.png`
 - иконки: `Karusel/assets/carousel/icons/*.png`
 - дополнительные декоры: `Karusel/assets/carousel/decorations/*`
+
+Подробнее: [`Karusel/assets/carousel/README.md`](../assets/carousel/README.md).
 
 ## Какие токены сейчас поддерживаются
 
@@ -141,13 +145,15 @@ Builder автоматически читает эти файлы и превр�
 
 1. Сначала перенести общие токены в `brand_colors.json`
 2. Затем зафиксировать названия фреймов в `figma_template_map.json`
-3. Затем экспортировать логотип/иконки в `assets/carousel`
+3. Затем экспортировать логотип/иконки в `Karusel/assets/carousel/...`
 4. Только после этого переносить layout в `*.html`
 5. Переиспользовать существующие классы из `base.css`, а не добавлять уникальный inline-стиль на каждый элемент
 
 ## Как проверить другой бренд без правки HTML
 
-В проекте есть demo-файл:
+Для примеров ниже нужны локальные входные данные: положите фото в [`Karusel/demo_photos`](../demo_photos/README.md) и при необходимости отредактируйте [`Karusel/demo_brief.txt`](../demo_brief.txt).
+
+В проекте есть demo-файлы конфигов:
 
 - `Karusel/config/demo_brand_tokens_ocean_med.json`
 - `Karusel/config/demo_brand_tokens_premium_gold.json`
@@ -223,14 +229,16 @@ python Karusel/render_compare_variants.py --photos-dir Karusel/demo_photos --bri
 
 ## Соответствие Figma -> шаблон
 
-- Frame `cover` -> `templates/carousel/cover.html`
-- Frame `benefits` -> `templates/carousel/benefits.html`
-- Frame `indications` -> `templates/carousel/indications.html`
-- Frame `howworks` -> `templates/carousel/howworks.html`
-- Frame `target_audience` -> `templates/carousel/target_audience.html`
-- Frame `results` -> `templates/carousel/results.html`
-- Frame `photo_raw` -> `templates/carousel/photo_raw.html`
-- Frame `cta` -> `templates/carousel/cta.html`
+Пути от корня репозитория `content-factory`:
+
+- Frame `cover` -> `Karusel/templates/carousel/cover.html`
+- Frame `benefits` -> `Karusel/templates/carousel/benefits.html`
+- Frame `indications` -> `Karusel/templates/carousel/indications.html`
+- Frame `howworks` -> `Karusel/templates/carousel/howworks.html`
+- Frame `target_audience` -> `Karusel/templates/carousel/target_audience.html`
+- Frame `results` -> `Karusel/templates/carousel/results.html`
+- Frame `photo_raw` -> `Karusel/templates/carousel/photo_raw.html`
+- Frame `cta` -> `Karusel/templates/carousel/cta.html`
 
 ## Практический совет
 

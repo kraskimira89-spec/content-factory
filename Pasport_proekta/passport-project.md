@@ -146,6 +146,18 @@ agent1_keywords → agent_planner → agent2_brief → agent3_content → agent_
 - Конфиг: `shared-config.json` → `sd_webui` (checkpoint v1.5, 1280×720, negative_prompt)
 - Хранение: `media/images/`, индекс в `db/image_index.json`
 
+### Karusel: целевая среда GPU (фиксировано)
+
+- **Целевой профиль окружения:** NVIDIA GPU (RTX 3060 12GB), Windows, Python 3.11.
+- **Vision:** локальный Ollama (`VISION_BACKEND=ollama`, модель `llava`/`llava:13b`).
+- **Rembg:** `onnxruntime-gpu` + CUDA 12.
+- **Проверка провайдеров ONNX Runtime:**
+  ```powershell
+  python -c "import onnxruntime as ort; print(ort.get_available_providers())"
+  ```
+- **Подтверждённый статус:** `TensorrtExecutionProvider`, `CUDAExecutionProvider`, `CPUExecutionProvider`.
+- Пошаговая инструкция по установке/восстановлению: `Karusel/docs/cuda12-rembg-gpu-windows.md`.
+
 ### Тема VPS (entuziastov75-child)
 
 - **Репозиторий:** entuziastov75-vps (`C:\Users\user\Documents\seo_entuziastov75`), дочерняя тема в `wp-content/themes/entuziastov75-child/`.

@@ -31,6 +31,18 @@
 
 2. **GPU (ускорение rembg)** — пошагово на Windows: **`Karusel/docs/cuda12-rembg-gpu-windows.md`** (драйвер → CUDA Toolkit 12 → `onnxruntime-gpu` → проверка). Кратко: после Toolkit выполните `pip uninstall onnxruntime onnxruntime-gpu -y` и `pip install onnxruntime-gpu`, затем проверьте `CUDAExecutionProvider`. **Ollama** GPU обычно работает от драйвера отдельно от этого пайплайна.
 
+### Целевая среда Karusel (Production/Dev)
+
+- **Целевая среда:** GPU (NVIDIA RTX 3060+), Windows 10/11, Python 3.11.
+- **Vision backend по умолчанию:** локальный Ollama (`VISION_BACKEND=ollama`, `OLLAMA_VISION_MODEL=llava`).
+- **Rembg backend:** `onnxruntime-gpu` + `CUDAExecutionProvider`.
+- **Критерий готовности окружения:**
+  ```powershell
+  python -c "import onnxruntime as ort; print(ort.get_available_providers())"
+  ```
+  В ответе должен быть `CUDAExecutionProvider`.
+- **Фактический статус (зафиксировано):** `['TensorrtExecutionProvider', 'CUDAExecutionProvider', 'CPUExecutionProvider']`.
+
 ## Конфиг
 
 - `config/.env` (корень content-factory): `TELEGRAM_BOT_TOKEN`.

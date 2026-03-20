@@ -29,7 +29,7 @@
    ```
    В `requirements.txt` указан обычный `rembg` (без `[gpu]`).
 
-2. **GPU** — установите [CUDA 12](https://developer.nvidia.com/cuda-downloads) и совместимый `onnxruntime-gpu`, затем при необходимости снова `pip install "rembg[gpu]"` (см. документацию rembg).
+2. **GPU (ускорение rembg)** — пошагово на Windows: **`Karusel/docs/cuda12-rembg-gpu-windows.md`** (драйвер → CUDA Toolkit 12 → `onnxruntime-gpu` → проверка). Кратко: после Toolkit выполните `pip uninstall onnxruntime onnxruntime-gpu -y` и `pip install onnxruntime-gpu`, затем проверьте `CUDAExecutionProvider`. **Ollama** GPU обычно работает от драйвера отдельно от этого пайплайна.
 
 ## Конфиг
 

@@ -154,7 +154,7 @@ powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-
 Пример с аргументом-файлом:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-gpu.ps1" -ScriptPath "D:\content-factory\Karusel\some_script.py" -- "D:\input\photo.png"
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\Karusel\run-python-gpu.ps1" -ScriptPath "D:\content-factory\Karusel\some_script.py" -ScriptArgs "D:\input\photo.png"
 ```
 
 ---

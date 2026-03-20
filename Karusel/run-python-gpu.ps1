@@ -26,6 +26,8 @@ if ([string]::IsNullOrWhiteSpace($WorkingDirectory)) {
     $WorkingDirectory = $karuselRoot
 }
 
+$normalizedScriptArgs = @($ScriptArgs | Where-Object { $null -ne $_ -and $_ -ne "" })
+
 $pythonExe = Join-Path $VenvRoot "Scripts\python.exe"
 $cudnnBin = Join-Path $VenvRoot "Lib\site-packages\nvidia\cudnn\bin"
 
@@ -64,7 +66,7 @@ Write-Host "Workdir: $resolvedWorkingDirectory" -ForegroundColor Cyan
 
 Push-Location $resolvedWorkingDirectory
 try {
-    & $pythonExe $resolvedScriptPath @ScriptArgs
+    & $pythonExe $resolvedScriptPath @normalizedScriptArgs
     exit $LASTEXITCODE
 }
 finally {

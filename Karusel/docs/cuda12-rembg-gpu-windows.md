@@ -122,7 +122,27 @@ python tests\test_agents_2_3.py
 |--------|-------------|
 | `cublasLt64_12.dll` missing | Установлен **CUDA Toolkit 12**, не только драйвер; перезагрузка; PATH к `CUDA\v12.x\bin`. |
 | Только CPU в ORT | `pip uninstall onnxruntime onnxruntime-gpu` → один раз `pip install onnxruntime-gpu`. |
-| Две версии CUDA | Удалите старые Toolkit через «Программы и компоненты» или оставьте одну актуальную 12.x. |
+| Две версии CUDA | См. блок **PATH при CUDA 12.x и 13.x** ниже или оставьте одну актуальную 12.x. |
+
+---
+
+## PATH при CUDA 12.x и 13.x (onnxruntime-gpu)
+
+**onnxruntime-gpu** для CUDA 12 ищет DLL вроде `cublasLt64_12.dll`. Если в **User PATH** раньше стоит `...\CUDA\v13.x\bin`, загрузка `onnxruntime_providers_cuda.dll` может дать **ошибку 126** — при этом в Python список провайдеров всё равно может содержать `CUDAExecutionProvider`.
+
+Скрипт **`D:\content-factory\scripts\cuda-path-auto.ps1`**:
+
+- по умолчанию выбирает **последнюю установленную CUDA 12.x** (`-PreferCuda12 $true`);
+- удаляет из User PATH старые записи `...\CUDA\v*\bin` и `...\CUDA\v*\libnvvp`;
+- добавляет в **начало** `bin` и `libnvvp` выбранного корня, задаёт `CUDA_PATH`.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\cuda-path-auto.ps1" -Scope User
+```
+
+После запуска **закройте и откройте терминал** (или Cursor), затем: `where.exe nvcc`, `nvcc --version` — должна быть **12.x**.
+
+Ежедневная задача Планировщика: `-RegisterTask` (в скрипте передаётся `-PreferCuda12:$true`, чтобы не откатывать PATH на v13).
 
 ---
 

@@ -1,57 +1,82 @@
 # Автонастройка PATH для CUDA и опциональная регистрация ежедневной задачи.
-# Ищет последнюю установленную CUDA (v12.x/v13.x), добавляет bin/libnvvp в PATH (User или Machine),
-# проверяет nvcc и может создать задачу в Планировщике Windows.
+#
+# Важно для onnxruntime-gpu / rembg: нужны DLL CUDA 12 (например cublasLt64_12.dll).
+# Если установлены и v12.x и v13.x — по умолчанию выбирается ПОСЛЕДНЯЯ v12.x, а не v13.x.
 #
 # Примеры:
 #   powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\cuda-path-auto.ps1"
 #   powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\cuda-path-auto.ps1" -Scope User -RegisterTask -TaskTime "09:10"
-#   powershell -ExecutionPolicy Bypass -File "D:\content-factory\scripts\cuda-path-auto.ps1" -Scope Machine -RegisterTask
 
 param(
     [ValidateSet("User", "Machine")]
     [string]$Scope = "User",
     [switch]$RegisterTask,
-    [string]$TaskTime = "09:10"
+    [string]$TaskTime = "09:10",
+    # $true = сначала последняя CUDA 12.x (рекомендуется для rembg); $false = самая новая среди v12|v13
+    [bool]$PreferCuda12 = $true
 )
 
 $ErrorActionPreference = "Stop"
 
-function Get-LatestCudaRoot {
+function Get-CudaInstallRoots {
     $base = "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA"
-    if (-not (Test-Path $base)) { return $null }
-
-    $dirs = Get-ChildItem -Path $base -Directory -ErrorAction SilentlyContinue |
-        Where-Object { $_.Name -match "^v(12|13)\." }
-
-    if (-not $dirs) { return $null }
-
-    # Сортировка по номеру версии (v12.6 < v13.2 и т.д.)
-    $latest = $dirs |
-        Sort-Object { [version](($_.Name -replace "^v", "") + ".0") } -Descending |
-        Select-Object -First 1
-    return $latest.FullName
+    if (-not (Test-Path $base)) { return @() }
+    return @(Get-ChildItem -Path $base -Directory -ErrorAction SilentlyContinue |
+        Where-Object { $_.Name -match "^v(12|13)\." })
 }
 
-function Add-ToPathIfMissing {
+function Get-SelectedCudaRoot {
     param(
-        [string]$PathToAdd,
+        [array]$Dirs,
+        [bool]$Prefer12
+    )
+    if (-not $Dirs -or $Dirs.Count -eq 0) { return $null }
+
+    $v12 = $Dirs | Where-Object { $_.Name -match "^v12\." }
+    $v13 = $Dirs | Where-Object { $_.Name -match "^v13\." }
+
+    if ($Prefer12 -and $v12) {
+        return ($v12 | Sort-Object { [version](($_.Name -replace "^v", "") + ".0") } -Descending | Select-Object -First 1).FullName
+    }
+    # Иначе — максимальная версия среди всех найденных
+    return ($Dirs | Sort-Object { [version](($_.Name -replace "^v", "") + ".0") } -Descending | Select-Object -First 1).FullName
+}
+
+function Set-CudaPathPriority {
+    param(
+        [string]$CudaRoot,
         [ValidateSet("User", "Machine")]
         [string]$Target
     )
-    if (-not (Test-Path $PathToAdd)) { return $false }
 
-    $current = [Environment]::GetEnvironmentVariable("Path", $Target)
-    if ([string]::IsNullOrWhiteSpace($current)) {
-        [Environment]::SetEnvironmentVariable("Path", $PathToAdd, $Target)
-        return $true
+    $cudaBin = Join-Path $CudaRoot "bin"
+    $cudaLibNvvp = Join-Path $CudaRoot "libnvvp"
+    if (-not (Test-Path $cudaBin)) {
+        throw "CUDA bin not found: $cudaBin"
     }
 
-    $parts = $current.Split(";") | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
-    if ($parts -contains $PathToAdd) { return $false }
+    $current = [Environment]::GetEnvironmentVariable("Path", $Target)
+    $parts = @()
+    if (-not [string]::IsNullOrWhiteSpace($current)) {
+        $parts = $current.Split(";") | ForEach-Object { $_.Trim() } | Where-Object { $_ -ne "" }
+    }
 
-    $newPath = ($parts + $PathToAdd) -join ";"
+    # Убрать записи ...\CUDA\vX.Y\bin и ...\CUDA\vX.Y\libnvvp (любая версия)
+    $filtered = $parts | Where-Object {
+        $p = $_
+        $isCudaBin = $p -match '\\NVIDIA GPU Computing Toolkit\\CUDA\\v[\d.]+\\bin$'
+        $isCudaLib = $p -match '\\NVIDIA GPU Computing Toolkit\\CUDA\\v[\d.]+\\libnvvp$'
+        -not ($isCudaBin -or $isCudaLib)
+    }
+
+    $prepend = @($cudaBin)
+    if (Test-Path $cudaLibNvvp) { $prepend += $cudaLibNvvp }
+
+    $newPath = ($prepend + $filtered) -join ";"
     [Environment]::SetEnvironmentVariable("Path", $newPath, $Target)
-    return $true
+    [Environment]::SetEnvironmentVariable("CUDA_PATH", $CudaRoot, $Target)
+
+    return @{ Bin = $cudaBin; LibNvvp = $cudaLibNvvp; RemovedCount = ($parts.Count - $filtered.Count) }
 }
 
 function Register-CudaPathTask {
@@ -62,42 +87,40 @@ function Register-CudaPathTask {
 
     $taskName = "CudaPathAutoUpdate"
     $factoryRoot = "D:\content-factory"
-    $actionArgs = "-ExecutionPolicy Bypass -NoProfile -WindowStyle Hidden -File `"$ScriptPath`" -Scope User"
+    $actionArgs = "-ExecutionPolicy Bypass -NoProfile -WindowStyle Hidden -File `"$ScriptPath`" -Scope User -PreferCuda12:`$true"
     $action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument $actionArgs -WorkingDirectory $factoryRoot
     $trigger = New-ScheduledTaskTrigger -Daily -At $AtTime
     $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable
     $principal = New-ScheduledTaskPrincipal -UserId $env:USERNAME -LogonType Interactive -RunLevel Limited
 
     Register-ScheduledTask -TaskName $taskName -Action $action -Trigger $trigger -Settings $settings -Principal $principal -Force | Out-Null
-    Write-Host "Task '$taskName' registered: daily at $AtTime." -ForegroundColor Green
+    Write-Host "Task '$taskName' registered: daily at $AtTime (PreferCuda12)." -ForegroundColor Green
 }
 
 try {
-    $cudaRoot = Get-LatestCudaRoot
+    $dirs = Get-CudaInstallRoots
+    $cudaRoot = Get-SelectedCudaRoot -Dirs $dirs -Prefer12:$PreferCuda12
     if (-not $cudaRoot) {
         Write-Host "CUDA v12/v13 not found in 'C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA'." -ForegroundColor Yellow
         exit 1
     }
 
-    $cudaBin = Join-Path $cudaRoot "bin"
-    $cudaLibNvvp = Join-Path $cudaRoot "libnvvp"
+    $info = Set-CudaPathPriority -CudaRoot $cudaRoot -Target $Scope
 
-    $addedBin = Add-ToPathIfMissing -PathToAdd $cudaBin -Target $Scope
-    $addedNvvp = Add-ToPathIfMissing -PathToAdd $cudaLibNvvp -Target $Scope
+    Write-Host "CUDA root (selected): $cudaRoot" -ForegroundColor Cyan
+    Write-Host "Scope: $Scope | PreferCuda12: $PreferCuda12" -ForegroundColor Cyan
+    Write-Host "Prepended: $($info.Bin)" -ForegroundColor Green
+    if (Test-Path $info.LibNvvp) { Write-Host "Prepended: $($info.LibNvvp)" -ForegroundColor Green }
+    Write-Host "Removed old CUDA PATH entries: $($info.RemovedCount)" -ForegroundColor DarkGray
 
-    Write-Host "CUDA root: $cudaRoot" -ForegroundColor Cyan
-    Write-Host "Scope: $Scope" -ForegroundColor Cyan
-    if ($addedBin) { Write-Host "Added to PATH: $cudaBin" -ForegroundColor Green } else { Write-Host "Already in PATH: $cudaBin" -ForegroundColor DarkGray }
-    if ($addedNvvp) { Write-Host "Added to PATH: $cudaLibNvvp" -ForegroundColor Green } else { Write-Host "Already in PATH: $cudaLibNvvp" -ForegroundColor DarkGray }
-
-    # Обновим PATH текущего процесса, чтобы сразу попробовать nvcc
     $env:Path = [Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [Environment]::GetEnvironmentVariable("Path", "User")
+    $env:CUDA_PATH = $cudaRoot
 
     $nvccCmd = Get-Command nvcc -ErrorAction SilentlyContinue
     if ($nvccCmd) {
         Write-Host "nvcc found: $($nvccCmd.Source)" -ForegroundColor Green
     } else {
-        Write-Host "nvcc not found in current session. Reopen terminal and run: nvcc --version" -ForegroundColor Yellow
+        Write-Host "nvcc not found in this session. Open a NEW terminal." -ForegroundColor Yellow
     }
 
     if ($RegisterTask) {

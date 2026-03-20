@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
+from playwright.async_api import async_playwright
 
 _AGENTS_DIR = Path(__file__).resolve().parent
 _KARUSEL_ROOT = _AGENTS_DIR.parent
@@ -396,7 +397,7 @@ async def build_carousel_async(
         "height": _int_token(vp.get("height") or tokens.get("slide_height") or VIEWPORT["height"], VIEWPORT["height"]),
     }
 
-    async with await (__import__("playwright").async_api.async_playwright()).start() as p:
+    async with async_playwright() as p:
         browser = await p.chromium.launch()
         try:
             tasks = []

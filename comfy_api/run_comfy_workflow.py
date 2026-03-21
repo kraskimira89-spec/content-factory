@@ -1,5 +1,5 @@
 """
-Утилита: отправить workflow в ComfyUI (/prompt), дождаться history, скачать картинки (/view).
+Утилита: отправить workflow в ComfyUI (/prompt), дождаться history, сохранить history в JSON, скачать картинки (/view).
 
 Запуск из корня репозитория:
   python comfy_api/run_comfy_workflow.py
@@ -37,6 +37,12 @@ def _parse_args() -> argparse.Namespace:
         type=Path,
         default=_PROJECT_ROOT / "outputs",
         help="Папка для скачанных файлов.",
+    )
+    p.add_argument(
+        "--history-dir",
+        type=Path,
+        default=_PROJECT_ROOT / "history",
+        help="Папка для сохранения полного ответа GET /history/{prompt_id} как JSON.",
     )
     p.add_argument(
         "--server",
@@ -87,11 +93,24 @@ def get_history(base: str, prompt_id: str) -> dict:
     return resp.json()
 
 
+def save_history(history_dir: Path, prompt_id: str, history_obj: dict) -> Path:
+    """Сохраняет весь объект history в history/{prompt_id}.json."""
+    history_dir.mkdir(parents=True, exist_ok=True)
+    path = history_dir / f"{prompt_id}.json"
+    path.write_text(
+        json.dumps(history_obj, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    print("History saved to:", path)
+    return path
+
+
 def wait_for_completion(
     base: str,
     prompt_id: str,
     poll_interval: float,
     timeout: float,
+    history_dir: Path,
 ) -> dict:
     deadline = time.monotonic() + timeout
     while time.monotonic() < deadline:
@@ -100,6 +119,7 @@ def wait_for_completion(
         outputs = entry.get("outputs") or {}
         if outputs:
             print("Workflow finished.")
+            save_history(history_dir, prompt_id, history)
             return entry
         print("Still running...", prompt_id)
         time.sleep(poll_interval)
@@ -139,7 +159,13 @@ def main() -> int:
 
     print("Waiting for completion...")
     try:
-        entry = wait_for_completion(base, prompt_id, args.poll_interval, args.timeout)
+        entry = wait_for_completion(
+            base,
+            prompt_id,
+            args.poll_interval,
+            args.timeout,
+            args.history_dir,
+        )
     except TimeoutError as e:
         print(e, file=sys.stderr)
         return 2

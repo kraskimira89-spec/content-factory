@@ -50,6 +50,7 @@ python comfy_api\run_comfy_workflow.py --server http://127.0.0.1:8188
 |----------|----------------|
 | `--workflow` | `comfy_api/workflow_api.json` |
 | `--output` | `outputs/` в корне репозитория |
+| `--history-dir` | `history/` — сюда пишется полный JSON ответа `GET /history/{prompt_id}` в файл `{prompt_id}.json` |
 | `--server` | из `COMFYUI_URL` / `shared-config` |
 | `--poll-interval` | `2` сек |
 | `--timeout` | `600` сек |

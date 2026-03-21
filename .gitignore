@@ -68,6 +68,7 @@ ChatExport*/
 
 # ComfyUI: выгрузка run_comfy_workflow.py
 outputs/
+history/
 
 # Отладочные файлы
 debug-*.log

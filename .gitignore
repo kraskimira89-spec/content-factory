@@ -66,6 +66,9 @@ media/images/*
 ChatExport*/
 **/ChatExport*/
 
+# ComfyUI: выгрузка run_comfy_workflow.py
+outputs/
+
 # Отладочные файлы
 debug-*.log
 

@@ -1,0 +1,57 @@
+{
+  "comfyui": {
+    "host": "http://127.0.0.1:8188",
+    "workflow_path": "assets/carousel/comfyui_portrait.json",
+    "checkpoint_name": "realisticVision_v60B1VAE.safetensors",
+    "poll_interval_sec": 1.5,
+    "poll_timeout_sec": 120,
+    "max_concurrent": 2,
+    "width": 512,
+    "height": 768,
+    "steps": 22,
+    "cfg": 7.0,
+    "sampler_name": "dpmpp_2m",
+    "scheduler": "karras"
+  },
+  "base_positive": "professional person, realistic photo style, 8k, sharp focus, full body or three quarter shot, plain light background for easy cutout, natural lighting, high quality photography",
+  "base_negative": "cartoon, anime, illustration, painting, blurry, low quality, watermark, text, logo, extra limbs, bad anatomy, deformed hands, multiple people, ugly, disfigured, oversaturated",
+  "skip_slide_types": ["photo_raw", "cta"],
+  "pose_by_slide_type": {
+    "cover": {
+      "pose": "standing, welcoming open hand gesture toward viewer",
+      "expression": "warm welcoming smile, eye contact with camera",
+      "clothing": "white medical coat over light blouse",
+      "background": "blurred modern clinic reception, soft bokeh"
+    },
+    "benefits": {
+      "pose": "pointing up with index finger, other hand on hip",
+      "expression": "confident enthusiastic expression",
+      "clothing": "light blue medical scrubs",
+      "background": "clean white studio background"
+    },
+    "indications": {
+      "pose": "holding clipboard with both hands, slight forward lean",
+      "expression": "professional attentive expression",
+      "clothing": "white lab coat, stethoscope around neck",
+      "background": "soft focus medical office background"
+    },
+    "howworks": {
+      "pose": "both hands open mid-air explaining gesture, arms slightly raised",
+      "expression": "engaged enthusiastic explaining smile",
+      "clothing": "white medical uniform",
+      "background": "modern medical equipment background, bokeh"
+    },
+    "target": {
+      "pose": "pointing at camera with both index fingers, you gesture",
+      "expression": "energetic direct confident eye contact",
+      "clothing": "dark navy medical jacket over white shirt",
+      "background": "bright yellow studio background"
+    },
+    "results": {
+      "pose": "thumbs up with right hand, left hand relaxed at side",
+      "expression": "proud satisfied genuine smile",
+      "clothing": "white waffle robe wellness style",
+      "background": "warm wellness spa background, soft lighting"
+    }
+  }
+}

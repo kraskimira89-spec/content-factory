@@ -6,7 +6,7 @@ agent9_images_runner.py
 
 URL не хардкодятся в коде — берутся из config/.env и config/shared-config.json:
 - SD_WEBUI_URL (дефолт http://127.0.0.1:7860) — image_protocol.sd_webui
-- COMFYUI_URL (дефолт http://127.0.0.1:8188) — comfyui.url_default
+- COMFYUI_URL (дефолт http://127.0.0.1:8000) — comfyui.url_default
 
 При ошибке подключения agent9 автоматически пробует порты 7860–7865 для SD.
 """
@@ -300,7 +300,7 @@ def run_comfyui_generation(abs_path: Path, prompt: str, width: int, height: int)
         except Exception as e:
             print(f"[agent9] SD WebUI недоступен: {e}")
 
-    # 2) ComfyUI (порт 8188) или Flask image_generate_api (8000)
+    # 2) ComfyUI (часто :8000 в ComfyUI 0.15+) или Flask image_generate_api на своём порту
     if base_url:
         try:
             resp = requests.post(

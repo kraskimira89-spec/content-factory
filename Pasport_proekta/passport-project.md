@@ -142,7 +142,7 @@ agent1_keywords → agent_planner → agent2_brief → agent3_content → agent_
 ### Генерация изображений (связь с локальным стеком)
 
 - **agent8** — формирует промпты для картинок по структуре страницы
-- **agent9** — отправляет запросы в SD WebUI (127.0.0.1:7860) или ComfyUI (8188)
+- **agent9** — отправляет запросы в SD WebUI (127.0.0.1:7860) или ComfyUI (часто 127.0.0.1:8000 в 0.15+)
 - Конфиг: `shared-config.json` → `sd_webui` (checkpoint v1.5, 1280×720, negative_prompt)
 - Хранение: `media/images/`, индекс в `db/image_index.json`
 

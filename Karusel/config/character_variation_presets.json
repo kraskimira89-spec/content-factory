@@ -1,6 +1,6 @@
 {
   "comfyui": {
-    "host": "http://127.0.0.1:8188",
+    "host": "http://127.0.0.1:8000",
     "workflow_path": "assets/carousel/comfyui_portrait.json",
     "checkpoint_name": "realisticVision_v60B1VAE.safetensors",
     "poll_interval_sec": 1.5,

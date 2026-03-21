@@ -117,7 +117,7 @@ python scripts/faq_parser.py materials/pages_manual/pressoterapiya.md
 
 - agent9 генерирует картинки для страниц услуг через SD WebUI (порт 7860)
 - Конфиг: `shared-config.json` → `sd_webui` (base_url, checkpoint, размеры, negative_prompt)
-- Альтернатива: ComfyUI на порту 8188
+- Альтернатива: ComfyUI (часто порт 8000 в 0.15+; старые сборки — 8188)
 
 ---
 

@@ -46,7 +46,7 @@ def get_comfyui_url() -> str:
     load_dotenv(_ENV_PATH)
     comfy = get_comfyui_config()
     env_name = comfy.get("url_env", "COMFYUI_URL")
-    default = comfy.get("url_default", "http://127.0.0.1:8188")
+    default = comfy.get("url_default", "http://127.0.0.1:8000")
     return os.getenv(env_name, "").strip() or default
 
 

@@ -114,9 +114,9 @@
   },
 
   "comfyui": {
-    "_comment": "ComfyUI на 8188 (типичный порт). SD WebUI — sd_webui. agent9 читает из .env (COMFYUI_URL, SD_WEBUI_URL).",
+    "_comment": "ComfyUI: 0.15+ часто :8000 (см. server-config в docs.comfy.org). Старые — :8188. SD WebUI — sd_webui. agent9: COMFYUI_URL, SD_WEBUI_URL.",
     "url_env": "COMFYUI_URL",
-    "url_default": "http://127.0.0.1:8188",
+    "url_default": "http://127.0.0.1:8000",
     "sd_webui_url_env": "SD_WEBUI_URL",
     "sd_webui_url_default": "http://127.0.0.1:7860",
     "timeout_sec": 120,

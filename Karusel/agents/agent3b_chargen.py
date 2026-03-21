@@ -60,7 +60,7 @@ class CharGenAgent:
         comfy = self.presets.get("comfyui", {})
         self.host = (
             os.environ.get("COMFYUI_URL", "").strip().rstrip("/")
-            or comfy.get("host", "http://127.0.0.1:8188").rstrip("/")
+            or comfy.get("host", "http://127.0.0.1:8000").rstrip("/")
         )
         wf_rel = comfy.get("workflow_path", "assets/carousel/comfyui_portrait.json")
         self.workflow_path = _KARUSEL_ROOT / wf_rel.replace("/", os.sep)

@@ -68,7 +68,7 @@
 | Переменная | Описание |
 |------------|----------|
 | `CHAR_VARIATION_ENABLED` | `1` / `true` — включить Agent 3b |
-| `COMFYUI_URL` | Базовый URL, по умолчанию `http://127.0.0.1:8188` |
+| `COMFYUI_URL` | Базовый URL, по умолчанию `http://127.0.0.1:8000` (ComfyUI 0.15+; старые сборки — `:8188`, задайте явно) |
 | `COMFYUI_CHECKPOINT` | Имя чекпоинта (перекрывает JSON), напр. `realisticVision_v60B1VAE.safetensors` |
 | `CHAR_ON_EVERY_SLIDE` | `1` / `true` — генерировать персонажа для всех слайдов кроме `photo_raw` и `cta` (даже если Parser выставил `use_character=false`) |
 

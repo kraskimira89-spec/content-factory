@@ -4,7 +4,7 @@
 
 ## Структура
 
-- **agents/** — Agent 1 (Parser), 2 (Vision), 3 (Rembg), 4 (Composer), 5 (Builder), 6 (Poster), orchestrator
+- **agents/** — Agent 1 (Parser), 2 (Vision), 3 (Rembg), **3b (CharGen, опционально ComfyUI)**, 4 (Composer), 5 (Builder), 6 (Poster), orchestrator
 - **templates/carousel/** — HTML-шаблоны слайдов (Jinja2) + base.css
 - **models/** — Pydantic: CarouselData, SlideData, Brand
 - **handlers/** — TG-хэндлер (car:enter → ожидание фото + ТЗ)
@@ -58,6 +58,23 @@
 - Demo-бренд для проверки без правки HTML: `Karusel/config/demo_brand_tokens_ocean_med.json`.
 - Premium demo-бренд для сравнения визуального направления: `Karusel/config/demo_brand_tokens_premium_gold.json`.
 - Figma workflow: `Karusel/docs/figma-workflow.md`.
+
+### Генерация персонажа через ComfyUI (Agent 3b, опционально)
+
+По умолчанию выключено. При **`CHAR_VARIATION_ENABLED=1`** оркестратор параллельно с rembg вызывает ComfyUI, генерирует PNG на слайд (поза/фон из [`Karusel/config/character_variation_presets.json`](config/character_variation_presets.json)), затем прогоняет результат через rembg. В **Agent 4** приоритет: **AI (`char_per_slide`) > rembg > без персонажа**.
+
+Переменные окружения (в `config/.env` или перед запуском):
+
+| Переменная | Описание |
+|------------|----------|
+| `CHAR_VARIATION_ENABLED` | `1` / `true` — включить Agent 3b |
+| `COMFYUI_URL` | Базовый URL, по умолчанию `http://127.0.0.1:8188` |
+| `COMFYUI_CHECKPOINT` | Имя чекпоинта (перекрывает JSON), напр. `realisticVision_v60B1VAE.safetensors` |
+| `CHAR_ON_EVERY_SLIDE` | `1` / `true` — генерировать персонажа для всех слайдов кроме `photo_raw` и `cta` (даже если Parser выставил `use_character=false`) |
+
+Workflow API: [`Karusel/assets/carousel/comfyui_portrait.json`](assets/carousel/comfyui_portrait.json) — ноды `3`–`9` как в стандартном txt2img; checkpoint в JSON должен существовать в папке моделей ComfyUI.
+
+Если ComfyUI недоступен или генерация падает, пайплайн продолжает работу с **rembg** как раньше.
 
 ## Запуск
 

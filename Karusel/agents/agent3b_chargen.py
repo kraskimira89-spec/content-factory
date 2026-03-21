@@ -9,6 +9,7 @@ import copy
 import json
 import os
 import random
+import shutil
 import sys
 from pathlib import Path
 from typing import Any
@@ -217,7 +218,6 @@ class CharGenAgent:
             if final:
                 target = chars_dir / f"char_slide_{slide_id:02d}.png"
                 try:
-                    import shutil
                     shutil.copy2(final, target)
                     return str(target.resolve())
                 except Exception as e:

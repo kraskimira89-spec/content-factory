@@ -240,6 +240,10 @@ python Karusel/render_compare_variants.py --photos-dir Karusel/demo_photos --bri
 - Frame `photo_raw` -> `Karusel/templates/carousel/photo_raw.html`
 - Frame `cta` -> `Karusel/templates/carousel/cta.html`
 
+## Персонаж на слайдах (ComfyUI, опционально)
+
+Источник персонажа для композиции: при включённом **`CHAR_VARIATION_ENABLED`** — сгенерированные PNG из Agent 3b (ComfyUI + rembg); иначе — cutout из Agent 3 (rembg). Позы и типы слайдов без генерации задаются в **`Karusel/config/character_variation_presets.json`**. Подробнее: **`Karusel/README.md`** (раздел «Генерация персонажа через ComfyUI»).
+
 ## Практический совет
 
 Если в Figma меняется только цвет/типографика/радиусы, достаточно обновить JSON токенов.

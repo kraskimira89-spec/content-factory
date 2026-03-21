@@ -93,7 +93,7 @@ def compose_slides(
         effective_use_char = use_char or (char_on_every_slide and not in_skip)
 
         # Приоритет: AI (char_per_slide) > rembg > нет
-        ai_path = char_per_slide.get(slide_id) if slide_id in char_per_slide else None
+        ai_path = char_per_slide.get(slide_id)
         if ai_path and Path(ai_path).is_file():
             slide_dict["character_png"] = ai_path
             logger.info("Слайд id=%s: персонаж из CharGen (AI)", slide_id)

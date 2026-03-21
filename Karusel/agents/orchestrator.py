@@ -5,6 +5,7 @@
 import asyncio
 import shutil
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Callable, Awaitable
 
@@ -17,6 +18,7 @@ from models.carousel_schema import CarouselData
 
 from agents.agent1_parser import parse_carousel_from_brief
 from agents.agent3_rembg import process_photo_for_character
+from agents.agent3b_chargen import is_chargen_enabled, run_chargen_async, run_chargen_sync
 from agents.agent4_composer import compose_slides
 from agents.agent5_builder import build_carousel_async, _load_preset
 from logger import get_logger
@@ -25,6 +27,33 @@ logger = get_logger("orchestrator")
 
 # Папка temp относительно корня Karusel
 TEMP_BASE = _KARUSEL_ROOT / "temp"
+
+
+def _collect_rembg_character_pngs(
+    carousel_data: CarouselData,
+    photo_paths: list[Path],
+    output_base: Path,
+    preset_path: str | Path | None,
+) -> dict[int, str]:
+    preset = _load_preset(preset_path)
+    character_box = preset.get("character_box") if preset else None
+    character_png_by_index: dict[int, str] = {}
+    for slide in carousel_data.slides:
+        if not slide.use_character:
+            continue
+        idx = slide.photo_index
+        if idx in character_png_by_index or idx >= len(photo_paths):
+            continue
+        try:
+            png_path = process_photo_for_character(
+                photo_paths[idx],
+                output_dir=output_base / "chars",
+                character_box=character_box,
+            )
+            character_png_by_index[idx] = png_path
+        except Exception as e:
+            logger.warning("Rembg для фото %s: %s", photo_paths[idx].name, e)
+    return character_png_by_index
 
 
 async def _update_status(
@@ -81,26 +110,34 @@ async def run(
         await _update_status(update_status, "📝 Формирую структуру…")
         carousel_data = parse_carousel_from_brief(raw_text, photo_count=len(photo_paths))
 
-        # Шаг 4 — Rembg (character_box из preset при наличии)
+        # Шаг 4 — Rembg + опционально CharGen (ComfyUI) параллельно
         await _update_status(update_status, "✂️ Обрабатываю изображения…")
-        preset = _load_preset(preset_path)
-        character_box = preset.get("character_box") if preset else None
-        character_png_by_index = {}
-        for slide in carousel_data.slides:
-            if not slide.use_character:
-                continue
-            idx = slide.photo_index
-            if idx in character_png_by_index or idx >= len(photo_paths):
-                continue
+        char_per_slide: dict[int, str] = {}
+        if is_chargen_enabled():
+            await _update_status(update_status, "🎨 Генерация персонажей (AI)…")
+            chargen_task = asyncio.create_task(
+                run_chargen_async(carousel_data, temp_dir)
+            )
+            character_png_by_index = await asyncio.to_thread(
+                _collect_rembg_character_pngs,
+                carousel_data,
+                photo_paths,
+                temp_dir,
+                preset_path,
+            )
             try:
-                png_path = process_photo_for_character(
-                    photo_paths[idx],
-                    output_dir=temp_dir / "chars",
-                    character_box=character_box,
-                )
-                character_png_by_index[idx] = png_path
+                char_per_slide = await chargen_task
             except Exception as e:
-                logger.warning("Rembg для фото %s: %s", photo_paths[idx].name, e)
+                logger.warning("CharGen: %s", e)
+                char_per_slide = {}
+        else:
+            character_png_by_index = await asyncio.to_thread(
+                _collect_rembg_character_pngs,
+                carousel_data,
+                photo_paths,
+                temp_dir,
+                preset_path,
+            )
 
         # Шаг 5 — Composer
         await _update_status(update_status, "🎨 Собираю слайды…")
@@ -109,6 +146,7 @@ async def run(
             photo_paths,
             character_png_by_photo_index=character_png_by_index or None,
             vision_results=vision_results,
+            char_per_slide=char_per_slide or None,
         )
 
         # Шаг 6 — Builder (параллельно, preset для viewport/layout)
@@ -184,24 +222,29 @@ def run_pipeline(
         except Exception as e:
             logger.warning("Agent 2 (Vision) пропущен: %s", e)
 
-    preset = _load_preset(preset_path)
-    character_box = preset.get("character_box") if preset else None
-    character_png_by_index = {}
-    for slide in carousel_data.slides:
-        if not slide.use_character:
-            continue
-        idx = slide.photo_index
-        if idx in character_png_by_index or idx >= len(photo_paths):
-            continue
-        try:
-            png_path = process_photo_for_character(
-                photo_paths[idx],
-                output_dir=output_dir / "chars",
-                character_box=character_box,
-            )
-            character_png_by_index[idx] = png_path
-        except Exception as e:
-            logger.warning("Rembg для фото %s: %s", photo_paths[idx].name, e)
+    char_per_slide: dict[int, str] = {}
+    character_png_by_index: dict[int, str] = {}
+
+    def _rembg_job():
+        return _collect_rembg_character_pngs(
+            carousel_data, photo_paths, output_dir, preset_path
+        )
+
+    def _chargen_job():
+        return run_chargen_sync(carousel_data, output_dir)
+
+    if is_chargen_enabled():
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            fut_r = pool.submit(_rembg_job)
+            fut_c = pool.submit(_chargen_job)
+            character_png_by_index = fut_r.result()
+            try:
+                char_per_slide = fut_c.result()
+            except Exception as e:
+                logger.warning("CharGen (sync): %s", e)
+                char_per_slide = {}
+    else:
+        character_png_by_index = _rembg_job()
 
     logger.info("Agent 4: композиция слайдов")
     slides_data = compose_slides(
@@ -209,6 +252,7 @@ def run_pipeline(
         photo_paths,
         character_png_by_photo_index=character_png_by_index or None,
         vision_results=vision_results,
+        char_per_slide=char_per_slide or None,
     )
 
     logger.info("Agent 5: сборка слайдов")

@@ -8,7 +8,16 @@ import sys
 from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader
-from playwright.async_api import async_playwright
+
+try:
+    from playwright.async_api import async_playwright
+except ImportError as e:
+    raise ImportError(
+        "Karusel Agent 5: нужен Microsoft Playwright и Chromium.\n"
+        "  pip install playwright\n"
+        "  playwright install chromium\n"
+        "См. Karusel/docs/pipeline-run-steps.md (частые ошибки)."
+    ) from e
 
 _AGENTS_DIR = Path(__file__).resolve().parent
 _KARUSEL_ROOT = _AGENTS_DIR.parent

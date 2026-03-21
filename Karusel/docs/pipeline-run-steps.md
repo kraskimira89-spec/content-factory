@@ -45,13 +45,13 @@ cd D:\content-factory
 ```
 
 ```powershell
-python Karusel\run_pipeline_cli.py --photos "D:\путь\к\фото1.jpg" "D:\путь\к\фото2.jpg" --brief "Услуга: массаж. Город: Москва. Телефон: +7..." --output Karusel\out_demo
+python Karusel\run_pipeline_cli.py --photos-dir Karusel\demo_photos --brief-file Karusel\demo_brief.txt --output Karusel\out_demo
 ```
 
-Или папка с фото + файл ТЗ:
+Свои фото (подставьте **реальные** пути, не шаблон «путь\к»):
 
 ```powershell
-python Karusel\run_pipeline_cli.py --photos-dir "D:\путь\к\папке_с_фото" --brief-file "D:\путь\к\tz.txt" --output Karusel\out_demo
+python Karusel\run_pipeline_cli.py --photos "C:\Users\Вы\Pictures\photo1.jpg" --brief "Услуга: массаж. Город: Москва. Телефон: +7..." --output Karusel\out_demo
 ```
 
 ## Шаг 3. Проверить результат
@@ -77,6 +77,15 @@ python Karusel\run_bot.py
 
 Нужен `TELEGRAM_BOT_TOKEN` в `config/.env`. В хэндлере включается сценарий с фото + ТЗ в чате (см. [`Karusel/handlers/carousel_handler.py`](../handlers/carousel_handler.py)).
 
+## Частые ошибки (по логам терминала)
+
+| Симптом | Что сделать |
+|--------|-------------|
+| `FileNotFoundError: Фото не найдено` | В `--photos` / `--photos-dir` укажите существующие файлы. Для проверки используйте `Karusel\demo_photos` (см. пример выше). |
+| `module 'playwright' has no attribute 'async_api'` | Часто устаревший локальный `agent5_builder.py`: в актуальной версии — `from playwright.async_api import async_playwright`. Выполните `git pull`, затем `pip install -U playwright` и `playwright install chromium`. |
+| `TelegramNetworkError` / `Cannot connect to host api.telegram.org` | Проблема сети, VPN, файрвола или DNS. Проверьте браузером `https://api.telegram.org`, при необходимости другой DNS/VPN. |
+| `Connection refused` к `127.0.0.1:8000` при `comfy_api/run_comfy_workflow.py` | ComfyUI не запущен или слушает другой порт. Запустите ComfyUI; при порте 8188: `COMFYUI_URL=http://127.0.0.1:8188` или `--server ...`. |
+
 ## Если rembg ругается на CUDA/cuDNN в терминале Cursor
 
 **Вариант A** — один раз в этой сессии терминала:
@@ -94,7 +103,7 @@ $env:Path = "D:\content-factory\venv\Lib\site-packages\nvidia\cudnn\bin;" + $env
 ```
 
 ```powershell
-python Karusel\run_pipeline_cli.py --photos-dir "D:\путь\к\фото" --brief-file "D:\путь\к\tz.txt" --output Karusel\out_demo
+python Karusel\run_pipeline_cli.py --photos-dir Karusel\demo_photos --brief-file Karusel\demo_brief.txt --output Karusel\out_demo
 ```
 
 **Вариант B** — обёртка [`Karusel/run-python-gpu.ps1`](../run-python-gpu.ps1) (см. [`Karusel/docs/cuda12-rembg-gpu-windows.md`](cuda12-rembg-gpu-windows.md)): укажите `-ScriptPath` на `Karusel\run_pipeline_cli.py`, `-WorkingDirectory` на `D:\content-factory`, остальное передайте как аргументы Python **без** `--` в PowerShell.

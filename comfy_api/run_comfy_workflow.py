@@ -24,6 +24,15 @@ if str(_PROJECT_ROOT) not in sys.path:
 from scripts.shared_config import get_comfyui_url  # noqa: E402
 
 
+def _comfy_unreachable_message(base: str) -> str:
+    return (
+        f"Не удалось подключиться к ComfyUI: {base}\n"
+        "  • Запустите ComfyUI и дождитесь готовности сервера.\n"
+        "  • Проверьте порт: в 0.15+ часто :8000, в старых сборках — :8188.\n"
+        "  • Задайте URL: переменная COMFYUI_URL в config/.env или флаг --server."
+    )
+
+
 def _parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="ComfyUI: queue workflow, poll history, download images.")
     p.add_argument(
@@ -77,7 +86,12 @@ def queue_prompt(base: str, workflow_path: Path, client_id: str) -> str:
         payload = {"prompt": data, "client_id": client_id}
 
     url = f"{base}/prompt"
-    resp = requests.post(url, json=payload, timeout=120)
+    try:
+        resp = requests.post(url, json=payload, timeout=120)
+    except requests.exceptions.ConnectionError as e:
+        raise requests.exceptions.ConnectionError(
+            _comfy_unreachable_message(base)
+        ) from e
     resp.raise_for_status()
     j = resp.json()
     print("queue_prompt response:", j)
@@ -88,7 +102,12 @@ def queue_prompt(base: str, workflow_path: Path, client_id: str) -> str:
 
 def get_history(base: str, prompt_id: str) -> dict:
     url = f"{base}/history/{prompt_id}"
-    resp = requests.get(url, timeout=60)
+    try:
+        resp = requests.get(url, timeout=60)
+    except requests.exceptions.ConnectionError as e:
+        raise requests.exceptions.ConnectionError(
+            _comfy_unreachable_message(base)
+        ) from e
     resp.raise_for_status()
     return resp.json()
 
@@ -133,7 +152,12 @@ def download_image(base: str, filename: str, subfolder: str, folder_type: str, o
         "type": folder_type,
     }
     url = f"{base}/view"
-    resp = requests.get(url, params=params, timeout=120)
+    try:
+        resp = requests.get(url, params=params, timeout=120)
+    except requests.exceptions.ConnectionError as e:
+        raise requests.exceptions.ConnectionError(
+            _comfy_unreachable_message(base)
+        ) from e
     resp.raise_for_status()
     output_dir.mkdir(parents=True, exist_ok=True)
     out_path = output_dir / filename
@@ -154,7 +178,11 @@ def main() -> int:
     print("ComfyUI base URL:", base)
 
     print("Queueing prompt...")
-    prompt_id = queue_prompt(base, workflow_path, args.client_id)
+    try:
+        prompt_id = queue_prompt(base, workflow_path, args.client_id)
+    except requests.exceptions.ConnectionError as e:
+        print(e.args[0] if e.args else e, file=sys.stderr)
+        return 3
     print("Got prompt_id:", prompt_id)
 
     print("Waiting for completion...")
@@ -169,14 +197,21 @@ def main() -> int:
     except TimeoutError as e:
         print(e, file=sys.stderr)
         return 2
+    except requests.exceptions.ConnectionError as e:
+        print(e.args[0] if e.args else e, file=sys.stderr)
+        return 3
 
     outputs = entry.get("outputs", {})
-    for _node_id, node_data in outputs.items():
-        for img in node_data.get("images", []):
-            filename = img["filename"]
-            subfolder = img.get("subfolder", "")
-            folder_type = img.get("type", "output")
-            download_image(base, filename, subfolder, folder_type, args.output)
+    try:
+        for _node_id, node_data in outputs.items():
+            for img in node_data.get("images", []):
+                filename = img["filename"]
+                subfolder = img.get("subfolder", "")
+                folder_type = img.get("type", "output")
+                download_image(base, filename, subfolder, folder_type, args.output)
+    except requests.exceptions.ConnectionError as e:
+        print(e.args[0] if e.args else e, file=sys.stderr)
+        return 3
 
     print("Done.")
     return 0
